@@ -872,6 +872,9 @@ const UI = {
     doneToday: "You've done this today, lovely!",
     startWorkout: "Start Workout",
     doItAgain: "Do it again",
+    resumeWorkout: "Resume workout",
+    startOver: "Start from the beginning",
+    onStepXofY: (i, n) => `You're on step ${i} of ${n}`,
     seePlanTitle: "See the full plan",
     seePlanSub: "All exercises and how to progress",
     howHardTitle: "How hard should it feel?",
@@ -950,6 +953,9 @@ const UI = {
     doneToday: "Bạn đã hoàn thành hôm nay rồi, tuyệt vời!",
     startWorkout: "Bắt đầu tập",
     doItAgain: "Tập lại",
+    resumeWorkout: "Tiếp tục bài tập",
+    startOver: "Bắt đầu lại từ đầu",
+    onStepXofY: (i, n) => `Bạn đang ở bước ${i} trên ${n}`,
     seePlanTitle: "Xem toàn bộ kế hoạch",
     seePlanSub: "Tất cả bài tập và cách tiến bộ",
     howHardTitle: "Nên tập nặng đến mức nào?",
@@ -1038,7 +1044,30 @@ function markDone() {
   const s = loadStore();
   s.lastDone = todayKey();
   s.count = (s.count || 0) + 1;
+  delete s.progress;                       // workout finished - nothing to resume
   saveStore(s);
+}
+
+// Remember where she is in the flow so an interruption (screen lock,
+// a text, the tab being evicted) never drops her back to step 1.
+function saveProgress(index) {
+  const s = loadStore();
+  s.progress = { dateKey: todayKey(), index };
+  saveStore(s);
+}
+function clearProgress() {
+  const s = loadStore();
+  delete s.progress;
+  saveStore(s);
+}
+// An in-progress workout worth resuming: from today, past the first step,
+// and not already at the end. Returns { index, total } or null.
+function inProgress() {
+  const p = loadStore().progress;
+  if (!p || p.dateKey !== todayKey()) return null;
+  const total = buildSteps().length;
+  if (p.index < 1 || p.index >= total) return null;
+  return { index: p.index, total };
 }
 
 /* ---------- steps for the flow ---------- */
@@ -1061,14 +1090,14 @@ function mediaHTML(ex) {
     <figure class="media" data-slug="${ex.slug}">
       <img alt="${T().mediaAlt(ex.name)}" src="assets/exercises/${ex.slug}.gif"
            onerror="this.remove(); this.closest('.media').classList.add('is-missing');" />
-      <span class="media-credit">Demo: ${credit}</span>
       <div class="media-placeholder" aria-hidden="true">
         <span class="mp-emoji">🎬</span>
         <b>${T().mediaPlaceholderTitle}</b>
         <small>${T().mediaPlaceholderHint}</small>
         <code>assets/exercises/${ex.slug}.gif</code>
       </div>
-    </figure>`;
+    </figure>
+    <p class="media-credit">Demo: ${credit}</p>`;
 }
 // Show placeholder only when img failed. If img loads, hide placeholder.
 function wireMedia(root) {
@@ -1089,14 +1118,22 @@ function wireMedia(root) {
 let flowIndex = 0;
 let currentRoute = "home";
 
+// Ephemeral, session-only UI state that must survive a same-view re-render
+// (e.g. switching language mid-flow) instead of silently resetting.
+const uiState = { checks: new Set(), accOpen: new Set() };
+
+// Navigate and push a history entry, so the phone/browser Back button walks
+// back through the flow instead of quietly leaving the site.
 function go(route, opts = {}) {
   if (route === "flow") flowIndex = opts.index ?? 0;
+  history.pushState({ route, index: route === "flow" ? flowIndex : 0 }, "");
   window.scrollTo(0, 0);
   render(route, opts);
 }
 
 function render(route, opts = {}) {
   currentRoute = route;
+  if (route === "flow") saveProgress(flowIndex);   // remember her place on every step
   const root = app();
   switch (route) {
     case "home":     root.innerHTML = viewHome(); break;
@@ -1110,7 +1147,24 @@ function render(route, opts = {}) {
   wireMedia(root);
   const v = root.firstElementChild;
   if (v) v.classList.add("view-enter");
+  moveFocusToHeading(root);
 }
+
+// Send focus to the new screen's heading after each swap so keyboard and
+// screen-reader users land on the fresh content instead of the page top.
+function moveFocusToHeading(root) {
+  const h = root.querySelector(".step-title, .home-hero h1, .page-header h1, .done h1");
+  if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+}
+
+// The phone/browser Back button (and Android's back gesture) restores the
+// previous screen rather than trapping her or ejecting from the app.
+window.addEventListener("popstate", (e) => {
+  const st = e.state || { route: "home", index: 0 };
+  if (st.route === "flow") flowIndex = st.index;
+  window.scrollTo(0, 0);
+  render(st.route, { index: st.index });
+});
 
 /* ============================================================
    VIEWS
@@ -1140,6 +1194,7 @@ function langToggle() {
 
 function viewHome() {
   const done = doneToday();
+  const prog = inProgress();
   return `
   <main class="view">
     ${langToggle()}
@@ -1157,7 +1212,15 @@ function viewHome() {
         <span>${icon.clock} ${T().aboutMinutes}</span>
       </div>
       ${done ? `<div class="done-today">${icon.check} ${T().doneToday}</div>` : ``}
+      ${prog ? `
+      <div class="resume">
+        <div class="resume-note">${T().onStepXofY(prog.index + 1, prog.total)}</div>
+        <button class="btn btn-go" data-resume>${T().resumeWorkout} ${icon.chev}</button>
+        <button class="btn btn-ghost btn-restart" data-restart>${T().startOver}</button>
+      </div>
+      ` : `
       <button class="btn btn-go" data-go="flow">${done ? T().doItAgain : T().startWorkout} ${icon.chev}</button>
+      `}
     </section>
 
     <nav class="quick-links" aria-label="More">
@@ -1233,16 +1296,26 @@ function viewFlow(index) {
 
 // Cool-down: unlike the warm-up (one move per screen), the whole cool-down
 // lives on a single scrollable page. Each stretch shows a real demo GIF
-// (ExerciseGymGifsDB), can be ticked off, and is followed by a balance hold
-// and a short recovery note.
+// (ExerciseGymGifsDB), can be ticked off (state persisted via uiState.checks,
+// like the other checklists), and is followed by a balance hold and a short
+// recovery note.
 function cooldownStep(data) {
+  // A tickable card: the corner button carries the check key; the whole card
+  // highlights when ticked, and the state survives re-renders.
+  const tick = (key) => {
+    const on = uiState.checks.has(key);
+    return { on, btn: `
+      <button class="cool-tick" data-check data-key="${key}" aria-pressed="${on ? "true" : "false"}" aria-label="${T().markDone}">
+        <span class="box">${icon.check}</span>
+      </button>` };
+  };
+
   const cards = data.moves.map((m, i) => {
     const cues = m.cues.map((c) => `<li>${c}</li>`).join("");
+    const t = tick(`cd-move-${i}`);
     return `
-    <article class="cool-card">
-      <button class="cool-tick" data-check aria-pressed="false" aria-label="${T().markDone}">
-        <span class="box">${icon.check}</span>
-      </button>
+    <article class="cool-card ${t.on ? "checked" : ""}">
+      ${t.btn}
       <div class="cool-kicker">${i + 1} &middot; ${m.focus} &middot; ${m.hold}</div>
       <h3 class="cool-name">${m.name}</h3>
       <p class="cool-works">${m.works}</p>
@@ -1255,11 +1328,10 @@ function cooldownStep(data) {
   }).join("");
 
   const b = data.balance;
+  const bt = tick("cd-balance");
   const balanceCard = `
-    <article class="cool-card cool-note">
-      <button class="cool-tick" data-check aria-pressed="false" aria-label="${T().markDone}">
-        <span class="box">${icon.check}</span>
-      </button>
+    <article class="cool-card cool-note ${bt.on ? "checked" : ""}">
+      ${bt.btn}
       <div class="cool-note-icon">${icon.gauge}</div>
       <div class="cool-kicker">${b.focus} &middot; ${b.hold}</div>
       <h3 class="cool-name">${b.name}</h3>
@@ -1267,11 +1339,10 @@ function cooldownStep(data) {
     </article>`;
 
   const r = data.recover;
+  const rt = tick("cd-recover");
   const recoverCard = `
-    <article class="cool-card cool-note">
-      <button class="cool-tick" data-check aria-pressed="false" aria-label="${T().markDone}">
-        <span class="box">${icon.check}</span>
-      </button>
+    <article class="cool-card cool-note ${rt.on ? "checked" : ""}">
+      ${rt.btn}
       <div class="cool-note-icon">${icon.breath}</div>
       <h3 class="cool-name">${r.name}</h3>
       <p class="cool-works">${r.text}</p>
@@ -1324,7 +1395,7 @@ function warmupExerciseStep(ex, wIndex) {
     <div class="vitals">
       <div class="vital">
         <div class="vlabel">${T().warmupAim}</div>
-        <div class="vbig">${ex.dose}</div>
+        <div class="vbig vbig-dose">${ex.dose}</div>
       </div>
       <div class="vital effort">
         <div class="vlabel">${T().howHardLabel}</div>
@@ -1412,12 +1483,13 @@ function viewDone() {
 function planAccItem(ex, num) {
   const eff = effortBars(ex.effort);
   const doseVital = ex.dose
-    ? `<div class="vital"><div class="vlabel">${T().warmupAim}</div><div class="vbig" style="font-size:1.5rem">${ex.dose}</div></div>`
+    ? `<div class="vital"><div class="vlabel">${T().warmupAim}</div><div class="vbig vbig-dose">${ex.dose}</div></div>`
     : `<div class="vital"><div class="vlabel">${T().doLabel}</div><div class="vbig" style="font-size:1.5rem">${ex.sets}</div><div class="vsub">${T().ofReps(ex.reps)}</div></div>`;
   const sub = ex.focus || ex.works;
+  const open = uiState.accOpen.has(ex.slug);
   return `
-    <div class="acc-item">
-      <button class="acc-btn" data-acc aria-expanded="false">
+    <div class="acc-item ${open ? "open" : ""}">
+      <button class="acc-btn" data-acc data-key="${ex.slug}" aria-expanded="${open ? "true" : "false"}">
         <span class="acc-num">${num}</span>
         <span class="acc-name">${ex.name}<small>${sub}</small></span>
         <span class="acc-chev">${icon.chevDown}</span>
@@ -1552,6 +1624,12 @@ document.addEventListener("click", (e) => {
     return;
   }
 
+  const resumeEl = e.target.closest("[data-resume]");
+  if (resumeEl) { const p = inProgress(); go("flow", { index: p ? p.index : 0 }); return; }
+
+  const restartEl = e.target.closest("[data-restart]");
+  if (restartEl) { clearProgress(); go("flow", { index: 0 }); return; }
+
   const goEl = e.target.closest("[data-go]");
   if (goEl) { go(goEl.getAttribute("data-go")); return; }
 
@@ -1563,7 +1641,7 @@ document.addEventListener("click", (e) => {
       if (flowIndex >= steps.length - 1) { markDone(); go("done"); }
       else { flowIndex++; go("flow", { index: flowIndex }); }
     } else if (dir === "prev") {
-      if (flowIndex > 0) { flowIndex--; go("flow", { index: flowIndex }); }
+      history.back();   // unified with the platform Back button
     }
     return;
   }
@@ -1574,6 +1652,8 @@ document.addEventListener("click", (e) => {
     const target = check.closest(".cool-card") || check;
     const on = target.classList.toggle("checked");
     check.setAttribute("aria-pressed", on ? "true" : "false");
+    const key = check.getAttribute("data-key");
+    if (key) { on ? uiState.checks.add(key) : uiState.checks.delete(key); }
     return;
   }
 
@@ -1582,10 +1662,13 @@ document.addEventListener("click", (e) => {
     const item = acc.closest(".acc-item");
     const open = item.classList.toggle("open");
     acc.setAttribute("aria-expanded", open ? "true" : "false");
+    const key = acc.getAttribute("data-key");
+    if (key) { open ? uiState.accOpen.add(key) : uiState.accOpen.delete(key); }
     return;
   }
 });
 
 /* boot */
 document.documentElement.lang = LANG;
+history.replaceState({ route: "home", index: 0 }, "");
 render("home");

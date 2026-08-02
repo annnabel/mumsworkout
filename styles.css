@@ -88,6 +88,11 @@ button { font-family: inherit; }
   border-radius: 6px;
 }
 
+/* Headings are focused programmatically after each view change so assistive
+   tech lands on the new screen. They aren't interactive, so hide the ring
+   that would wrongly imply they are - focus still moves for screen readers. */
+[tabindex="-1"]:focus { outline: none; }
+
 /* ---------- App shell / view container ---------- */
 #app { min-height: 100dvh; }
 
@@ -230,6 +235,17 @@ button { font-family: inherit; }
   font-weight: 700;
   font-size: 1rem;
 }
+
+/* Resume an interrupted workout: pick up where she left off, or start fresh */
+.resume { margin-top: 1.4rem; }
+.resume-note {
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  margin-bottom: 0.6rem;
+}
+.resume .btn-go { margin-top: 0; }
+.resume .btn-restart { margin-top: 0.7rem; }
 
 /* ============================================================
    BUTTONS
@@ -413,14 +429,12 @@ button { font-family: inherit; }
 }
 /* contain, never crop - the whole movement (head to feet) must stay visible */
 .media img { width: 100%; height: 100%; object-fit: contain; display: block; }
+/* Seated below the frame so it never overlaps the demo figure */
 .media-credit {
-  position: absolute;
-  right: 0.6rem; bottom: 0.5rem;
-  font-size: 0.72rem;
+  margin: 0.4rem 0.15rem 0;
+  text-align: right;
+  font-size: 0.78rem;
   color: var(--ink-soft);
-  background: color-mix(in oklch, var(--bg) 78%, transparent);
-  border-radius: 6px;
-  padding: 0.1rem 0.45rem;
 }
 .media-placeholder {
   position: absolute; inset: 0;
@@ -472,6 +486,9 @@ button { font-family: inherit; }
   margin-top: 0.15rem;
   line-height: 1.1;
 }
+/* Word-y doses ("10 each leg") sit smaller so they wrap tidily and stay
+   balanced against the neighbouring effort card. */
+.vital .vbig-dose { font-size: 1.4rem; line-height: 1.2; }
 .vital .vsub { font-size: 0.95rem; color: var(--ink-soft); }
 
 /* Effort meter */
