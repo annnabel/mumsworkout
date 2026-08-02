@@ -7,9 +7,9 @@ Each exercise in the app looks for its form video here, by file name:
 | `leg-press.gif`      | Leg Press              |
 | `chest-press.gif`    | Chest Press            |
 | `seated-row.gif`     | Seated Row             |
-| `leg-curl.gif`       | Seated Leg Curl        |
+| `prone-leg-curl.gif` | Prone Leg Curl Machine |
 | `lat-pulldown.gif`   | Lat Pulldown           |
-| `shoulder-press.gif` | Seated Shoulder Press  |
+| `machine-shoulder-press.gif` | Machine Shoulder Press |
 | `dead-bug.gif`       | Dead Bug (core)        |
 | `calf-raise.gif`     | Calf Raise             |
 

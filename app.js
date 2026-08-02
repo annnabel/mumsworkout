@@ -132,26 +132,26 @@ const CONTENT = {
         breath: "Breathe out as you pull in, in as you return.",
       },
       {
-        slug: "leg-curl",
-        name: "Seated Leg Curl",
+        slug: "prone-leg-curl",
+        name: "Prone Leg Curl Machine",
         works: "The backs of your thighs, important for steady, stable knees.",
         sets: "2 sets", reps: "10-12 reps", effort: "moderate",
         setup: [
-          "Adjust the seat so your knee lines up with the machine's pivot point.",
+          "Lie face down with your knees just past the edge of the pad.",
           "Rest the ankle pad just above your heels.",
-          "Sit back with your back flush against the seat.",
+          "Hold the handles and keep your hips pressed into the pad.",
         ],
         doThis: [
-          "Breathe out and curl your heels down and under the seat.",
+          "Breathe out and curl your heels up towards your bottom.",
           "Move smoothly through the whole range.",
-          "Return slowly, don't let the weight drop.",
+          "Lower slowly, don't let the weight drop.",
         ],
         avoid: [
-          "Lifting your hips to help.",
+          "Lifting your hips off the pad to help.",
           "Letting the weight slam down at the end.",
-          "A knee that doesn't line up with the pivot.",
+          "Arching your lower back as you curl.",
         ],
-        breath: "Breathe out as you curl, in as you return.",
+        breath: "Breathe out as you curl, in as you lower.",
       },
       {
         slug: "lat-pulldown",
@@ -176,8 +176,8 @@ const CONTENT = {
         breath: "Breathe out as you pull down, in as you return.",
       },
       {
-        slug: "shoulder-press",
-        name: "Seated Shoulder Press",
+        slug: "machine-shoulder-press",
+        name: "Machine Shoulder Press",
         works: "Shoulders and arms, for reaching up to shelves.",
         sets: "2 sets", reps: "8-10 reps", effort: "easy",
         setup: [
@@ -341,26 +341,26 @@ const CONTENT = {
         breath: "Thở ra khi kéo vào, hít vào khi đưa về.",
       },
       {
-        slug: "leg-curl",
-        name: "Gập Chân Ngồi",
+        slug: "prone-leg-curl",
+        name: "Máy Gập Chân Nằm Sấp",
         works: "Mặt sau đùi, quan trọng cho đầu gối vững và ổn định.",
         sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
         setup: [
-          "Chỉnh ghế sao cho đầu gối thẳng hàng với điểm xoay của máy.",
+          "Nằm sấp với đầu gối hơi vượt qua mép đệm.",
           "Đặt đệm mắt cá ngay trên gót chân.",
-          "Ngồi tựa lưng sát vào ghế.",
+          "Nắm tay cầm và ép hông xuống đệm.",
         ],
         doThis: [
-          "Thở ra và gập gót chân xuống, vào phía dưới ghế.",
+          "Thở ra và gập gót chân lên về phía mông.",
           "Chuyển động mượt mà qua toàn bộ biên độ.",
-          "Đưa về chậm rãi, đừng để tạ rơi.",
+          "Hạ xuống chậm rãi, đừng để tạ rơi.",
         ],
         avoid: [
-          "Nhấc hông lên để hỗ trợ.",
+          "Nhấc hông khỏi đệm để hỗ trợ.",
           "Để tạ đập mạnh xuống ở cuối động tác.",
-          "Đầu gối không thẳng hàng với điểm xoay.",
+          "Ưỡn lưng dưới khi gập.",
         ],
-        breath: "Thở ra khi gập, hít vào khi đưa về.",
+        breath: "Thở ra khi gập, hít vào khi hạ xuống.",
       },
       {
         slug: "lat-pulldown",
@@ -385,8 +385,8 @@ const CONTENT = {
         breath: "Thở ra khi kéo xuống, hít vào khi đưa về.",
       },
       {
-        slug: "shoulder-press",
-        name: "Đẩy Vai Ngồi",
+        slug: "machine-shoulder-press",
+        name: "Máy Đẩy Vai",
         works: "Vai và cánh tay, để với lên kệ cao.",
         sets: "2 hiệp", reps: "8-10 lần", effort: "easy",
         setup: [
