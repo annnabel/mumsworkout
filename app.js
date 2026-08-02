@@ -377,13 +377,84 @@ const CONTENT = {
     COOLDOWN: {
       title: "Cool-Down",
       kicker: "About 5 minutes",
-      intro: "Lovely work. Finish with some balance holds and gentle stretches while your muscles are warm.",
-      items: [
-        { b: "Single-leg balance holds", s: "2 × 20-30 seconds each side. Hold a rail, then just a fingertip, then try eyes closed. This is your balance training." },
-        { b: "Stretch the big ones", s: "Thighs, hips and glutes, chest, upper back and calves — 20-30 seconds each, no bouncing." },
-        { b: "Recover", s: "A glass of water and a little protein at your next meal." },
+      intro: "Lovely work. Scroll through these gentle stretches while your muscles are still warm — hold each one, breathe, and don't bounce. Then a balance hold and a little recovery.",
+      overviewTitle: "Ease down, top to toe",
+      // Gentle end-of-session stretches, each with a real demo GIF
+      // (ExerciseGymGifsDB, same source as the warm-up). Shown all together
+      // on one scrollable page rather than one per screen.
+      moves: [
+        {
+          slug: "cooldown-quad",
+          name: "Seated Thigh Release",
+          focus: "Thighs (quads)",
+          hold: "20-30 sec each leg",
+          works: "Eases the front of your thighs after the leg press and squats, so your knees and hips feel loose.",
+          cues: [
+            "Sit tall on a bench, rest one hand on the front of your thigh.",
+            "Gently press and slowly straighten, then bend the knee to find an easy stretch.",
+            "Keep it comfortable, breathe slowly, then swap legs.",
+          ],
+        },
+        {
+          slug: "cooldown-glute",
+          name: "Seated Figure-4 Glute Stretch",
+          focus: "Hips & glutes",
+          hold: "20-30 sec each side",
+          works: "Opens the hips and glutes — the muscles that power every stand-up and stair — so your lower back can relax.",
+          cues: [
+            "Sit tall and cross one ankle over the opposite knee.",
+            "Sit up straight and lean forward gently from the hips.",
+            "Feel an easy stretch deep in the hip, then swap sides.",
+          ],
+        },
+        {
+          slug: "cooldown-chest",
+          name: "Chest & Shoulder Opener",
+          focus: "Chest & front of shoulders",
+          hold: "20-30 seconds",
+          works: "Undoes the forward-rounding of the chest press and daily life, opening you up so you stand tall.",
+          cues: [
+            "Stand tall and draw both hands gently behind you.",
+            "Ease your shoulder blades together and lift your chest.",
+            "Breathe into the front of the chest — no forcing.",
+          ],
+        },
+        {
+          slug: "cooldown-upper-back",
+          name: "Upper-Back Stretch",
+          focus: "Upper back & shoulders",
+          hold: "20-30 seconds",
+          works: "Loosens the upper back after the rows and pulldowns, the area where good posture is won or lost.",
+          cues: [
+            "Clasp your hands out in front at chest height.",
+            "Round your upper back and reach forward, spreading the shoulder blades.",
+            "Let your head follow and breathe out slowly.",
+          ],
+        },
+        {
+          slug: "cooldown-calf",
+          name: "Calf Stretch on the Wall",
+          focus: "Calves",
+          hold: "20-30 sec each leg",
+          works: "Lengthens the calves and keeps your ankles supple — steady ankles are steady steps and safer stairs.",
+          cues: [
+            "Stand facing a wall, hands flat at shoulder height.",
+            "Step one foot back, heel down, back leg straight.",
+            "Lean gently into the wall until you feel an easy calf stretch, then swap.",
+          ],
+        },
       ],
-      tip: "Feeling wobbly on one leg? Keep hold of the rail, steadiness comes with practice.",
+      balance: {
+        name: "Single-Leg Balance Hold",
+        focus: "Balance training",
+        hold: "2 × 20-30 sec each side",
+        text: "Stand on one leg — hold a rail, then just a fingertip, then try eyes closed. This is your balance training, and it looks after you for years.",
+      },
+      recover: {
+        name: "Recover",
+        text: "A glass of water now, and a little protein at your next meal, to help your muscles rebuild.",
+      },
+      tip: "Feeling wobbly on one leg? Keep hold of the rail — steadiness comes with practice.",
     },
   },
 
@@ -706,13 +777,81 @@ const CONTENT = {
     COOLDOWN: {
       title: "Thả Lỏng",
       kicker: "Khoảng 5 phút",
-      intro: "Làm rất tốt. Kết thúc bằng vài lần giữ thăng bằng và giãn cơ nhẹ nhàng khi cơ bắp còn ấm.",
-      items: [
-        { b: "Giữ thăng bằng một chân", s: "2 × 20-30 giây mỗi bên. Bám thanh vịn, rồi chỉ một đầu ngón tay, rồi thử nhắm mắt. Đây là bài tập thăng bằng của bạn." },
-        { b: "Giãn các cơ lớn", s: "Đùi, hông và cơ mông, ngực, lưng trên và bắp chân — mỗi động tác 20-30 giây, không nảy." },
-        { b: "Hồi phục", s: "Một cốc nước và một chút chất đạm vào bữa ăn kế tiếp." },
+      intro: "Làm rất tốt. Cuộn qua các động tác giãn cơ nhẹ nhàng này khi cơ bắp còn ấm — giữ mỗi động tác, hít thở, và đừng nảy. Sau đó là giữ thăng bằng và hồi phục một chút.",
+      overviewTitle: "Thả lỏng từ trên xuống dưới",
+      moves: [
+        {
+          slug: "cooldown-quad",
+          name: "Thả Lỏng Đùi Trước (Ngồi)",
+          focus: "Đùi trước",
+          hold: "20-30 giây mỗi chân",
+          works: "Làm dịu mặt trước của đùi sau bài đạp chân và squat, giúp đầu gối và hông thấy nhẹ nhõm.",
+          cues: [
+            "Ngồi thẳng trên ghế băng, đặt một tay lên mặt trước của đùi.",
+            "Nhẹ nhàng ấn và từ từ duỗi thẳng, rồi gập gối để tìm mức giãn dễ chịu.",
+            "Giữ thoải mái, thở chậm, rồi đổi chân.",
+          ],
+        },
+        {
+          slug: "cooldown-glute",
+          name: "Giãn Cơ Mông Kiểu Số 4 (Ngồi)",
+          focus: "Hông & cơ mông",
+          hold: "20-30 giây mỗi bên",
+          works: "Mở hông và cơ mông — nhóm cơ giúp bạn đứng dậy và lên cầu thang — để lưng dưới được thư giãn.",
+          cues: [
+            "Ngồi thẳng và bắt chéo một cổ chân lên đầu gối bên kia.",
+            "Giữ lưng thẳng và nghiêng người nhẹ về trước từ hông.",
+            "Cảm nhận mức giãn dễ chịu sâu trong hông, rồi đổi bên.",
+          ],
+        },
+        {
+          slug: "cooldown-chest",
+          name: "Mở Ngực & Vai",
+          focus: "Ngực & phía trước vai",
+          hold: "20-30 giây",
+          works: "Gỡ tư thế gù về trước do bài đẩy ngực và sinh hoạt hằng ngày, mở lồng ngực để bạn đứng thẳng.",
+          cues: [
+            "Đứng thẳng và nhẹ nhàng đưa hai tay ra phía sau.",
+            "Khép nhẹ hai bả vai lại và nâng ngực lên.",
+            "Hít vào phía trước ngực — đừng gắng sức.",
+          ],
+        },
+        {
+          slug: "cooldown-upper-back",
+          name: "Giãn Lưng Trên",
+          focus: "Lưng trên & vai",
+          hold: "20-30 giây",
+          works: "Làm mềm lưng trên sau bài kéo xà và kéo cáp, nơi quyết định tư thế đẹp hay xấu.",
+          cues: [
+            "Đan hai bàn tay và vươn ra trước ngang ngực.",
+            "Cong lưng trên và vươn về phía trước, tách rộng hai bả vai.",
+            "Để đầu cúi theo và thở ra chậm rãi.",
+          ],
+        },
+        {
+          slug: "cooldown-calf",
+          name: "Giãn Bắp Chân Vào Tường",
+          focus: "Bắp chân",
+          hold: "20-30 giây mỗi chân",
+          works: "Kéo dài bắp chân và giữ cổ chân linh hoạt — cổ chân vững là bước đi vững và cầu thang an toàn hơn.",
+          cues: [
+            "Đứng đối diện tường, hai tay áp phẳng ngang vai.",
+            "Bước một chân ra sau, gót chạm đất, chân sau thẳng.",
+            "Nghiêng nhẹ vào tường đến khi thấy bắp chân giãn dễ chịu, rồi đổi chân.",
+          ],
+        },
       ],
-      tip: "Thấy chông chênh trên một chân? Cứ bám vào thanh vịn, sự vững vàng đến cùng luyện tập.",
+      balance: {
+        name: "Giữ Thăng Bằng Một Chân",
+        focus: "Luyện thăng bằng",
+        hold: "2 × 20-30 giây mỗi bên",
+        text: "Đứng trên một chân — bám thanh vịn, rồi chỉ một đầu ngón tay, rồi thử nhắm mắt. Đây là bài tập thăng bằng của bạn, và nó bảo vệ bạn trong nhiều năm.",
+      },
+      recover: {
+        name: "Hồi phục",
+        text: "Một cốc nước ngay bây giờ, và một chút chất đạm vào bữa ăn kế tiếp, để cơ bắp tái tạo.",
+      },
+      tip: "Thấy chông chênh trên một chân? Cứ bám vào thanh vịn — sự vững vàng đến cùng luyện tập.",
     },
   },
 };
@@ -754,6 +893,7 @@ const UI = {
     setUp: "Set up",
     doThisHead: "Do this",
     avoidHead: "Avoid",
+    markDone: "Mark as done",
     allDone: "All done!",
     doneText: "Wonderful work. Every session keeps you stronger and steadier. See you next time.",
     backToStart: "Back to start",
@@ -831,6 +971,7 @@ const UI = {
     setUp: "Chuẩn bị",
     doThisHead: "Nên làm",
     avoidHead: "Tránh",
+    markDone: "Đánh dấu đã xong",
     allDone: "Xong hết rồi!",
     doneText: "Làm tốt lắm. Mỗi buổi tập giúp bạn khỏe hơn và vững vàng hơn. Hẹn gặp lại lần sau.",
     backToStart: "Về trang đầu",
@@ -913,8 +1054,9 @@ function buildSteps() {
 
 /* ---------- media (GIF with graceful placeholder) ---------- */
 function mediaHTML(ex) {
-  // Warm-up GIFs come from ExerciseGymGifsDB; the strength GIFs from ExerciseDB.
-  const credit = ex.slug.startsWith("warmup-") ? "ExerciseGymGifsDB" : "ExerciseDB";
+  // Warm-up & cool-down GIFs come from ExerciseGymGifsDB; strength from ExerciseDB.
+  const gym = ex.slug.startsWith("warmup-") || ex.slug.startsWith("cooldown-");
+  const credit = gym ? "ExerciseGymGifsDB" : "ExerciseDB";
   return `
     <figure class="media" data-slug="${ex.slug}">
       <img alt="${T().mediaAlt(ex.name)}" src="assets/exercises/${ex.slug}.gif"
@@ -1083,24 +1225,68 @@ function viewFlow(index) {
 
   if (step.type === "warmup-intro") inner = warmupIntroStep(C().WARMUP);
   else if (step.type === "warmup-exercise") inner = warmupExerciseStep(step.ex, step.wIndex);
-  else if (step.type === "cooldown") inner = warmupStep(C().COOLDOWN);
+  else if (step.type === "cooldown") inner = cooldownStep(C().COOLDOWN);
   else inner = exerciseStep(step.ex, step.exIndex);
 
   return stepChrome(index, total, inner) + flowFooter(index, total);
 }
 
-// Cool-down: a simple, tickable checklist (unchanged).
-function warmupStep(data) {
-  const items = data.items.map((it) => `
-    <button class="check-item" data-check aria-pressed="false">
-      <span class="box">${icon.check}</span>
-      <span class="ci-text"><b>${it.b}</b><small>${it.s}</small></span>
-    </button>`).join("");
+// Cool-down: unlike the warm-up (one move per screen), the whole cool-down
+// lives on a single scrollable page. Each stretch shows a real demo GIF
+// (ExerciseGymGifsDB), can be ticked off, and is followed by a balance hold
+// and a short recovery note.
+function cooldownStep(data) {
+  const cards = data.moves.map((m, i) => {
+    const cues = m.cues.map((c) => `<li>${c}</li>`).join("");
+    return `
+    <article class="cool-card">
+      <button class="cool-tick" data-check aria-pressed="false" aria-label="${T().markDone}">
+        <span class="box">${icon.check}</span>
+      </button>
+      <div class="cool-kicker">${i + 1} &middot; ${m.focus} &middot; ${m.hold}</div>
+      <h3 class="cool-name">${m.name}</h3>
+      <p class="cool-works">${m.works}</p>
+      ${mediaHTML(m)}
+      <section class="block do" style="margin-top:1rem">
+        <div class="block-head">${icon.check} ${T().doThisHead}</div>
+        <ul>${cues}</ul>
+      </section>
+    </article>`;
+  }).join("");
+
+  const b = data.balance;
+  const balanceCard = `
+    <article class="cool-card cool-note">
+      <button class="cool-tick" data-check aria-pressed="false" aria-label="${T().markDone}">
+        <span class="box">${icon.check}</span>
+      </button>
+      <div class="cool-note-icon">${icon.gauge}</div>
+      <div class="cool-kicker">${b.focus} &middot; ${b.hold}</div>
+      <h3 class="cool-name">${b.name}</h3>
+      <p class="cool-works">${b.text}</p>
+    </article>`;
+
+  const r = data.recover;
+  const recoverCard = `
+    <article class="cool-card cool-note">
+      <button class="cool-tick" data-check aria-pressed="false" aria-label="${T().markDone}">
+        <span class="box">${icon.check}</span>
+      </button>
+      <div class="cool-note-icon">${icon.breath}</div>
+      <h3 class="cool-name">${r.name}</h3>
+      <p class="cool-works">${r.text}</p>
+    </article>`;
+
   return `
     <div class="step-kicker">${data.kicker}</div>
     <h2 class="step-title">${data.title}</h2>
     <p class="works">${data.intro}</p>
-    <div class="checklist">${items}</div>
+    <div class="warm-overview-head" style="margin-top:1.4rem">${data.overviewTitle}</div>
+    <div class="cool-list">
+      ${cards}
+      ${balanceCard}
+      ${recoverCard}
+    </div>
     <div class="callout info" style="margin-top:1.3rem">${data.tip}</div>`;
 }
 
@@ -1269,7 +1455,11 @@ function viewPlan() {
     <div class="acc">${acc}</div>
 
     <h2 class="section-title">${T().planCooldown}</h2>
-    <ul class="plan-list">${C().COOLDOWN.items.map((it) => `<li>${icon.dot}<span><strong>${it.b}.</strong> ${it.s}</span></li>`).join("")}</ul>
+    <ul class="plan-list">
+      ${C().COOLDOWN.moves.map((m) => `<li>${icon.dot}<span><strong>${m.name}.</strong> ${m.focus} — ${m.hold}.</span></li>`).join("")}
+      <li>${icon.dot}<span><strong>${C().COOLDOWN.balance.name}.</strong> ${C().COOLDOWN.balance.hold}.</span></li>
+      <li>${icon.dot}<span><strong>${C().COOLDOWN.recover.name}.</strong> ${C().COOLDOWN.recover.text}</span></li>
+    </ul>
 
     <h2 class="section-title">${T().planStronger}</h2>
     <div class="prose">
@@ -1380,7 +1570,9 @@ document.addEventListener("click", (e) => {
 
   const check = e.target.closest("[data-check]");
   if (check) {
-    const on = check.classList.toggle("checked");
+    // Cool-down ticks live in a corner button; highlight the whole card.
+    const target = check.closest(".cool-card") || check;
+    const on = target.classList.toggle("checked");
     check.setAttribute("aria-pressed", on ? "true" : "false");
     return;
   }

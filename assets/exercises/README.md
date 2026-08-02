@@ -12,6 +12,16 @@ Each exercise and warm-up move in the app looks for its form video here, by file
 | `warmup-glute-bridges.gif`  | Glute Bridges                | Hips & glutes            |
 | `warmup-squats.gif`         | Supported Squats             | Legs & hips              |
 
+## Cool-down stretches
+
+| File                        | Cool-down stretch            | Focus                    |
+|-----------------------------|------------------------------|--------------------------|
+| `cooldown-quad.gif`         | Seated Thigh Release         | Thighs (quads)           |
+| `cooldown-glute.gif`        | Seated Figure-4 Glute Stretch| Hips & glutes            |
+| `cooldown-chest.gif`        | Chest & Shoulder Opener      | Chest & front of shoulders |
+| `cooldown-upper-back.gif`   | Upper-Back Stretch           | Upper back & shoulders   |
+| `cooldown-calf.gif`         | Calf Stretch on the Wall     | Calves                   |
+
 ## The exercises
 
 | File                 | Exercise               |
@@ -27,9 +37,10 @@ Each exercise and warm-up move in the app looks for its form video here, by file
 
 ## Where these came from
 - The **exercise** GIFs are from **ExerciseDB** (https://exercisedb.dev).
-- The **warm-up** GIFs are from **ExerciseGymGifsDB**
+- The **warm-up** and **cool-down** GIFs are from **ExerciseGymGifsDB**
   (https://github.com/JahelCuadrado/ExerciseGymGifsDB), a free, static
-  collection of exercise GIFs served over a CDN.
+  collection of exercise GIFs served over a CDN. Using one source keeps the
+  warm-up and cool-down demos visually uniform.
 
 Both are compilations of demo clips whose copyrights belong to their original
 authors; this personal, non-commercial app simply saves a copy of each clip
