@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-02T00:00:00Z",
+  "title": "Design System: Mum's Workout",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Confident Blue", "canonical": "oklch(0.50 0.11 250)", "tonalRamp": ["oklch(0.15 0.06 250)", "oklch(0.25 0.09 250)", "oklch(0.35 0.11 250)", "oklch(0.44 0.11 250)", "oklch(0.50 0.11 250)", "oklch(0.62 0.09 250)", "oklch(0.78 0.06 250)", "oklch(0.955 0.028 250)"] },
+      "accent-coral": { "role": "secondary", "displayName": "Warm Coral", "canonical": "oklch(0.66 0.15 35)", "tonalRamp": ["oklch(0.30 0.07 35)", "oklch(0.40 0.10 35)", "oklch(0.50 0.13 35)", "oklch(0.58 0.14 35)", "oklch(0.66 0.15 35)", "oklch(0.76 0.12 35)", "oklch(0.87 0.07 35)", "oklch(0.96 0.03 35)"] },
+      "go": { "role": "tertiary", "displayName": "Go Green", "canonical": "oklch(0.52 0.13 152)", "tonalRamp": ["oklch(0.15 0.06 152)", "oklch(0.25 0.09 152)", "oklch(0.35 0.12 152)", "oklch(0.46 0.13 152)", "oklch(0.52 0.13 152)", "oklch(0.66 0.11 152)", "oklch(0.82 0.07 152)", "oklch(0.95 0.045 152)"] },
+      "caution": { "role": "tertiary", "displayName": "Caution Amber", "canonical": "oklch(0.74 0.15 78)", "tonalRamp": ["oklch(0.30 0.06 78)", "oklch(0.40 0.09 70)", "oklch(0.52 0.12 74)", "oklch(0.63 0.14 76)", "oklch(0.74 0.15 78)", "oklch(0.83 0.12 80)", "oklch(0.91 0.08 82)", "oklch(0.965 0.045 82)"] },
+      "danger": { "role": "tertiary", "displayName": "Stop Red", "canonical": "oklch(0.55 0.19 25)", "tonalRamp": ["oklch(0.20 0.08 25)", "oklch(0.30 0.12 25)", "oklch(0.40 0.15 25)", "oklch(0.45 0.16 25)", "oklch(0.55 0.19 25)", "oklch(0.68 0.16 25)", "oklch(0.83 0.09 25)", "oklch(0.965 0.03 25)"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "oklch(0.25 0.02 255)", "tonalRamp": ["oklch(0.20 0.02 255)", "oklch(0.25 0.02 255)", "oklch(0.35 0.02 255)", "oklch(0.42 0.02 255)", "oklch(0.55 0.015 255)", "oklch(0.70 0.012 250)", "oklch(0.85 0.01 245)", "oklch(0.955 0.009 245)"] },
+      "bg": { "role": "neutral", "displayName": "Daylight White", "canonical": "oklch(1 0 0)", "tonalRamp": ["oklch(0.90 0.012 245)", "oklch(0.955 0.009 245)", "oklch(0.978 0.006 245)", "oklch(1 0 0)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Home greeting headline and the Done screen. Weight 800, up to 2.6rem." },
+      "headline": { "displayName": "Headline", "purpose": "The exercise/step title on each flow screen." },
+      "title": { "displayName": "Title", "purpose": "Section titles on the full-plan and safety reference pages." },
+      "body": { "displayName": "Body", "purpose": "All reading copy and cues. 1.15rem on an 18px root, capped ~65-75ch." },
+      "label": { "displayName": "Label", "purpose": "The two tiny uppercase vital labels only (SETS x REPS, EFFORT)." }
+    },
+    "shadows": [
+      { "name": "ambient-soft", "value": "0 1px 2px oklch(0.4 0.03 255 / 0.06), 0 6px 20px oklch(0.4 0.03 255 / 0.08)", "purpose": "Soft blue-tinted lift on the Today card, Start button, and selected pill." },
+      { "name": "ambient-lifted", "value": "0 2px 6px oklch(0.4 0.03 255 / 0.08), 0 18px 40px oklch(0.4 0.03 255 / 0.14)", "purpose": "Most prominent raised surface; used sparingly." }
+    ],
+    "motion": [
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "View entrance and progress-bar fill; calm exponential ease-out." },
+      { "name": "press", "value": "transform 120ms ease", "purpose": "Gentle :active scale(0.985) on buttons and tappable rows." },
+      { "name": "state", "value": "150ms ease", "purpose": "Background/border/color transitions on hover, selection, and checked states." },
+      { "name": "pop", "value": "500ms cubic-bezier(0.22, 1.4, 0.4, 1)", "purpose": "The Done-screen success burst only." }
+    ],
+    "breakpoints": [
+      { "name": "comfort", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Start / Next Button (Go)",
+      "kind": "button",
+      "refersTo": "button-go",
+      "description": "The single most important action on a screen: Start Workout, Next.",
+      "html": "<button class=\"ds-btn-go\">Start Workout</button>",
+      "css": ".ds-btn-go { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; min-height: 4.4rem; padding: 1rem 1.4rem; font-family: Figtree, system-ui, sans-serif; font-size: 1.35rem; font-weight: 700; color: oklch(1 0 0); background: oklch(0.52 0.13 152); border: 1px solid transparent; border-radius: 18px; box-shadow: 0 1px 2px oklch(0.4 0.03 255 / 0.06), 0 6px 20px oklch(0.4 0.03 255 / 0.08); cursor: pointer; transition: transform 120ms ease, background-color 150ms ease; } .ds-btn-go:hover { background: oklch(0.46 0.13 152); } .ds-btn-go:active { transform: scale(0.985); } .ds-btn-go:focus-visible { outline: 3px solid oklch(0.50 0.11 250); outline-offset: 3px; }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Standard forward action in the confident-blue guide color.",
+      "html": "<button class=\"ds-btn-primary\">Continue</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; min-height: 3.75rem; padding: 1rem 1.4rem; font-family: Figtree, system-ui, sans-serif; font-size: 1.2rem; font-weight: 700; color: oklch(1 0 0); background: oklch(0.50 0.11 250); border: 1px solid transparent; border-radius: 18px; cursor: pointer; transition: transform 120ms ease, background-color 150ms ease; } .ds-btn-primary:hover { background: oklch(0.44 0.11 250); } .ds-btn-primary:active { transform: scale(0.985); } .ds-btn-primary:focus-visible { outline: 3px solid oklch(0.50 0.11 250); outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Back and secondary actions; transparent with a stronger hairline.",
+      "html": "<button class=\"ds-btn-ghost\">Back</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.75rem; padding: 1rem 1.4rem; font-family: Figtree, system-ui, sans-serif; font-size: 1.2rem; font-weight: 700; color: oklch(0.25 0.02 255); background: transparent; border: 1px solid oklch(0.82 0.015 245); border-radius: 18px; cursor: pointer; transition: transform 120ms ease, background-color 150ms ease; } .ds-btn-ghost:hover { background: oklch(0.978 0.006 245); } .ds-btn-ghost:active { transform: scale(0.985); } .ds-btn-ghost:focus-visible { outline: 3px solid oklch(0.50 0.11 250); outline-offset: 3px; }"
+    },
+    {
+      "name": "Vital Card",
+      "kind": "card",
+      "refersTo": "vital-card",
+      "description": "The big sets-x-reps / effort readouts on an exercise screen.",
+      "html": "<div class=\"ds-vital\"><span class=\"ds-vital-label\">Sets &times; Reps</span><span class=\"ds-vital-big\">3 &times; 10</span><span class=\"ds-vital-sub\">rest 60-90s</span></div>",
+      "css": ".ds-vital { display: block; background: oklch(0.978 0.006 245); border: 1px solid oklch(0.90 0.012 245); border-radius: 18px; padding: 1rem 1.1rem; font-family: Figtree, system-ui, sans-serif; } .ds-vital-label { display: block; font-size: 0.92rem; font-weight: 700; color: oklch(0.42 0.02 255); text-transform: uppercase; letter-spacing: 0.06em; } .ds-vital-big { display: block; font-size: 1.9rem; font-weight: 800; color: oklch(0.25 0.02 255); margin-top: 0.15rem; line-height: 1.1; } .ds-vital-sub { display: block; font-size: 0.95rem; color: oklch(0.42 0.02 255); }"
+    },
+    {
+      "name": "Do-This Block",
+      "kind": "custom",
+      "refersTo": "callout-info",
+      "description": "Green 'do this' cue block with hand-drawn check marks.",
+      "html": "<div class=\"ds-do\"><div class=\"ds-do-head\">Do this</div><ul><li>Sit tall, feet flat and firm</li><li>Push smoothly, breathe out on effort</li></ul></div>",
+      "css": ".ds-do { border-radius: 18px; padding: 1.15rem 1.2rem; background: oklch(0.95 0.045 152); border: 1px solid oklch(0.72 0.09 152); font-family: Figtree, system-ui, sans-serif; } .ds-do-head { font-weight: 800; font-size: 1.15rem; color: oklch(0.46 0.13 152); margin-bottom: 0.7rem; } .ds-do ul { margin: 0; padding-left: 0; list-style: none; } .ds-do li { position: relative; padding-left: 2.2rem; margin-bottom: 0.7rem; font-size: 1.12rem; line-height: 1.5; color: oklch(0.25 0.02 255); } .ds-do li:last-child { margin-bottom: 0; } .ds-do li::before { content: ''; position: absolute; left: 0.15rem; top: 0.35rem; width: 1.15rem; height: 0.6rem; border-left: 3px solid oklch(0.46 0.13 152); border-bottom: 3px solid oklch(0.46 0.13 152); transform: rotate(-45deg); }"
+    },
+    {
+      "name": "Avoid Block",
+      "kind": "custom",
+      "refersTo": "callout-warn",
+      "description": "Amber common-mistakes block with cross markers.",
+      "html": "<div class=\"ds-avoid\"><div class=\"ds-avoid-head\">Avoid</div><ul><li>Locking the knees or joints hard</li><li>Rushing or jerking the weight</li></ul></div>",
+      "css": ".ds-avoid { border-radius: 18px; padding: 1.15rem 1.2rem; background: oklch(0.965 0.045 82); border: 1px solid oklch(0.83 0.12 80); font-family: Figtree, system-ui, sans-serif; } .ds-avoid-head { font-weight: 800; font-size: 1.15rem; color: oklch(0.44 0.10 62); margin-bottom: 0.7rem; } .ds-avoid ul { margin: 0; padding-left: 0; list-style: none; } .ds-avoid li { position: relative; padding-left: 2.2rem; margin-bottom: 0.7rem; font-size: 1.12rem; line-height: 1.5; color: oklch(0.25 0.02 255); } .ds-avoid li:last-child { margin-bottom: 0; } .ds-avoid li::before { content: '✕'; position: absolute; left: 0; top: 0.05rem; width: 1.6rem; height: 1.6rem; display: grid; place-items: center; background: oklch(0.90 0.08 80); color: oklch(0.44 0.10 62); font-weight: 800; font-size: 0.9rem; border-radius: 999px; }"
+    },
+    {
+      "name": "Danger Callout",
+      "kind": "custom",
+      "refersTo": "callout-danger",
+      "description": "Red 'stop and see a professional' warning; rare by design.",
+      "html": "<div class=\"ds-danger\"><b>Stop and rest if&hellip;</b>You feel sharp joint pain, dizziness, or chest tightness.</div>",
+      "css": ".ds-danger { border-radius: 18px; padding: 1.15rem 1.2rem; background: oklch(0.965 0.03 25); border: 1px solid oklch(0.78 0.10 25); font-family: Figtree, system-ui, sans-serif; font-size: 1.08rem; line-height: 1.55; color: oklch(0.25 0.02 255); } .ds-danger b { display: block; margin-bottom: 0.35rem; font-size: 1.12rem; color: oklch(0.45 0.16 25); }"
+    },
+    {
+      "name": "Effort Meter",
+      "kind": "custom",
+      "refersTo": "effort-meter",
+      "description": "Plain-language stand-in for RPE: segmented pills that fill green.",
+      "html": "<div class=\"ds-effort\"><div class=\"ds-meter\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></div><div class=\"ds-effort-sub\">Working, but you could say a short sentence</div></div>",
+      "css": ".ds-effort { font-family: Figtree, system-ui, sans-serif; } .ds-effort .ds-meter { display: flex; gap: 0.3rem; margin: 0.4rem 0 0.35rem; } .ds-effort .ds-meter i { height: 0.85rem; flex: 1; border-radius: 999px; background: oklch(0.955 0.009 245); } .ds-effort .ds-meter i.on { background: oklch(0.52 0.13 152); } .ds-effort-sub { color: oklch(0.25 0.02 255); font-weight: 500; font-size: 0.95rem; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Patient Guide",
+    "overview": "Everything here behaves like a trusted person walking beside you, one step at a time. The system never rushes, never crowds, and never assumes you already know the way. Screens hold a single idea at a time on a comfortable phone-width column of calm white, at a deliberately oversized scale, because the one person who uses this is 50+ and does not use technology often. The palette is a pure-white daylight carrying a single deep, confident blue for guidance, with a tightly-governed safety vocabulary: green means go, amber means be careful, red means stop. Warmth comes from Figtree's humanist letterforms and generous rounding, not from a tinted background. The result should read as reassuring and human, a guide, not a gym.",
+    "keyCharacteristics": [
+      "Phone-first, single-column, one-idea-per-screen.",
+      "Oversized type and >=60px tap targets for older eyes and hands.",
+      "Pure-white daylight surface; one blue guide color; strict semantic safety colors.",
+      "Plain language, always. No jargon, no abbreviations, no hidden affordances.",
+      "Injury prevention is the north star of the content; the visual system makes cues and warnings impossible to miss."
+    ],
+    "rules": [
+      { "name": "The Traffic-Light Rule", "body": "Green, amber, and red are reserved for safety meaning (go, caution, stop) and never used decoratively.", "section": "colors" },
+      { "name": "The One-Blue Rule", "body": "There is exactly one guide color. Blue leads the eye to the next action and the current position; never decoration that competes with a real cue.", "section": "colors" },
+      { "name": "The Pure-White Rule", "body": "The body background is pure white, never a cream, sand, or warm-tinted near-white. Warmth is carried by type and rounding.", "section": "colors" },
+      { "name": "The One-Voice Rule", "body": "One family, Figtree, everywhere. Hierarchy comes from weight and size, never from a new typeface.", "section": "typography" },
+      { "name": "The Read-It-Once Rule", "body": "Nothing that must be understood drops below body size (1.15rem on an 18px root). Body and cues are always sentence case and plain-spoken.", "section": "typography" },
+      { "name": "The Soft-Lift Rule", "body": "Shadows are soft, blue-tinted, and ambient; flat by default, lift only what the user should act on.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep one idea per screen and one clearly-dominant action (the green or blue button).",
+      "Do keep the body pure white and carry warmth through Figtree and rounding.",
+      "Do honor the Traffic-Light Rule: green = proceed/correct/done, amber = caution, red = stop.",
+      "Do keep every tap target >= 60px and body text >= 1.15rem.",
+      "Do keep ink-soft (oklch(0.42 0.02 255)) as the lightest text on white, dark enough for ~4.5:1.",
+      "Do contain (never crop) the demo GIF, and show the filename-naming placeholder when a GIF is missing.",
+      "Do write in plain, sentence-case language a first-time user understands on sight."
+    ],
+    "donts": [
+      "Don't make it look like a gym, a fitness tracker, or a clinical/medical form.",
+      "Don't use jargon or abbreviations (never 'RPE'); the effort meter and plain words replace numeric scales.",
+      "Don't introduce a second font family, a gradient headline, or a tiny tracked uppercase eyebrow above sections.",
+      "Don't use a cream/sand/warm-tinted background in place of pure white.",
+      "Don't spend green, amber, or red on decoration, and don't let coral become a second brand color.",
+      "Don't hide actions behind menus, swipes, or discoverable gestures.",
+      "Don't use hard/dark drop shadows; lift is soft, blue-tinted, and ambient."
+    ]
+  }
+}
