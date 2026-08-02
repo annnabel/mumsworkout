@@ -5,9 +5,14 @@ with a form video, clear cues, and plain-language safety guidance. Built to be e
 someone who doesn't use technology often, with injury prevention as the priority.
 
 ## What it does
-- **Today's Workout** - a big "Start" button leads through warm-up → 8 exercises → cool-down,
+- **Today's Workout** - a big "Start" button leads through a warm-up → 8 exercises → cool-down,
   one screen at a time with a large **Next** button and a progress bar.
-- **Form demo GIF** for every exercise (from [ExerciseDB](https://exercisedb.dev)).
+- **A mobility & longevity warm-up** - 6 gentle moves (gentle cardio, shoulder & upper-back
+  reach, seated mid-back twists, marching high knees, ankle circles, supported squats), each on
+  its own screen with a demo GIF and cues, warming every joint the workout will use.
+- **Form demo GIF** for every exercise and warm-up move (exercises from
+  [ExerciseDB](https://exercisedb.dev); warm-ups from
+  [ExerciseGymGifsDB](https://github.com/JahelCuadrado/ExerciseGymGifsDB)).
 - **Do this / Avoid** cues, colour-coded, plus a breathing reminder.
 - **Plain-language effort guide** (no jargon like "RPE").
 - **Staying safe** page - when to stop and see a professional.
@@ -39,4 +44,4 @@ friendly placeholder telling you which name to use.
 ## A note
 This app is a friendly guide, not medical advice. Anyone with a joint replacement,
 disc issue, or diagnosed osteopenia/osteoporosis should get the all-clear from a
-doctor before starting. Exercise demos courtesy of ExerciseDB.
+doctor before starting. Exercise demos courtesy of ExerciseDB and ExerciseGymGifsDB.
