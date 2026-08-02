@@ -63,6 +63,7 @@ const CONTENT = {
       moderate: { on: 2, word: "Comfortably hard", note: "At the end you could still do about 3 more." },
       easy:     { on: 1, word: "Take it gently",   note: "This joint needs extra care. Keep 3-4 in reserve." },
       steady:   { on: 2, word: "Steady effort",    note: "Controlled and smooth, no straining." },
+      gentle:   { on: 1, word: "Easy and gentle",  note: "Just waking the body up, no strain at all." },
     },
     EXERCISES: [
       {
@@ -243,16 +244,158 @@ const CONTENT = {
         breath: "Breathe out as you rise, in as you lower.",
       },
     ],
+    // Warm-up movements - shown one per screen, just like the exercises.
+    // Mobility- and longevity-focused: a gentle raise, then loosening every
+    // joint the workout will load from the top down, finishing with a
+    // supported squat that primes the first machine (the leg press).
+    // Each has a real demo GIF (ExerciseGymGifsDB) in assets/exercises/.
+    WARMUP_EXERCISES: [
+      {
+        slug: "warmup-cardio",
+        name: "Gentle Cardio",
+        focus: "Warm the heart & whole body",
+        works: "Wakes up your whole body and warms your joints so everything moves more easily. A gentle start looks after your heart and muscles.",
+        dose: "5 minutes", effort: "gentle",
+        setup: [
+          "Choose the cross-trainer, the recumbent bike, or a brisk walk.",
+          "Start slowly and build to a gentle, steady pace.",
+          "Keep it easy enough that you could still hold a conversation.",
+        ],
+        doThis: [
+          "Let your breathing rise a little, warm but never puffed out.",
+          "Keep your shoulders relaxed and down, posture tall.",
+          "Give yourself the full 5 minutes, there's no rush.",
+        ],
+        avoid: [
+          "Going hard or fast, this is only to warm up.",
+          "Skipping it because you feel fine, warm joints move far better.",
+          "Holding your breath.",
+        ],
+        breath: "Breathe in and out slowly and evenly the whole time.",
+      },
+      {
+        slug: "warmup-upper-back",
+        name: "Shoulder & Upper-Back Reach",
+        focus: "Shoulders & upper back",
+        works: "Loosens your shoulders and upper back, the joints behind every press and pull. Mobile shoulders help you reach and dress with ease, and keep you standing tall.",
+        dose: "8-10 slow reps", effort: "gentle",
+        setup: [
+          "Stand tall, or sit tall, with your feet about hip-width apart.",
+          "Clasp your hands together and reach them out in front, about chest height.",
+          "Let your neck and shoulders stay relaxed.",
+        ],
+        doThis: [
+          "Reach forward and gently round your upper back, feeling a soft stretch between the shoulder blades.",
+          "Then open your arms wide and squeeze your shoulder blades gently together.",
+          "Finish with a few slow shoulder rolls, backwards.",
+        ],
+        avoid: [
+          "Forcing the movement or holding your breath.",
+          "Shrugging up towards your ears.",
+          "Rushing, slow and smooth warms the joint far better.",
+        ],
+        breath: "Breathe out as you reach forward, in as you open up.",
+      },
+      {
+        slug: "warmup-midback-twists",
+        name: "Seated Mid-Back Twists",
+        focus: "Mid-back & posture",
+        works: "Frees up your mid-back so you can turn and stand tall, and readies you for the rows and pulldowns. Good upper-back movement is where posture is won or lost as the years go by.",
+        dose: "8 each side", effort: "gentle",
+        setup: [
+          "Sit tall on a bench or sturdy chair (or on a mat with your legs out, as shown).",
+          "Cross your arms loosely over your chest.",
+          "Keep your hips still and facing forwards.",
+        ],
+        doThis: [
+          "Turn your upper body gently to one side, then to the other.",
+          "Let the movement come from your mid-back, not your lower back.",
+          "Move slowly and only as far as feels comfortable.",
+        ],
+        avoid: [
+          "Twisting hard or fast, or bouncing at the end of the turn.",
+          "Letting your hips swing round with you.",
+          "Straining your neck, let your head follow your chest.",
+        ],
+        breath: "Breathe out gently as you turn, in as you come back to the middle.",
+      },
+      {
+        slug: "warmup-high-knees",
+        name: "Marching High Knees",
+        focus: "Hips & balance",
+        works: "Warms your hips and switches on your balance, ready for the leg press and leg curl. Strong, mobile hips keep your walking smooth and help guard against trips and falls.",
+        dose: "10 each leg", effort: "gentle",
+        setup: [
+          "Stand facing a wall, about an arm's length away.",
+          "Place both hands flat on the wall for support.",
+          "Stand tall with your feet about hip-width apart.",
+        ],
+        doThis: [
+          "Lift one knee up in front of you to a comfortable height, then lower it.",
+          "Alternate legs in a slow, steady marching rhythm.",
+          "Keep your back tall and lean lightly into the wall.",
+        ],
+        avoid: [
+          "Rushing, or turning it into a run.",
+          "Forcing the knee up higher than feels easy.",
+          "Rounding your back.",
+        ],
+        breath: "Breathe steadily and evenly throughout.",
+      },
+      {
+        slug: "warmup-ankle-circles",
+        name: "Ankle Circles",
+        focus: "Ankles & balance",
+        works: "Warms your ankles and lower legs for the calf raise, and wakes up your balance. Mobile, steady ankles are one of your best defences against trips and falls.",
+        dose: "10 each foot", effort: "gentle",
+        setup: [
+          "Hold a rail or the back of a chair for balance.",
+          "Stand tall and take your weight onto one leg.",
+          "Lift the other foot slightly off the floor.",
+        ],
+        doThis: [
+          "Draw slow circles with your foot, 10 one way and 10 the other.",
+          "Then gently point and flex the foot a few times.",
+          "Swap and repeat with the other foot.",
+        ],
+        avoid: [
+          "Rushing the circles.",
+          "Balancing with no support if you feel wobbly, always hold on.",
+          "Forcing the ankle past a comfortable range.",
+        ],
+        breath: "Breathe naturally throughout.",
+        note: "Feeling unsteady? Do the circles sitting down, it works just as well.",
+      },
+      {
+        slug: "warmup-squats",
+        name: "Supported Squats",
+        focus: "Legs & hips",
+        works: "Grooves the exact movement of the leg press and warms your thighs and hips. Rising smoothly from a chair, or a squat, is one of the clearest signs of a strong, independent body.",
+        dose: "8-10 reps", effort: "gentle",
+        setup: [
+          "Stand tall, holding a sturdy bench, rail or machine frame in front of you.",
+          "Feet about shoulder-width apart, toes turned out very slightly.",
+          "Hold on lightly, just for balance and confidence.",
+        ],
+        doThis: [
+          "Sit your hips back and down, as if lowering towards a chair.",
+          "Go only as low as is comfortable, then stand back up smoothly.",
+          "Keep your knees pointing in line with your toes.",
+        ],
+        avoid: [
+          "Dropping down quickly, lower with control.",
+          "Letting your knees fall inwards.",
+          "Hauling yourself up with your arms if your legs can manage.",
+        ],
+        breath: "Breathe out as you stand, in as you lower.",
+      },
+    ],
     WARMUP: {
       title: "Warm-Up First",
-      kicker: "5-8 minutes",
-      intro: "A few easy minutes to get your body ready. Please don't skip this.",
-      items: [
-        { b: "5 minutes of easy cardio", s: "Recumbent bike, cross-trainer, or a brisk walk. Gentle enough to chat." },
-        { b: "Loosen your joints", s: "Small circles: ankles, hips, arms, 10 each way." },
-        { b: "A few practice sit-to-stands", s: "Stand up and sit down from a chair 8-10 times, plus some shoulder rolls." },
-      ],
-      tip: "Save stretching for the very end, muscles stretch better once they're warm.",
+      kicker: "About 6-8 minutes",
+      intro: "A few gentle moves to loosen your joints and get your body ready. These keep you moving well for years to come, please don't skip them.",
+      overviewTitle: "Today's warm-up",
+      tip: "Save deeper stretching for the very end, muscles stretch better once they're warm.",
     },
     COOLDOWN: {
       title: "Cool-Down",
@@ -272,6 +415,7 @@ const CONTENT = {
       moderate: { on: 2, word: "Nặng vừa phải", note: "Khi kết thúc, bạn vẫn có thể làm thêm khoảng 3 lần nữa." },
       easy:     { on: 1, word: "Nhẹ nhàng thôi", note: "Khớp này cần được chăm sóc kỹ hơn. Hãy giữ lại 3-4 lần trong sức." },
       steady:   { on: 2, word: "Gắng sức đều đặn", note: "Kiểm soát và mượt mà, không gồng ép." },
+      gentle:   { on: 1, word: "Nhẹ nhàng, thong thả", note: "Chỉ để đánh thức cơ thể, hoàn toàn không gắng sức." },
     },
     EXERCISES: [
       {
@@ -452,16 +596,158 @@ const CONTENT = {
         breath: "Thở ra khi nhón lên, hít vào khi hạ xuống.",
       },
     ],
+    // Các động tác khởi động - hiển thị từng động tác trên mỗi màn hình,
+    // giống như các bài tập chính. Tập trung vào sự linh hoạt của khớp và sự
+    // dẻo dai lâu dài: làm ấm nhẹ, rồi thả lỏng từng khớp từ trên xuống,
+    // kết thúc bằng bài squat có điểm tựa để chuẩn bị cho máy đạp chân.
+    // Mỗi động tác có GIF minh họa thật (ExerciseGymGifsDB) trong assets/exercises/.
+    WARMUP_EXERCISES: [
+      {
+        slug: "warmup-cardio",
+        name: "Cardio Nhẹ",
+        focus: "Làm ấm tim & toàn thân",
+        works: "Đánh thức toàn bộ cơ thể và làm ấm các khớp để mọi thứ cử động dễ dàng hơn. Khởi đầu nhẹ nhàng giúp chăm sóc tim và cơ bắp của bạn.",
+        dose: "5 phút", effort: "gentle",
+        setup: [
+          "Chọn máy tập trên không, xe đạp tựa lưng, hoặc đi bộ nhanh.",
+          "Bắt đầu chậm rãi rồi tăng dần lên nhịp độ nhẹ nhàng, đều đặn.",
+          "Giữ đủ nhẹ để bạn vẫn có thể vừa tập vừa trò chuyện.",
+        ],
+        doThis: [
+          "Để hơi thở tăng lên một chút, ấm người nhưng không hụt hơi.",
+          "Giữ vai thả lỏng, hạ xuống, và giữ tư thế thẳng.",
+          "Dành trọn 5 phút cho mình, không cần vội.",
+        ],
+        avoid: [
+          "Tập mạnh hoặc nhanh, đây chỉ là để khởi động.",
+          "Bỏ qua vì thấy mình vẫn khỏe, khớp được làm ấm sẽ cử động tốt hơn nhiều.",
+          "Nín thở.",
+        ],
+        breath: "Hít vào và thở ra chậm rãi, đều đặn suốt thời gian.",
+      },
+      {
+        slug: "warmup-upper-back",
+        name: "Vươn Vai & Lưng Trên",
+        focus: "Vai & lưng trên",
+        works: "Làm mềm vai và lưng trên, những khớp đứng sau mọi động tác đẩy và kéo. Vai linh hoạt giúp bạn với tay, mặc đồ dễ dàng và giữ dáng đứng thẳng.",
+        dose: "8-10 lần chậm", effort: "gentle",
+        setup: [
+          "Đứng thẳng, hoặc ngồi thẳng, hai chân rộng bằng hông.",
+          "Đan hai tay vào nhau và vươn ra trước, khoảng ngang ngực.",
+          "Giữ cổ và vai thả lỏng.",
+        ],
+        doThis: [
+          "Vươn tay ra trước và nhẹ nhàng cong lưng trên, cảm nhận sự căng nhẹ giữa hai bả vai.",
+          "Sau đó mở rộng hai tay và nhẹ nhàng ép hai bả vai lại với nhau.",
+          "Kết thúc bằng vài vòng xoay vai chậm ra sau.",
+        ],
+        avoid: [
+          "Ép động tác hoặc nín thở.",
+          "Nhún vai lên gần tai.",
+          "Vội vàng, chậm và mượt sẽ làm ấm khớp tốt hơn nhiều.",
+        ],
+        breath: "Thở ra khi vươn tay ra trước, hít vào khi mở rộng.",
+      },
+      {
+        slug: "warmup-midback-twists",
+        name: "Vặn Lưng Giữa Khi Ngồi",
+        focus: "Lưng giữa & tư thế",
+        works: "Làm linh hoạt lưng giữa để bạn xoay người và đứng thẳng, đồng thời sẵn sàng cho các bài kéo. Lưng trên cử động tốt là nơi quyết định tư thế theo năm tháng.",
+        dose: "8 lần mỗi bên", effort: "gentle",
+        setup: [
+          "Ngồi thẳng trên băng hoặc ghế chắc chắn (hoặc trên thảm với chân duỗi, như trong hình).",
+          "Khoanh nhẹ hai tay trước ngực.",
+          "Giữ hông yên và hướng về phía trước.",
+        ],
+        doThis: [
+          "Xoay nhẹ phần thân trên sang một bên, rồi sang bên kia.",
+          "Để chuyển động đến từ lưng giữa, không phải lưng dưới.",
+          "Xoay chậm rãi và chỉ đến mức thấy thoải mái.",
+        ],
+        avoid: [
+          "Vặn mạnh hoặc nhanh, hay nảy ở cuối động tác.",
+          "Để hông xoay theo người.",
+          "Gồng cổ, hãy để đầu xoay theo ngực.",
+        ],
+        breath: "Thở ra nhẹ khi xoay, hít vào khi trở về giữa.",
+      },
+      {
+        slug: "warmup-high-knees",
+        name: "Nâng Cao Đầu Gối Tại Chỗ",
+        focus: "Hông & thăng bằng",
+        works: "Làm ấm hông và bật khả năng giữ thăng bằng, sẵn sàng cho đạp chân và gập chân. Hông khỏe và linh hoạt giúp bước đi êm ái và phòng vấp ngã.",
+        dose: "10 lần mỗi chân", effort: "gentle",
+        setup: [
+          "Đứng đối diện tường, cách khoảng một cánh tay.",
+          "Đặt cả hai bàn tay phẳng lên tường để làm điểm tựa.",
+          "Đứng thẳng, hai chân rộng bằng hông.",
+        ],
+        doThis: [
+          "Nâng một đầu gối lên trước tới độ cao thoải mái, rồi hạ xuống.",
+          "Đổi chân theo nhịp bước đều đặn, chậm rãi.",
+          "Giữ lưng thẳng và tựa nhẹ vào tường.",
+        ],
+        avoid: [
+          "Vội vàng, hay biến nó thành chạy.",
+          "Ép đầu gối lên cao hơn mức thấy dễ chịu.",
+          "Gù lưng.",
+        ],
+        breath: "Thở đều đặn, nhịp nhàng suốt động tác.",
+      },
+      {
+        slug: "warmup-ankle-circles",
+        name: "Xoay Cổ Chân",
+        focus: "Cổ chân & thăng bằng",
+        works: "Làm ấm cổ chân và cẳng chân cho bài nhón bắp chân, và đánh thức khả năng giữ thăng bằng. Cổ chân linh hoạt, vững vàng là một trong những cách phòng vấp ngã tốt nhất.",
+        dose: "10 lần mỗi chân", effort: "gentle",
+        setup: [
+          "Bám vào thanh vịn hoặc lưng ghế để giữ thăng bằng.",
+          "Đứng thẳng và dồn trọng lượng lên một chân.",
+          "Nhấc chân kia lên khỏi sàn một chút.",
+        ],
+        doThis: [
+          "Vẽ những vòng chậm bằng bàn chân, 10 lần một chiều và 10 lần chiều kia.",
+          "Sau đó nhẹ nhàng gập và duỗi bàn chân vài lần.",
+          "Đổi và lặp lại với chân kia.",
+        ],
+        avoid: [
+          "Vội vàng xoay vòng.",
+          "Giữ thăng bằng mà không có điểm tựa nếu thấy chông chênh, luôn bám vào.",
+          "Ép cổ chân quá tầm thoải mái.",
+        ],
+        breath: "Thở tự nhiên suốt động tác.",
+        note: "Thấy chông chênh? Hãy xoay vòng khi ngồi, vẫn hiệu quả như vậy.",
+      },
+      {
+        slug: "warmup-squats",
+        name: "Squat Có Điểm Tựa",
+        focus: "Chân & hông",
+        works: "Rèn đúng động tác của bài đạp chân và làm ấm đùi cùng hông. Đứng dậy nhẹ nhàng từ ghế, hay từ tư thế squat, là dấu hiệu rõ nhất của cơ thể khỏe mạnh, tự lập.",
+        dose: "8-10 lần", effort: "gentle",
+        setup: [
+          "Đứng thẳng, tay nắm vào băng, thanh vịn hoặc khung máy chắc chắn ở phía trước.",
+          "Hai chân rộng bằng vai, mũi chân hơi xoay ra ngoài.",
+          "Nắm nhẹ, chỉ để giữ thăng bằng và vững tâm.",
+        ],
+        doThis: [
+          "Đẩy hông ra sau và hạ xuống, như thể ngồi xuống ghế.",
+          "Chỉ hạ đến mức thấy thoải mái, rồi đứng lên mượt mà.",
+          "Giữ đầu gối hướng thẳng hàng với các ngón chân.",
+        ],
+        avoid: [
+          "Buông người xuống nhanh, hãy hạ có kiểm soát.",
+          "Để đầu gối đổ vào trong.",
+          "Dùng tay kéo người lên nếu chân bạn có thể tự làm.",
+        ],
+        breath: "Thở ra khi đứng lên, hít vào khi hạ xuống.",
+      },
+    ],
     WARMUP: {
       title: "Khởi Động Trước",
-      kicker: "5-8 phút",
-      intro: "Vài phút nhẹ nhàng để cơ thể sẵn sàng. Xin đừng bỏ qua phần này.",
-      items: [
-        { b: "5 phút cardio nhẹ", s: "Xe đạp tựa lưng, máy tập trên không, hoặc đi bộ nhanh. Nhẹ đủ để vừa tập vừa trò chuyện." },
-        { b: "Làm mềm các khớp", s: "Xoay vòng nhỏ: mắt cá, hông, cánh tay, mỗi bên 10 lần." },
-        { b: "Vài lần đứng lên ngồi xuống", s: "Đứng lên và ngồi xuống từ ghế 8-10 lần, cùng vài động tác xoay vai." },
-      ],
-      tip: "Để dành việc giãn cơ đến tận cuối buổi, cơ bắp giãn tốt hơn khi đã ấm.",
+      kicker: "Khoảng 6-8 phút",
+      intro: "Vài động tác nhẹ nhàng để làm mềm các khớp và giúp cơ thể sẵn sàng. Chúng giúp bạn cử động tốt trong nhiều năm tới, xin đừng bỏ qua.",
+      overviewTitle: "Khởi động hôm nay",
+      tip: "Để dành việc giãn cơ sâu đến tận cuối buổi, cơ bắp giãn tốt hơn khi đã ấm.",
     },
     COOLDOWN: {
       title: "Thả Lỏng",
@@ -506,6 +792,8 @@ const UI = {
     next: "Next",
     finish: "Finish",
     exerciseXofY: (i, n) => `Exercise ${i} of ${n}`,
+    warmupXofY: (i, n) => `Warm-up ${i} of ${n}`,
+    warmupAim: "Aim for",
     doLabel: "Do",
     ofReps: (reps) => `of ${reps}`,
     howHardLabel: "How hard",
@@ -581,6 +869,8 @@ const UI = {
     next: "Tiếp",
     finish: "Hoàn tất",
     exerciseXofY: (i, n) => `Bài tập ${i} trên ${n}`,
+    warmupXofY: (i, n) => `Khởi động ${i} trên ${n}`,
+    warmupAim: "Mục tiêu",
     doLabel: "Thực hiện",
     ofReps: (reps) => `mỗi hiệp ${reps}`,
     howHardLabel: "Mức gắng sức",
@@ -658,8 +948,10 @@ function markDone() {
 
 /* ---------- steps for the flow ---------- */
 function buildSteps() {
+  const warm = C().WARMUP_EXERCISES || [];
   return [
-    { type: "warmup" },
+    { type: "warmup-intro" },
+    ...warm.map((ex, i) => ({ type: "warmup-exercise", ex, wIndex: i })),
     ...C().EXERCISES.map((ex, i) => ({ type: "exercise", ex, exIndex: i })),
     { type: "cooldown" },
   ];
@@ -667,11 +959,13 @@ function buildSteps() {
 
 /* ---------- media (GIF with graceful placeholder) ---------- */
 function mediaHTML(ex) {
+  // Warm-up GIFs come from ExerciseGymGifsDB; the strength GIFs from ExerciseDB.
+  const credit = ex.slug.startsWith("warmup-") ? "ExerciseGymGifsDB" : "ExerciseDB";
   return `
     <figure class="media" data-slug="${ex.slug}">
       <img alt="${T().mediaAlt(ex.name)}" src="assets/exercises/${ex.slug}.gif"
            onerror="this.remove(); this.closest('.media').classList.add('is-missing');" />
-      <span class="media-credit">Demo: ExerciseDB</span>
+      <span class="media-credit">Demo: ${credit}</span>
       <div class="media-placeholder" aria-hidden="true">
         <span class="mp-emoji">🎬</span>
         <b>${T().mediaPlaceholderTitle}</b>
@@ -833,13 +1127,15 @@ function viewFlow(index) {
   const step = steps[index];
   let inner = "";
 
-  if (step.type === "warmup") inner = warmupStep(C().WARMUP);
+  if (step.type === "warmup-intro") inner = warmupIntroStep(C().WARMUP);
+  else if (step.type === "warmup-exercise") inner = warmupExerciseStep(step.ex, step.wIndex);
   else if (step.type === "cooldown") inner = warmupStep(C().COOLDOWN);
   else inner = exerciseStep(step.ex, step.exIndex);
 
   return stepChrome(index, total, inner) + flowFooter(index, total);
 }
 
+// Cool-down: a simple, tickable checklist (unchanged).
 function warmupStep(data) {
   const items = data.items.map((it) => `
     <button class="check-item" data-check aria-pressed="false">
@@ -852,6 +1148,68 @@ function warmupStep(data) {
     <p class="works">${data.intro}</p>
     <div class="checklist">${items}</div>
     <div class="callout info" style="margin-top:1.3rem">${data.tip}</div>`;
+}
+
+// Warm-up intro: sets expectations and previews the moves that follow.
+function warmupIntroStep(data) {
+  const moves = (C().WARMUP_EXERCISES || []).map((ex, i) => `
+    <li>
+      <span class="warm-ov-num">${i + 1}</span>
+      <span class="ci-text"><b>${ex.name}</b><small>${ex.focus}</small></span>
+    </li>`).join("");
+  return `
+    <div class="step-kicker">${data.kicker}</div>
+    <h2 class="step-title">${data.title}</h2>
+    <p class="works">${data.intro}</p>
+    <div class="warm-overview-head">${data.overviewTitle}</div>
+    <ol class="warm-overview">${moves}</ol>
+    <div class="callout info" style="margin-top:1.3rem">${data.tip}</div>`;
+}
+
+// Warm-up movement: same shape as an exercise, but with a gentle "aim for"
+// dose instead of sets/reps.
+function warmupExerciseStep(ex, wIndex) {
+  const total = (C().WARMUP_EXERCISES || []).length;
+  const eff = effortBars(ex.effort);
+  const setup = ex.setup.map((s) => `<li>${s}</li>`).join("");
+  const doThis = ex.doThis.map((s) => `<li>${s}</li>`).join("");
+  const avoid = ex.avoid.map((s) => `<li>${s}</li>`).join("");
+  return `
+    <div class="step-kicker">${T().warmupXofY(wIndex + 1, total)} &middot; ${ex.focus}</div>
+    <h2 class="step-title">${ex.name}</h2>
+    <p class="works">${ex.works}</p>
+
+    ${mediaHTML(ex)}
+
+    <div class="vitals">
+      <div class="vital">
+        <div class="vlabel">${T().warmupAim}</div>
+        <div class="vbig">${ex.dose}</div>
+      </div>
+      <div class="vital effort">
+        <div class="vlabel">${T().howHardLabel}</div>
+        <div class="meter" aria-hidden="true">${eff.bars}</div>
+        <div class="vsub"><b style="font-weight:700">${eff.word}.</b> ${eff.note}</div>
+      </div>
+    </div>
+
+    <section class="block setup">
+      <div class="block-head">${T().setUp}</div>
+      <ol>${setup}</ol>
+    </section>
+
+    <section class="block do">
+      <div class="block-head">${icon.check} ${T().doThisHead}</div>
+      <ul>${doThis}</ul>
+    </section>
+
+    <section class="block avoid">
+      <div class="block-head">${icon.alert} ${T().avoidHead}</div>
+      <ul>${avoid}</ul>
+    </section>
+
+    <div class="breath">${icon.breath}<span>${ex.breath}</span></div>
+    ${ex.note ? `<div class="callout info" style="margin-top:1rem">${ex.note}</div>` : ``}`;
 }
 
 function exerciseStep(ex, exIndex) {
@@ -909,20 +1267,25 @@ function viewDone() {
 }
 
 /* ---------- Full plan ---------- */
-function viewPlan() {
-  const acc = C().EXERCISES.map((ex, i) => {
-    const eff = effortBars(ex.effort);
-    return `
+// One accordion row. Warm-up moves carry a `dose`; strength moves carry
+// `sets`/`reps` - the vitals adapt to whichever is present.
+function planAccItem(ex, num) {
+  const eff = effortBars(ex.effort);
+  const doseVital = ex.dose
+    ? `<div class="vital"><div class="vlabel">${T().warmupAim}</div><div class="vbig" style="font-size:1.5rem">${ex.dose}</div></div>`
+    : `<div class="vital"><div class="vlabel">${T().doLabel}</div><div class="vbig" style="font-size:1.5rem">${ex.sets}</div><div class="vsub">${T().ofReps(ex.reps)}</div></div>`;
+  const sub = ex.focus || ex.works;
+  return `
     <div class="acc-item">
       <button class="acc-btn" data-acc aria-expanded="false">
-        <span class="acc-num">${i + 1}</span>
-        <span class="acc-name">${ex.name}<small>${ex.works}</small></span>
+        <span class="acc-num">${num}</span>
+        <span class="acc-name">${ex.name}<small>${sub}</small></span>
         <span class="acc-chev">${icon.chevDown}</span>
       </button>
       <div class="acc-panel">
         ${mediaHTML(ex)}
         <div class="vitals" style="margin-top:0.9rem">
-          <div class="vital"><div class="vlabel">${T().doLabel}</div><div class="vbig" style="font-size:1.5rem">${ex.sets}</div><div class="vsub">${T().ofReps(ex.reps)}</div></div>
+          ${doseVital}
           <div class="vital effort"><div class="vlabel">${T().howHardLabel}</div><div class="meter">${eff.bars}</div><div class="vsub">${eff.word}</div></div>
         </div>
         <section class="block setup"><div class="block-head">${T().setUp}</div><ol>${ex.setup.map((s) => `<li>${s}</li>`).join("")}</ol></section>
@@ -930,7 +1293,11 @@ function viewPlan() {
         <section class="block avoid"><div class="block-head">${icon.alert} ${T().avoidHead}</div><ul>${ex.avoid.map((s) => `<li>${s}</li>`).join("")}</ul></section>
       </div>
     </div>`;
-  }).join("");
+}
+
+function viewPlan() {
+  const warmAcc = (C().WARMUP_EXERCISES || []).map((ex, i) => planAccItem(ex, i + 1)).join("");
+  const acc = C().EXERCISES.map((ex, i) => planAccItem(ex, i + 1)).join("");
 
   return `
   ${pageHeader(T().planTitle)}
@@ -940,7 +1307,8 @@ function viewPlan() {
     <div class="callout info">${icon.shield}${T().planBefore}</div>
 
     <h2 class="section-title">${T().planWarmup}</h2>
-    <ul class="plan-list">${C().WARMUP.items.map((it) => `<li>${icon.dot}<span><strong>${it.b}.</strong> ${it.s}</span></li>`).join("")}</ul>
+    <p class="section-intro">${T().planTapAny}</p>
+    <div class="acc">${warmAcc}</div>
 
     <h2 class="section-title">${T().planExercises}</h2>
     <p class="section-intro">${T().planTapAny}</p>

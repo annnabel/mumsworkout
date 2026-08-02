@@ -1,6 +1,19 @@
 # Exercise demo GIFs
 
-Each exercise in the app looks for its form video here, by file name:
+Each exercise and warm-up move in the app looks for its form video here, by file name.
+
+## Warm-up moves
+
+| File                        | Warm-up move                 | Focus                    |
+|-----------------------------|------------------------------|--------------------------|
+| `warmup-cardio.gif`         | Gentle Cardio                | Heart & whole body       |
+| `warmup-upper-back.gif`     | Shoulder & Upper-Back Reach  | Shoulders & upper back   |
+| `warmup-midback-twists.gif` | Seated Mid-Back Twists       | Mid-back & posture       |
+| `warmup-high-knees.gif`     | Marching High Knees          | Hips & balance           |
+| `warmup-ankle-circles.gif`  | Ankle Circles                | Ankles & balance         |
+| `warmup-squats.gif`         | Supported Squats             | Legs & hips              |
+
+## The exercises
 
 | File                 | Exercise               |
 |----------------------|------------------------|
@@ -14,11 +27,16 @@ Each exercise in the app looks for its form video here, by file name:
 | `calf-raise.gif`     | Calf Raise             |
 
 ## Where these came from
-The GIFs currently in this folder are from **ExerciseDB** (https://exercisedb.dev),
-a free, open exercise database. They were downloaded and saved here so the app
-loads instantly and works even with a poor gym connection.
+- The **exercise** GIFs are from **ExerciseDB** (https://exercisedb.dev).
+- The **warm-up** GIFs are from **ExerciseGymGifsDB**
+  (https://github.com/JahelCuadrado/ExerciseGymGifsDB), a free, static
+  collection of exercise GIFs served over a CDN.
+
+Both are compilations of demo clips whose copyrights belong to their original
+authors; this personal, non-commercial app simply saves a copy of each clip
+here so it loads instantly and works even with a poor gym connection.
 
 ## To swap in your own clip
-Just replace the file, keeping the **same file name** (e.g. `leg-press.gif`).
+Just replace the file, keeping the **same file name** (e.g. `warmup-squats.gif`).
 A GIF or short looping video exported as `.gif` works best. If a file is ever
 missing, the app shows a friendly placeholder telling you which name to use.
