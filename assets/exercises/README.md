@@ -21,13 +21,16 @@ Each exercise and warm-up move in the app looks for its form video here, by file
 | `chest-press.gif`    | Chest Press            |
 | `seated-row.gif`     | Seated Row             |
 | `prone-leg-curl.gif` | Prone Leg Curl Machine |
-| `lat-pulldown.gif`   | Lat Pulldown           |
+| `lat-pulldown.gif`   | Lat Pulldown (female-model demo) |
 | `machine-shoulder-press.gif` | Machine Shoulder Press |
 | `dead-bug.gif`       | Dead Bug (core)        |
 | `bodyweight-calf-raise.gif` | Bodyweight Calf Raise |
 
 ## Where these came from
-- The **exercise** GIFs are from **ExerciseDB** (https://exercisedb.dev).
+- The **exercise** GIFs are from **ExerciseDB** (https://exercisedb.dev). Where
+  ExerciseDB offers a female-model demonstration of the same movement, we use it
+  (currently the Lat Pulldown). Most machine exercises only have a male-model
+  demo in the free set, so those remain male.
 - The **warm-up** GIFs are from **ExerciseGymGifsDB**
   (https://github.com/JahelCuadrado/ExerciseGymGifsDB), a free, static
   collection of exercise GIFs served over a CDN.
