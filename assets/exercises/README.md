@@ -11,7 +11,7 @@ Each exercise in the app looks for its form video here, by file name:
 | `lat-pulldown.gif`   | Lat Pulldown           |
 | `machine-shoulder-press.gif` | Machine Shoulder Press |
 | `dead-bug.gif`       | Dead Bug (core)        |
-| `calf-raise.gif`     | Calf Raise             |
+| `bodyweight-calf-raise.gif` | Bodyweight Calf Raise |
 
 ## Where these came from
 The GIFs currently in this folder are from **ExerciseDB** (https://exercisedb.dev),
