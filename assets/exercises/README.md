@@ -6,11 +6,10 @@ Each exercise and warm-up move in the app looks for its form video here, by file
 
 | File                        | Warm-up move                 | Focus                    |
 |-----------------------------|------------------------------|--------------------------|
-| `warmup-cardio.gif`         | Gentle Cardio                | Heart & whole body       |
+| `warmup-cardio.gif`         | General Raise                | Heart & whole body       |
 | `warmup-upper-back.gif`     | Shoulder & Upper-Back Reach  | Shoulders & upper back   |
 | `warmup-midback-twists.gif` | Seated Mid-Back Twists       | Mid-back & posture       |
-| `warmup-high-knees.gif`     | Marching High Knees          | Hips & balance           |
-| `warmup-ankle-circles.gif`  | Ankle Circles                | Ankles & balance         |
+| `warmup-glute-bridges.gif`  | Glute Bridges                | Hips & glutes            |
 | `warmup-squats.gif`         | Supported Squats             | Legs & hips              |
 
 ## The exercises
@@ -24,7 +23,7 @@ Each exercise and warm-up move in the app looks for its form video here, by file
 | `lat-pulldown.gif`   | Lat Pulldown           |
 | `machine-shoulder-press.gif` | Machine Shoulder Press |
 | `dead-bug.gif`       | Dead Bug (core)        |
-| `bodyweight-calf-raise.gif` | Bodyweight Calf Raise |
+| `single-leg-calf-raise.gif` | Single Calf Raise |
 
 ## Where these came from
 - The **exercise** GIFs are from **ExerciseDB** (https://exercisedb.dev).

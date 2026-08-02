@@ -7,9 +7,9 @@ someone who doesn't use technology often, with injury prevention as the priority
 ## What it does
 - **Today's Workout** - a big "Start" button leads through a warm-up → 8 exercises → cool-down,
   one screen at a time with a large **Next** button and a progress bar.
-- **A mobility & longevity warm-up** - 6 gentle moves (gentle cardio, shoulder & upper-back
-  reach, seated mid-back twists, marching high knees, ankle circles, supported squats), each on
-  its own screen with a demo GIF and cues, warming every joint the workout will use.
+- **A mobility & longevity warm-up** - 5 gentle moves (general raise, shoulder & upper-back
+  reach, seated mid-back twists, glute bridges, supported squats), each on its own screen with a
+  demo GIF and cues, warming every joint the workout will use.
 - **Form demo GIF** for every exercise and warm-up move (exercises from
   [ExerciseDB](https://exercisedb.dev); warm-ups from
   [ExerciseGymGifsDB](https://github.com/JahelCuadrado/ExerciseGymGifsDB)).
