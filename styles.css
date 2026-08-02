@@ -642,6 +642,65 @@ button { font-family: inherit; }
 .warm-overview .ci-text b { display: block; font-weight: 700; }
 .warm-overview .ci-text small { color: var(--ink-soft); font-size: 1rem; }
 
+/* Cool-down: everything on one scrollable page. Each stretch is its own
+   card, with a demo GIF and a tick-off button in the corner. */
+.cool-list { margin-top: 0.7rem; display: grid; gap: 1rem; }
+.cool-card {
+  position: relative;
+  padding: 1.2rem 1.2rem 1.3rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+.cool-card.checked { background: var(--go-wash); border-color: color-mix(in oklch, var(--go) 30%, var(--line)); }
+.cool-tick {
+  position: absolute;
+  top: 0.9rem; right: 0.9rem;
+  z-index: 1;
+  width: 2.4rem; height: 2.4rem;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.cool-tick .box {
+  width: 1.7rem; height: 1.7rem;
+  border-radius: 7px;
+  border: 2px solid var(--line-strong);
+  display: grid; place-items: center;
+  color: transparent;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+.cool-card.checked .cool-tick .box { background: var(--go); border-color: var(--go); color: white; }
+.cool-kicker {
+  font-weight: 700; color: var(--primary);
+  font-size: 0.95rem;
+  padding-right: 3rem;   /* clear of the tick button */
+}
+.cool-name {
+  font-size: 1.4rem; font-weight: 800;
+  margin-top: 0.2rem;
+  padding-right: 3rem;
+}
+.cool-works {
+  margin-top: 0.4rem;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+.cool-card .media { margin-top: 1rem; }
+/* Balance & recover: text-only note cards, no GIF */
+.cool-note { display: block; }
+.cool-note-icon {
+  width: 2.8rem; height: 2.8rem;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  background: var(--primary-wash); color: var(--primary-strong);
+  margin-bottom: 0.7rem;
+}
+
 /* Footer nav for flow */
 .flow-footer {
   position: sticky;
