@@ -616,33 +616,15 @@ button { font-family: inherit; }
 .check-item .ci-text b { display: block; font-weight: 700; }
 .check-item .ci-text small { color: var(--ink-soft); font-size: 1rem; }
 
-/* Warm-up intro: preview of the moves that follow */
+/* Section heading above the warm-up and cool-down card lists */
 .warm-overview-head {
   margin-top: 1.4rem; margin-bottom: 0.7rem;
   font-weight: 800; font-size: 1.05rem;
   color: var(--ink-soft);
   text-transform: uppercase; letter-spacing: 0.03em;
 }
-.warm-overview { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
-.warm-overview li {
-  display: flex; gap: 0.9rem; align-items: center;
-  padding: 0.85rem 1.05rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  font-size: 1.12rem;
-}
-.warm-ov-num {
-  flex: none;
-  width: 2rem; height: 2rem;
-  display: grid; place-items: center;
-  background: var(--primary-wash); color: var(--primary-strong);
-  font-weight: 800; border-radius: 999px; font-size: 1rem;
-}
-.warm-overview .ci-text b { display: block; font-weight: 700; }
-.warm-overview .ci-text small { color: var(--ink-soft); font-size: 1rem; }
 
-/* Cool-down: everything on one scrollable page. Each stretch is its own
+/* Warm-up & cool-down: everything on one scrollable page. Each move is its own
    card, with a demo GIF and a tick-off button in the corner. */
 .cool-list { margin-top: 0.7rem; display: grid; gap: 1rem; }
 .cool-card {
@@ -719,6 +701,15 @@ button { font-family: inherit; }
 }
 .flow-footer .btn-back { flex: 0 0 auto; width: auto; padding-inline: 1.3rem; }
 .flow-footer .btn-next { flex: 1; }
+/* On the last step "Next" becomes the green "Finish" (.btn-go). Keep its go
+   colour, but match the Next button's footprint so the footer doesn't jump
+   taller on the final page. */
+.flow-footer .btn-go {
+  min-height: var(--tap);
+  font-size: 1.2rem;
+  margin-top: 0;
+  box-shadow: none;
+}
 
 /* ============================================================
    DONE SCREEN

@@ -245,9 +245,9 @@ const CONTENT = {
         note: "Not steady enough on one leg yet? Start on both feet and build up over time.",
       },
     ],
-    // Warm-up movements - shown one per screen, just like the exercises.
-    // Mobility- and longevity-focused: a gentle raise, then loosening every
-    // joint the workout will load from the top down, finishing with a
+    // Warm-up movements - shown together on one scrollable page (like the
+    // cool-down). Mobility- and longevity-focused: a gentle raise, then loosening
+    // every joint the workout will load from the top down, finishing with a
     // supported squat that primes the first machine (the leg press).
     // Each has a real demo GIF (ExerciseGymGifsDB) in assets/exercises/.
     WARMUP_EXERCISES: [
@@ -370,14 +370,14 @@ const CONTENT = {
     WARMUP: {
       title: "Warm-Up First",
       kicker: "About 5 minutes",
-      intro: "A few gentle moves to loosen your joints and get your body ready. Don't skip them — warm joints move better and stay healthy for years.",
+      intro: "A few gentle moves to loosen your joints and get your body ready. Don't skip them. Warm joints move better and stay healthy for years.",
       overviewTitle: "Today's warm-up",
       tip: "Save deeper stretching for the very end, muscles stretch better once they're warm.",
     },
     COOLDOWN: {
       title: "Cool-Down",
       kicker: "About 5 minutes",
-      intro: "Lovely work. Scroll through these gentle stretches while your muscles are still warm — hold each one, breathe, and don't bounce. Then a balance hold and a little recovery.",
+      intro: "Lovely work. Scroll through these gentle stretches while your muscles are still warm. Hold each one, breathe, and don't bounce. Then a balance hold and a little recovery.",
       overviewTitle: "Ease down, top to toe",
       // Gentle end-of-session stretches, each with a real demo GIF
       // (ExerciseGymGifsDB, same source as the warm-up). Shown all together
@@ -400,7 +400,7 @@ const CONTENT = {
           name: "Seated Figure-4 Glute Stretch",
           focus: "Hips & glutes",
           hold: "20-30 sec each side",
-          works: "Opens the hips and glutes — the muscles that power every stand-up and stair — so your lower back can relax.",
+          works: "Opens the hips and glutes, the muscles that power every stand-up and stair, so your lower back can relax.",
           cues: [
             "Sit tall and cross one ankle over the opposite knee.",
             "Sit up straight and lean forward gently from the hips.",
@@ -416,7 +416,7 @@ const CONTENT = {
           cues: [
             "Stand tall and draw both hands gently behind you.",
             "Ease your shoulder blades together and lift your chest.",
-            "Breathe into the front of the chest — no forcing.",
+            "Breathe into the front of the chest. Don't force it.",
           ],
         },
         {
@@ -436,7 +436,7 @@ const CONTENT = {
           name: "Calf Stretch on the Wall",
           focus: "Calves",
           hold: "20-30 sec each leg",
-          works: "Lengthens the calves and keeps your ankles supple — steady ankles are steady steps and safer stairs.",
+          works: "Lengthens the calves and keeps your ankles supple. Steady ankles mean steady steps and safer stairs.",
           cues: [
             "Stand facing a wall, hands flat at shoulder height.",
             "Step one foot back, heel down, back leg straight.",
@@ -448,13 +448,13 @@ const CONTENT = {
         name: "Single-Leg Balance Hold",
         focus: "Balance training",
         hold: "2 × 20-30 sec each side",
-        text: "Stand on one leg — hold a rail, then just a fingertip, then try eyes closed. This is your balance training, and it looks after you for years.",
+        text: "Stand on one leg. Hold a rail, then just a fingertip, then try with your eyes closed. This is your balance training, and it looks after you for years.",
       },
       recover: {
         name: "Recover",
         text: "A glass of water now, and a little protein at your next meal, to help your muscles rebuild.",
       },
-      tip: "Feeling wobbly on one leg? Keep hold of the rail — steadiness comes with practice.",
+      tip: "Feeling wobbly on one leg? Keep hold of the rail. Steadiness comes with practice.",
     },
   },
 
@@ -777,7 +777,7 @@ const CONTENT = {
     COOLDOWN: {
       title: "Thả Lỏng",
       kicker: "Khoảng 5 phút",
-      intro: "Làm rất tốt. Cuộn qua các động tác giãn cơ nhẹ nhàng này khi cơ bắp còn ấm — giữ mỗi động tác, hít thở, và đừng nảy. Sau đó là giữ thăng bằng và hồi phục một chút.",
+      intro: "Làm rất tốt. Cuộn qua các động tác giãn cơ nhẹ nhàng này khi cơ bắp còn ấm. Giữ mỗi động tác, hít thở, và đừng nảy. Sau đó là giữ thăng bằng và hồi phục một chút.",
       overviewTitle: "Thả lỏng từ trên xuống dưới",
       moves: [
         {
@@ -797,7 +797,7 @@ const CONTENT = {
           name: "Giãn Cơ Mông Kiểu Số 4 (Ngồi)",
           focus: "Hông & cơ mông",
           hold: "20-30 giây mỗi bên",
-          works: "Mở hông và cơ mông — nhóm cơ giúp bạn đứng dậy và lên cầu thang — để lưng dưới được thư giãn.",
+          works: "Mở hông và cơ mông, nhóm cơ giúp bạn đứng dậy và lên cầu thang, để lưng dưới được thư giãn.",
           cues: [
             "Ngồi thẳng và bắt chéo một cổ chân lên đầu gối bên kia.",
             "Giữ lưng thẳng và nghiêng người nhẹ về trước từ hông.",
@@ -813,7 +813,7 @@ const CONTENT = {
           cues: [
             "Đứng thẳng và nhẹ nhàng đưa hai tay ra phía sau.",
             "Khép nhẹ hai bả vai lại và nâng ngực lên.",
-            "Hít vào phía trước ngực — đừng gắng sức.",
+            "Hít vào phía trước ngực. Đừng gắng sức.",
           ],
         },
         {
@@ -833,7 +833,7 @@ const CONTENT = {
           name: "Giãn Bắp Chân Vào Tường",
           focus: "Bắp chân",
           hold: "20-30 giây mỗi chân",
-          works: "Kéo dài bắp chân và giữ cổ chân linh hoạt — cổ chân vững là bước đi vững và cầu thang an toàn hơn.",
+          works: "Kéo dài bắp chân và giữ cổ chân linh hoạt. Cổ chân vững là bước đi vững và cầu thang an toàn hơn.",
           cues: [
             "Đứng đối diện tường, hai tay áp phẳng ngang vai.",
             "Bước một chân ra sau, gót chạm đất, chân sau thẳng.",
@@ -845,13 +845,13 @@ const CONTENT = {
         name: "Giữ Thăng Bằng Một Chân",
         focus: "Luyện thăng bằng",
         hold: "2 × 20-30 giây mỗi bên",
-        text: "Đứng trên một chân — bám thanh vịn, rồi chỉ một đầu ngón tay, rồi thử nhắm mắt. Đây là bài tập thăng bằng của bạn, và nó bảo vệ bạn trong nhiều năm.",
+        text: "Đứng trên một chân. Bám thanh vịn, rồi chỉ một đầu ngón tay, rồi thử nhắm mắt. Đây là bài tập thăng bằng của bạn, và nó bảo vệ bạn trong nhiều năm.",
       },
       recover: {
         name: "Hồi phục",
         text: "Một cốc nước ngay bây giờ, và một chút chất đạm vào bữa ăn kế tiếp, để cơ bắp tái tạo.",
       },
-      tip: "Thấy chông chênh trên một chân? Cứ bám vào thanh vịn — sự vững vàng đến cùng luyện tập.",
+      tip: "Thấy chông chênh trên một chân? Cứ bám vào thanh vịn. Sự vững vàng đến cùng luyện tập.",
     },
   },
 };
@@ -888,7 +888,6 @@ const UI = {
     next: "Next",
     finish: "Finish",
     exerciseXofY: (i, n) => `Exercise ${i} of ${n}`,
-    warmupXofY: (i, n) => `Warm-up ${i} of ${n}`,
     warmupAim: "Aim for",
     doLabel: "Do",
     ofReps: (reps) => `of ${reps}`,
@@ -969,7 +968,6 @@ const UI = {
     next: "Tiếp",
     finish: "Hoàn tất",
     exerciseXofY: (i, n) => `Bài tập ${i} trên ${n}`,
-    warmupXofY: (i, n) => `Khởi động ${i} trên ${n}`,
     warmupAim: "Mục tiêu",
     doLabel: "Thực hiện",
     ofReps: (reps) => `mỗi hiệp ${reps}`,
@@ -1072,10 +1070,8 @@ function inProgress() {
 
 /* ---------- steps for the flow ---------- */
 function buildSteps() {
-  const warm = C().WARMUP_EXERCISES || [];
   return [
-    { type: "warmup-intro" },
-    ...warm.map((ex, i) => ({ type: "warmup-exercise", ex, wIndex: i })),
+    { type: "warmup" },
     ...C().EXERCISES.map((ex, i) => ({ type: "exercise", ex, exIndex: i })),
     { type: "cooldown" },
   ];
@@ -1286,8 +1282,7 @@ function viewFlow(index) {
   const step = steps[index];
   let inner = "";
 
-  if (step.type === "warmup-intro") inner = warmupIntroStep(C().WARMUP);
-  else if (step.type === "warmup-exercise") inner = warmupExerciseStep(step.ex, step.wIndex);
+  if (step.type === "warmup") inner = warmupStep(C().WARMUP);
   else if (step.type === "cooldown") inner = cooldownStep(C().COOLDOWN);
   else inner = exerciseStep(step.ex, step.exIndex);
 
@@ -1361,66 +1356,69 @@ function cooldownStep(data) {
     <div class="callout info" style="margin-top:1.3rem">${data.tip}</div>`;
 }
 
-// Warm-up intro: sets expectations and previews the moves that follow.
-function warmupIntroStep(data) {
-  const moves = (C().WARMUP_EXERCISES || []).map((ex, i) => `
-    <li>
-      <span class="warm-ov-num">${i + 1}</span>
-      <span class="ci-text"><b>${ex.name}</b><small>${ex.focus}</small></span>
-    </li>`).join("");
+// Warm-up: like the cool-down, the whole warm-up lives on one scrollable page.
+// Each move is a tickable card (state persisted via uiState.checks) carrying its
+// demo GIF plus the same set-up / do-this / avoid guidance the exercises use, so
+// nothing is lost by dropping the one-move-per-screen flow.
+function warmupStep(data) {
+  const exercises = C().WARMUP_EXERCISES || [];
+
+  const tick = (key) => {
+    const on = uiState.checks.has(key);
+    return { on, btn: `
+      <button class="cool-tick" data-check data-key="${key}" aria-pressed="${on ? "true" : "false"}" aria-label="${T().markDone}">
+        <span class="box">${icon.check}</span>
+      </button>` };
+  };
+
+  const cards = exercises.map((ex, i) => {
+    const eff = effortBars(ex.effort);
+    const setup = ex.setup.map((s) => `<li>${s}</li>`).join("");
+    const doThis = ex.doThis.map((s) => `<li>${s}</li>`).join("");
+    const avoid = ex.avoid.map((s) => `<li>${s}</li>`).join("");
+    const t = tick(`wu-move-${i}`);
+    return `
+    <article class="cool-card ${t.on ? "checked" : ""}">
+      ${t.btn}
+      <div class="cool-kicker">${i + 1} &middot; ${ex.focus} &middot; ${ex.dose}</div>
+      <h3 class="cool-name">${ex.name}</h3>
+      <p class="cool-works">${ex.works}</p>
+      ${mediaHTML(ex)}
+      <div class="vitals" style="margin-top:1rem">
+        <div class="vital">
+          <div class="vlabel">${T().warmupAim}</div>
+          <div class="vbig vbig-dose">${ex.dose}</div>
+        </div>
+        <div class="vital effort">
+          <div class="vlabel">${T().howHardLabel}</div>
+          <div class="meter" aria-hidden="true">${eff.bars}</div>
+          <div class="vsub"><b style="font-weight:700">${eff.word}.</b> ${eff.note}</div>
+        </div>
+      </div>
+      <section class="block setup" style="margin-top:1rem">
+        <div class="block-head">${T().setUp}</div>
+        <ol>${setup}</ol>
+      </section>
+      <section class="block do">
+        <div class="block-head">${icon.check} ${T().doThisHead}</div>
+        <ul>${doThis}</ul>
+      </section>
+      <section class="block avoid">
+        <div class="block-head">${icon.alert} ${T().avoidHead}</div>
+        <ul>${avoid}</ul>
+      </section>
+      <div class="breath">${icon.breath}<span>${ex.breath}</span></div>
+      ${ex.note ? `<div class="callout info" style="margin-top:1rem">${ex.note}</div>` : ``}
+    </article>`;
+  }).join("");
+
   return `
     <div class="step-kicker">${data.kicker}</div>
     <h2 class="step-title">${data.title}</h2>
     <p class="works">${data.intro}</p>
-    <div class="warm-overview-head">${data.overviewTitle}</div>
-    <ol class="warm-overview">${moves}</ol>
+    <div class="warm-overview-head" style="margin-top:1.4rem">${data.overviewTitle}</div>
+    <div class="cool-list">${cards}</div>
     <div class="callout info" style="margin-top:1.3rem">${data.tip}</div>`;
-}
-
-// Warm-up movement: same shape as an exercise, but with a gentle "aim for"
-// dose instead of sets/reps.
-function warmupExerciseStep(ex, wIndex) {
-  const total = (C().WARMUP_EXERCISES || []).length;
-  const eff = effortBars(ex.effort);
-  const setup = ex.setup.map((s) => `<li>${s}</li>`).join("");
-  const doThis = ex.doThis.map((s) => `<li>${s}</li>`).join("");
-  const avoid = ex.avoid.map((s) => `<li>${s}</li>`).join("");
-  return `
-    <div class="step-kicker">${T().warmupXofY(wIndex + 1, total)} &middot; ${ex.focus}</div>
-    <h2 class="step-title">${ex.name}</h2>
-    <p class="works">${ex.works}</p>
-
-    ${mediaHTML(ex)}
-
-    <div class="vitals">
-      <div class="vital">
-        <div class="vlabel">${T().warmupAim}</div>
-        <div class="vbig vbig-dose">${ex.dose}</div>
-      </div>
-      <div class="vital effort">
-        <div class="vlabel">${T().howHardLabel}</div>
-        <div class="meter" aria-hidden="true">${eff.bars}</div>
-        <div class="vsub"><b style="font-weight:700">${eff.word}.</b> ${eff.note}</div>
-      </div>
-    </div>
-
-    <section class="block setup">
-      <div class="block-head">${T().setUp}</div>
-      <ol>${setup}</ol>
-    </section>
-
-    <section class="block do">
-      <div class="block-head">${icon.check} ${T().doThisHead}</div>
-      <ul>${doThis}</ul>
-    </section>
-
-    <section class="block avoid">
-      <div class="block-head">${icon.alert} ${T().avoidHead}</div>
-      <ul>${avoid}</ul>
-    </section>
-
-    <div class="breath">${icon.breath}<span>${ex.breath}</span></div>
-    ${ex.note ? `<div class="callout info" style="margin-top:1rem">${ex.note}</div>` : ``}`;
 }
 
 function exerciseStep(ex, exIndex) {
@@ -1528,7 +1526,7 @@ function viewPlan() {
 
     <h2 class="section-title">${T().planCooldown}</h2>
     <ul class="plan-list">
-      ${C().COOLDOWN.moves.map((m) => `<li>${icon.dot}<span><strong>${m.name}.</strong> ${m.focus} — ${m.hold}.</span></li>`).join("")}
+      ${C().COOLDOWN.moves.map((m) => `<li>${icon.dot}<span><strong>${m.name}.</strong> ${m.focus}, ${m.hold}.</span></li>`).join("")}
       <li>${icon.dot}<span><strong>${C().COOLDOWN.balance.name}.</strong> ${C().COOLDOWN.balance.hold}.</span></li>
       <li>${icon.dot}<span><strong>${C().COOLDOWN.recover.name}.</strong> ${C().COOLDOWN.recover.text}</span></li>
     </ul>
