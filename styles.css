@@ -1,5 +1,5 @@
 /* ============================================================
-   Mum's Workout — design system
+   Mum's Workout - design system
    Phone-first, accessibility-led. Large type, big targets,
    calm palette. Injury-prevention content is colour-coded.
    ============================================================ */
@@ -108,8 +108,59 @@ button { font-family: inherit; }
 /* ============================================================
    HOME
    ============================================================ */
+/* Language switch - sits above the greeting on Home */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-top: max(0.9rem, env(safe-area-inset-top));
+  margin-bottom: 0.5rem;
+}
+.lang-switch-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.lang-switch-label svg { flex: none; }
+.lang-opts {
+  display: inline-flex;
+  gap: 0.3rem;
+  padding: 0.3rem;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.lang-opt {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: transparent;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  min-height: 2.5rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.lang-opt.on {
+  background: var(--primary);
+  color: var(--primary-ink);
+  box-shadow: var(--shadow);
+}
+.lang-opt:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .home-hero {
-  padding-top: max(1.5rem, env(safe-area-inset-top));
+  padding-top: 0.25rem;
   margin-bottom: 1.75rem;
 }
 .greeting {
@@ -360,7 +411,7 @@ button { font-family: inherit; }
   border: 1px solid var(--line);
   aspect-ratio: 4 / 3;
 }
-/* contain, never crop — the whole movement (head to feet) must stay visible */
+/* contain, never crop - the whole movement (head to feet) must stay visible */
 .media img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .media-credit {
   position: absolute;
@@ -480,7 +531,7 @@ button { font-family: inherit; }
   border-radius: 999px;
 }
 
-/* "Do this" — green ticks */
+/* "Do this" - green ticks */
 .block.do { background: var(--go-wash); border-color: color-mix(in oklch, var(--go) 25%, var(--line)); }
 .block.do .block-head { color: var(--go-strong); }
 .block.do li::before {
@@ -492,7 +543,7 @@ button { font-family: inherit; }
   transform: rotate(-45deg);
 }
 
-/* "Avoid" — amber caution */
+/* "Avoid" - amber caution */
 .block.avoid { background: var(--caution-wash); border-color: color-mix(in oklch, var(--caution) 40%, var(--line)); }
 .block.avoid .block-head { color: var(--caution-ink); }
 .block.avoid li { color: var(--ink); }

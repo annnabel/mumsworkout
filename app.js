@@ -1,5 +1,5 @@
 /* ============================================================
-   Mum's Workout — app logic
+   Mum's Workout - app logic
    Plain vanilla JS. No build step. One view on screen at a time.
    ============================================================ */
 
@@ -25,223 +25,615 @@ const icon = {
   shield: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>`,
   gauge: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13l4-3"/><path d="M4.5 17a8 8 0 1 1 15 0"/></svg>`,
   alert: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 4l-8 14a2 2 0 0 0 1.7 3h16a2 2 0 0 0 1.7-3l-8-14a2 2 0 0 0-3.4 0z"/></svg>`,
+  globe: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9S14.5 18.3 12 21C9.5 18.3 8.2 15.3 8.2 12S9.5 5.7 12 3z"/></svg>`,
   dot: `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>`,
 };
 
 /* ============================================================
-   CONTENT — the program, in plain language
+   LANGUAGE - English (default) and Vietnamese
+   Saved to localStorage so it persists between visits.
+   ============================================================ */
+const LANG_KEY = "mums-workout-lang";
+const LANGS = { en: "English", vi: "Tiếng Việt" };
+
+function loadLang() {
+  try {
+    const l = localStorage.getItem(LANG_KEY);
+    return l === "vi" ? "vi" : "en";
+  } catch { return "en"; }
+}
+function saveLang(l) {
+  try { localStorage.setItem(LANG_KEY, l); } catch { /* ignore */ }
+}
+let LANG = loadLang();
+function setLang(l) {
+  LANG = l === "vi" ? "vi" : "en";
+  saveLang(LANG);
+  document.documentElement.lang = LANG;
+}
+
+/* ============================================================
+   CONTENT - the program, in plain language, per language
    ============================================================ */
 
-// Effort levels -> filled bars (out of 3) + plain words
-const EFFORT = {
-  moderate: { on: 2, word: "Comfortably hard", note: "At the end you could still do about 3 more." },
-  easy:     { on: 1, word: "Take it gently",   note: "This joint needs extra care. Keep 3–4 in reserve." },
-  steady:   { on: 2, word: "Steady effort",    note: "Controlled and smooth — no straining." },
+const CONTENT = {
+  en: {
+    // Effort levels -> filled bars (out of 3) + plain words
+    EFFORT: {
+      moderate: { on: 2, word: "Comfortably hard", note: "At the end you could still do about 3 more." },
+      easy:     { on: 1, word: "Take it gently",   note: "This joint needs extra care. Keep 3-4 in reserve." },
+      steady:   { on: 2, word: "Steady effort",    note: "Controlled and smooth, no straining." },
+    },
+    EXERCISES: [
+      {
+        slug: "leg-press",
+        name: "Leg Press",
+        works: "Your legs and hips, the big movement, like standing up from a chair.",
+        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        setup: [
+          "Set the seat so your knees bend to about a right angle at the bottom, no deeper.",
+          "Feet flat on the plate, about shoulder-width apart, placed a little high.",
+          "Sit with your back flat against the pad. Hold the side handles lightly.",
+        ],
+        doThis: [
+          "Breathe out as you push the plate away.",
+          "Push through your whole foot, keeping knees in line with your toes.",
+          "Take 2-3 seconds to lower it back down, slow and controlled.",
+        ],
+        avoid: [
+          "Letting your knees fall inwards.",
+          "Going so low your lower back lifts off the pad.",
+          "Snapping your knees straight and locking them hard at the top.",
+        ],
+        breath: "Breathe out on the push, in as you lower.",
+      },
+      {
+        slug: "chest-press",
+        name: "Chest Press",
+        works: "Chest, shoulders and the backs of your arms, pushing strength.",
+        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        setup: [
+          "Set the seat height so the handles line up with the middle of your chest.",
+          "Sit tall, back flat, shoulders gently drawn back and down.",
+          "Keep your wrists straight, not bent.",
+        ],
+        doThis: [
+          "Breathe out as you press the handles away.",
+          "Move smoothly, no bouncing off the weight stack.",
+          "Come back only until your elbows are level with your body.",
+        ],
+        avoid: [
+          "Shrugging your shoulders up towards your ears.",
+          "Arching your back away from the pad.",
+          "Letting your elbows flare far out to the sides.",
+        ],
+        breath: "Breathe out as you press, in as you return.",
+      },
+      {
+        slug: "seated-row",
+        name: "Seated Row",
+        works: "Your upper back and posture, helps you stand tall.",
+        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        setup: [
+          "Sit with your chest resting firmly against the pad, if there is one.",
+          "Take hold of the handles at about chest height.",
+          "Plant both feet flat and stable.",
+        ],
+        doThis: [
+          "Breathe out and pull, leading with your elbows.",
+          "Gently squeeze your shoulder blades together at the end.",
+          "Return slowly, letting your arms stretch forward without slumping.",
+        ],
+        avoid: [
+          "Yanking the weight using your body's momentum.",
+          "Shrugging instead of squeezing the shoulder blades.",
+          "Rounding your back on the way back.",
+        ],
+        breath: "Breathe out as you pull in, in as you return.",
+      },
+      {
+        slug: "leg-curl",
+        name: "Seated Leg Curl",
+        works: "The backs of your thighs, important for steady, stable knees.",
+        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        setup: [
+          "Adjust the seat so your knee lines up with the machine's pivot point.",
+          "Rest the ankle pad just above your heels.",
+          "Sit back with your back flush against the seat.",
+        ],
+        doThis: [
+          "Breathe out and curl your heels down and under the seat.",
+          "Move smoothly through the whole range.",
+          "Return slowly, don't let the weight drop.",
+        ],
+        avoid: [
+          "Lifting your hips to help.",
+          "Letting the weight slam down at the end.",
+          "A knee that doesn't line up with the pivot.",
+        ],
+        breath: "Breathe out as you curl, in as you return.",
+      },
+      {
+        slug: "lat-pulldown",
+        name: "Lat Pulldown",
+        works: "Your back and arms, pulling strength for everyday reaching.",
+        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        setup: [
+          "Tuck the thigh pad down snugly before you sit.",
+          "Take the bar a little wider than shoulder-width, palms facing away.",
+          "Sit tall with a very slight lean back.",
+        ],
+        doThis: [
+          "Breathe out and pull the bar down to the top of your chest.",
+          "Drive your elbows down and back.",
+          "Return slowly all the way up to a full stretch overhead.",
+        ],
+        avoid: [
+          "Swinging your body to help pull.",
+          "Pulling the bar down too low, towards your tummy.",
+          "Ever pulling the bar behind your neck.",
+        ],
+        breath: "Breathe out as you pull down, in as you return.",
+      },
+      {
+        slug: "shoulder-press",
+        name: "Seated Shoulder Press",
+        works: "Shoulders and arms, for reaching up to shelves.",
+        sets: "2 sets", reps: "8-10 reps", effort: "easy",
+        setup: [
+          "Set the seat so the handles start level with your shoulders.",
+          "Keep your back flat against the pad the whole time.",
+          "Wrists straight and steady.",
+        ],
+        doThis: [
+          "Breathe out and press up smoothly, don't snap your elbows straight.",
+          "Lower with control back to shoulder height, no lower.",
+          "Keep your ribs down; let your shoulders do the work.",
+        ],
+        avoid: [
+          "Arching your back away from the pad to help.",
+          "Jerky, rushed movements.",
+          "Adding weight too quickly, this joint is easily aggravated.",
+        ],
+        breath: "Breathe out as you press up, in as you lower.",
+      },
+      {
+        slug: "dead-bug",
+        name: "Dead Bug (Core)",
+        works: "A gentle tummy and back exercise done on a mat, no machine.",
+        sets: "2 sets", reps: "8-10 each side", effort: "steady",
+        setup: [
+          "Lie on your back on a mat, knees bent up over your hips.",
+          "Reach both arms straight up towards the ceiling.",
+          "Press your lower back gently into the floor.",
+        ],
+        doThis: [
+          "Slowly lower one arm overhead and the opposite leg out straight.",
+          "Keep your lower back pressed flat the whole time.",
+          "Bring them back, then switch to the other side.",
+        ],
+        avoid: [
+          "Letting your lower back arch up off the floor.",
+          "Rushing, this is a slow, controlled exercise.",
+          "Holding your breath.",
+        ],
+        breath: "Breathe out as you reach out, in as you return.",
+        note: "Prefer this on hands and knees? Ask about the Bird Dog version in the full plan.",
+      },
+      {
+        slug: "calf-raise",
+        name: "Calf Raise",
+        works: "Your calves and ankles, steadier balance and fewer stumbles.",
+        sets: "2 sets", reps: "12-15 reps", effort: "moderate",
+        setup: [
+          "Place the balls of your feet on the edge, heels free to drop below.",
+          "Use a light hand on a rail for balance if standing.",
+          "Stand tall and steady.",
+        ],
+        doThis: [
+          "Rise up onto your toes and pause briefly at the top.",
+          "Lower slowly, letting your heels drop into a gentle stretch.",
+          "Keep it smooth all the way through.",
+        ],
+        avoid: [
+          "Bouncing out of the bottom.",
+          "Using momentum instead of a controlled lift.",
+          "Cutting the movement short.",
+        ],
+        breath: "Breathe out as you rise, in as you lower.",
+      },
+    ],
+    WARMUP: {
+      title: "Warm-Up First",
+      kicker: "5-8 minutes",
+      intro: "A few easy minutes to get your body ready. Please don't skip this.",
+      items: [
+        { b: "5 minutes of easy cardio", s: "Recumbent bike, cross-trainer, or a brisk walk. Gentle enough to chat." },
+        { b: "Loosen your joints", s: "Small circles: ankles, hips, arms, 10 each way." },
+        { b: "A few practice sit-to-stands", s: "Stand up and sit down from a chair 8-10 times, plus some shoulder rolls." },
+      ],
+      tip: "Save stretching for the very end, muscles stretch better once they're warm.",
+    },
+    COOLDOWN: {
+      title: "Cool-Down",
+      kicker: "5-8 minutes",
+      intro: "Lovely work. Finish with some gentle stretches while your muscles are warm.",
+      items: [
+        { b: "Stretch the muscles you used", s: "Thighs, hips, chest, upper back, shoulders and calves." },
+        { b: "Hold each stretch 20-30 seconds", s: "Breathe normally, no bouncing. It should feel pleasant, never painful." },
+        { b: "Optional easy walk", s: "3-5 minutes of gentle walking to wind down." },
+      ],
+      tip: "Have a glass of water and a little protein with your next meal, it helps you recover.",
+    },
+  },
+
+  vi: {
+    EFFORT: {
+      moderate: { on: 2, word: "Nặng vừa phải", note: "Khi kết thúc, bạn vẫn có thể làm thêm khoảng 3 lần nữa." },
+      easy:     { on: 1, word: "Nhẹ nhàng thôi", note: "Khớp này cần được chăm sóc kỹ hơn. Hãy giữ lại 3-4 lần trong sức." },
+      steady:   { on: 2, word: "Gắng sức đều đặn", note: "Kiểm soát và mượt mà, không gồng ép." },
+    },
+    EXERCISES: [
+      {
+        slug: "leg-press",
+        name: "Đạp Chân",
+        works: "Chân và hông của bạn, động tác lớn giống như đứng lên từ ghế.",
+        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        setup: [
+          "Chỉnh ghế sao cho đầu gối gập khoảng một góc vuông ở điểm thấp nhất, không sâu hơn.",
+          "Đặt bàn chân phẳng trên bàn đạp, rộng bằng vai, đặt hơi cao một chút.",
+          "Ngồi tựa lưng phẳng vào đệm. Nắm nhẹ tay vịn hai bên.",
+        ],
+        doThis: [
+          "Thở ra khi đẩy bàn đạp ra xa.",
+          "Đẩy bằng cả bàn chân, giữ đầu gối thẳng hàng với các ngón chân.",
+          "Hạ xuống trong 2-3 giây, chậm rãi và có kiểm soát.",
+        ],
+        avoid: [
+          "Để đầu gối đổ vào trong.",
+          "Hạ quá thấp khiến lưng dưới nhấc khỏi đệm.",
+          "Duỗi thẳng và khóa cứng đầu gối ở điểm trên cùng.",
+        ],
+        breath: "Thở ra khi đẩy, hít vào khi hạ xuống.",
+      },
+      {
+        slug: "chest-press",
+        name: "Đẩy Ngực",
+        works: "Ngực, vai và mặt sau cánh tay, sức đẩy.",
+        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        setup: [
+          "Chỉnh độ cao ghế sao cho tay cầm ngang với giữa ngực.",
+          "Ngồi thẳng, lưng phẳng, vai nhẹ nhàng kéo ra sau và xuống dưới.",
+          "Giữ cổ tay thẳng, không gập.",
+        ],
+        doThis: [
+          "Thở ra khi đẩy tay cầm ra xa.",
+          "Chuyển động mượt mà, không nảy khỏi khối tạ.",
+          "Chỉ đưa về đến khi khuỷu tay ngang với thân người.",
+        ],
+        avoid: [
+          "Nhún vai lên gần tai.",
+          "Ưỡn lưng ra khỏi đệm.",
+          "Để khuỷu tay xòe rộng ra hai bên.",
+        ],
+        breath: "Thở ra khi đẩy, hít vào khi đưa về.",
+      },
+      {
+        slug: "seated-row",
+        name: "Kéo Cáp Ngồi",
+        works: "Lưng trên và tư thế của bạn, giúp bạn đứng thẳng.",
+        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        setup: [
+          "Ngồi với ngực tựa chắc vào đệm, nếu có.",
+          "Nắm lấy tay cầm ở khoảng ngang ngực.",
+          "Đặt cả hai bàn chân phẳng và vững.",
+        ],
+        doThis: [
+          "Thở ra và kéo, dẫn đầu bằng khuỷu tay.",
+          "Nhẹ nhàng ép hai bả vai lại với nhau ở cuối động tác.",
+          "Đưa về chậm rãi, để cánh tay vươn ra trước mà không gù lưng.",
+        ],
+        avoid: [
+          "Giật tạ bằng đà của cơ thể.",
+          "Nhún vai thay vì ép bả vai.",
+          "Gù lưng khi đưa về.",
+        ],
+        breath: "Thở ra khi kéo vào, hít vào khi đưa về.",
+      },
+      {
+        slug: "leg-curl",
+        name: "Gập Chân Ngồi",
+        works: "Mặt sau đùi, quan trọng cho đầu gối vững và ổn định.",
+        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        setup: [
+          "Chỉnh ghế sao cho đầu gối thẳng hàng với điểm xoay của máy.",
+          "Đặt đệm mắt cá ngay trên gót chân.",
+          "Ngồi tựa lưng sát vào ghế.",
+        ],
+        doThis: [
+          "Thở ra và gập gót chân xuống, vào phía dưới ghế.",
+          "Chuyển động mượt mà qua toàn bộ biên độ.",
+          "Đưa về chậm rãi, đừng để tạ rơi.",
+        ],
+        avoid: [
+          "Nhấc hông lên để hỗ trợ.",
+          "Để tạ đập mạnh xuống ở cuối động tác.",
+          "Đầu gối không thẳng hàng với điểm xoay.",
+        ],
+        breath: "Thở ra khi gập, hít vào khi đưa về.",
+      },
+      {
+        slug: "lat-pulldown",
+        name: "Kéo Xà Trên",
+        works: "Lưng và cánh tay, sức kéo cho việc với tay hằng ngày.",
+        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        setup: [
+          "Kéo đệm đùi xuống cho khít trước khi ngồi.",
+          "Nắm thanh xà rộng hơn vai một chút, lòng bàn tay hướng ra ngoài.",
+          "Ngồi thẳng, hơi ngả người ra sau một chút.",
+        ],
+        doThis: [
+          "Thở ra và kéo thanh xà xuống đến phía trên ngực.",
+          "Đưa khuỷu tay xuống và ra sau.",
+          "Đưa về chậm rãi, lên hết cỡ để vươn căng qua đầu.",
+        ],
+        avoid: [
+          "Đung đưa cơ thể để hỗ trợ kéo.",
+          "Kéo thanh xà xuống quá thấp, về phía bụng.",
+          "Không bao giờ kéo thanh xà ra sau gáy.",
+        ],
+        breath: "Thở ra khi kéo xuống, hít vào khi đưa về.",
+      },
+      {
+        slug: "shoulder-press",
+        name: "Đẩy Vai Ngồi",
+        works: "Vai và cánh tay, để với lên kệ cao.",
+        sets: "2 hiệp", reps: "8-10 lần", effort: "easy",
+        setup: [
+          "Chỉnh ghế sao cho tay cầm bắt đầu ngang với vai.",
+          "Giữ lưng phẳng tựa vào đệm suốt cả động tác.",
+          "Cổ tay thẳng và vững.",
+        ],
+        doThis: [
+          "Thở ra và đẩy lên mượt mà, đừng bật khóa khuỷu tay.",
+          "Hạ xuống có kiểm soát về ngang vai, không thấp hơn.",
+          "Giữ khung sườn hạ xuống, để vai làm việc.",
+        ],
+        avoid: [
+          "Ưỡn lưng ra khỏi đệm để hỗ trợ.",
+          "Chuyển động giật cục, vội vàng.",
+          "Tăng tạ quá nhanh, khớp này dễ bị kích ứng.",
+        ],
+        breath: "Thở ra khi đẩy lên, hít vào khi hạ xuống.",
+      },
+      {
+        slug: "dead-bug",
+        name: "Dead Bug (Cơ lõi)",
+        works: "Bài tập nhẹ nhàng cho bụng và lưng thực hiện trên thảm, không cần máy.",
+        sets: "2 hiệp", reps: "8-10 mỗi bên", effort: "steady",
+        setup: [
+          "Nằm ngửa trên thảm, gập gối lên phía trên hông.",
+          "Vươn thẳng hai tay lên trần nhà.",
+          "Ấn nhẹ lưng dưới xuống sàn.",
+        ],
+        doThis: [
+          "Từ từ hạ một tay qua đầu và chân đối diện duỗi thẳng ra.",
+          "Giữ lưng dưới ép phẳng suốt thời gian.",
+          "Đưa chúng về, rồi đổi sang bên kia.",
+        ],
+        avoid: [
+          "Để lưng dưới cong nhấc khỏi sàn.",
+          "Vội vàng, đây là bài tập chậm và có kiểm soát.",
+          "Nín thở.",
+        ],
+        breath: "Thở ra khi vươn ra, hít vào khi đưa về.",
+        note: "Thích tập ở tư thế quỳ chống tay hơn? Hãy hỏi về phiên bản Bird Dog trong kế hoạch đầy đủ.",
+      },
+      {
+        slug: "calf-raise",
+        name: "Nhón Bắp Chân",
+        works: "Bắp chân và mắt cá, giữ thăng bằng tốt hơn và ít vấp ngã hơn.",
+        sets: "2 hiệp", reps: "12-15 lần", effort: "moderate",
+        setup: [
+          "Đặt phần trước bàn chân lên mép, để gót chân thả tự do xuống dưới.",
+          "Đặt nhẹ một tay lên thanh vịn để giữ thăng bằng nếu đứng.",
+          "Đứng thẳng và vững.",
+        ],
+        doThis: [
+          "Nhón lên trên các đầu ngón chân và dừng lại một chút ở đỉnh.",
+          "Hạ chậm rãi, để gót chân thả xuống thành một cái căng nhẹ.",
+          "Giữ mượt mà suốt cả động tác.",
+        ],
+        avoid: [
+          "Nảy lên từ điểm thấp nhất.",
+          "Dùng đà thay vì nâng có kiểm soát.",
+          "Rút ngắn động tác.",
+        ],
+        breath: "Thở ra khi nhón lên, hít vào khi hạ xuống.",
+      },
+    ],
+    WARMUP: {
+      title: "Khởi Động Trước",
+      kicker: "5-8 phút",
+      intro: "Vài phút nhẹ nhàng để cơ thể sẵn sàng. Xin đừng bỏ qua phần này.",
+      items: [
+        { b: "5 phút cardio nhẹ", s: "Xe đạp tựa lưng, máy tập trên không, hoặc đi bộ nhanh. Nhẹ đủ để vừa tập vừa trò chuyện." },
+        { b: "Làm mềm các khớp", s: "Xoay vòng nhỏ: mắt cá, hông, cánh tay, mỗi bên 10 lần." },
+        { b: "Vài lần đứng lên ngồi xuống", s: "Đứng lên và ngồi xuống từ ghế 8-10 lần, cùng vài động tác xoay vai." },
+      ],
+      tip: "Để dành việc giãn cơ đến tận cuối buổi, cơ bắp giãn tốt hơn khi đã ấm.",
+    },
+    COOLDOWN: {
+      title: "Thả Lỏng",
+      kicker: "5-8 phút",
+      intro: "Làm rất tốt. Kết thúc bằng vài động tác giãn cơ nhẹ nhàng khi cơ bắp còn ấm.",
+      items: [
+        { b: "Giãn các cơ bạn đã dùng", s: "Đùi, hông, ngực, lưng trên, vai và bắp chân." },
+        { b: "Giữ mỗi động tác giãn 20-30 giây", s: "Thở bình thường, không nảy. Nên thấy dễ chịu, không bao giờ đau." },
+        { b: "Đi bộ nhẹ tùy chọn", s: "Đi bộ nhẹ 3-5 phút để thư giãn." },
+      ],
+      tip: "Uống một cốc nước và ăn một chút chất đạm vào bữa kế tiếp, điều đó giúp bạn hồi phục.",
+    },
+  },
 };
 
-const EXERCISES = [
-  {
-    slug: "leg-press",
-    name: "Leg Press",
-    works: "Your legs and hips — the big movement, like standing up from a chair.",
-    sets: "2 sets", reps: "10–12 reps", effort: "moderate",
-    setup: [
-      "Set the seat so your knees bend to about a right angle at the bottom — no deeper.",
-      "Feet flat on the plate, about shoulder-width apart, placed a little high.",
-      "Sit with your back flat against the pad. Hold the side handles lightly.",
-    ],
-    doThis: [
-      "Breathe out as you push the plate away.",
-      "Push through your whole foot, keeping knees in line with your toes.",
-      "Take 2–3 seconds to lower it back down, slow and controlled.",
-    ],
-    avoid: [
-      "Letting your knees fall inwards.",
-      "Going so low your lower back lifts off the pad.",
-      "Snapping your knees straight and locking them hard at the top.",
-    ],
-    breath: "Breathe out on the push, in as you lower.",
-  },
-  {
-    slug: "chest-press",
-    name: "Chest Press",
-    works: "Chest, shoulders and the backs of your arms — pushing strength.",
-    sets: "2 sets", reps: "10–12 reps", effort: "moderate",
-    setup: [
-      "Set the seat height so the handles line up with the middle of your chest.",
-      "Sit tall, back flat, shoulders gently drawn back and down.",
-      "Keep your wrists straight, not bent.",
-    ],
-    doThis: [
-      "Breathe out as you press the handles away.",
-      "Move smoothly — no bouncing off the weight stack.",
-      "Come back only until your elbows are level with your body.",
-    ],
-    avoid: [
-      "Shrugging your shoulders up towards your ears.",
-      "Arching your back away from the pad.",
-      "Letting your elbows flare far out to the sides.",
-    ],
-    breath: "Breathe out as you press, in as you return.",
-  },
-  {
-    slug: "seated-row",
-    name: "Seated Row",
-    works: "Your upper back and posture — helps you stand tall.",
-    sets: "2 sets", reps: "10–12 reps", effort: "moderate",
-    setup: [
-      "Sit with your chest resting firmly against the pad, if there is one.",
-      "Take hold of the handles at about chest height.",
-      "Plant both feet flat and stable.",
-    ],
-    doThis: [
-      "Breathe out and pull, leading with your elbows.",
-      "Gently squeeze your shoulder blades together at the end.",
-      "Return slowly, letting your arms stretch forward without slumping.",
-    ],
-    avoid: [
-      "Yanking the weight using your body's momentum.",
-      "Shrugging instead of squeezing the shoulder blades.",
-      "Rounding your back on the way back.",
-    ],
-    breath: "Breathe out as you pull in, in as you return.",
-  },
-  {
-    slug: "leg-curl",
-    name: "Seated Leg Curl",
-    works: "The backs of your thighs — important for steady, stable knees.",
-    sets: "2 sets", reps: "10–12 reps", effort: "moderate",
-    setup: [
-      "Adjust the seat so your knee lines up with the machine's pivot point.",
-      "Rest the ankle pad just above your heels.",
-      "Sit back with your back flush against the seat.",
-    ],
-    doThis: [
-      "Breathe out and curl your heels down and under the seat.",
-      "Move smoothly through the whole range.",
-      "Return slowly — don't let the weight drop.",
-    ],
-    avoid: [
-      "Lifting your hips to help.",
-      "Letting the weight slam down at the end.",
-      "A knee that doesn't line up with the pivot.",
-    ],
-    breath: "Breathe out as you curl, in as you return.",
-  },
-  {
-    slug: "lat-pulldown",
-    name: "Lat Pulldown",
-    works: "Your back and arms — pulling strength for everyday reaching.",
-    sets: "2 sets", reps: "10–12 reps", effort: "moderate",
-    setup: [
-      "Tuck the thigh pad down snugly before you sit.",
-      "Take the bar a little wider than shoulder-width, palms facing away.",
-      "Sit tall with a very slight lean back.",
-    ],
-    doThis: [
-      "Breathe out and pull the bar down to the top of your chest.",
-      "Drive your elbows down and back.",
-      "Return slowly all the way up to a full stretch overhead.",
-    ],
-    avoid: [
-      "Swinging your body to help pull.",
-      "Pulling the bar down too low, towards your tummy.",
-      "Ever pulling the bar behind your neck.",
-    ],
-    breath: "Breathe out as you pull down, in as you return.",
-  },
-  {
-    slug: "shoulder-press",
-    name: "Seated Shoulder Press",
-    works: "Shoulders and arms — for reaching up to shelves.",
-    sets: "2 sets", reps: "8–10 reps", effort: "easy",
-    setup: [
-      "Set the seat so the handles start level with your shoulders.",
-      "Keep your back flat against the pad the whole time.",
-      "Wrists straight and steady.",
-    ],
-    doThis: [
-      "Breathe out and press up smoothly — don't snap your elbows straight.",
-      "Lower with control back to shoulder height, no lower.",
-      "Keep your ribs down; let your shoulders do the work.",
-    ],
-    avoid: [
-      "Arching your back away from the pad to help.",
-      "Jerky, rushed movements.",
-      "Adding weight too quickly — this joint is easily aggravated.",
-    ],
-    breath: "Breathe out as you press up, in as you lower.",
-  },
-  {
-    slug: "dead-bug",
-    name: "Dead Bug (Core)",
-    works: "A gentle tummy and back exercise done on a mat — no machine.",
-    sets: "2 sets", reps: "8–10 each side", effort: "steady",
-    setup: [
-      "Lie on your back on a mat, knees bent up over your hips.",
-      "Reach both arms straight up towards the ceiling.",
-      "Press your lower back gently into the floor.",
-    ],
-    doThis: [
-      "Slowly lower one arm overhead and the opposite leg out straight.",
-      "Keep your lower back pressed flat the whole time.",
-      "Bring them back, then switch to the other side.",
-    ],
-    avoid: [
-      "Letting your lower back arch up off the floor.",
-      "Rushing — this is a slow, controlled exercise.",
-      "Holding your breath.",
-    ],
-    breath: "Breathe out as you reach out, in as you return.",
-    note: "Prefer this on hands and knees? Ask about the Bird Dog version in the full plan.",
-  },
-  {
-    slug: "calf-raise",
-    name: "Calf Raise",
-    works: "Your calves and ankles — steadier balance and fewer stumbles.",
-    sets: "2 sets", reps: "12–15 reps", effort: "moderate",
-    setup: [
-      "Place the balls of your feet on the edge, heels free to drop below.",
-      "Use a light hand on a rail for balance if standing.",
-      "Stand tall and steady.",
-    ],
-    doThis: [
-      "Rise up onto your toes and pause briefly at the top.",
-      "Lower slowly, letting your heels drop into a gentle stretch.",
-      "Keep it smooth all the way through.",
-    ],
-    avoid: [
-      "Bouncing out of the bottom.",
-      "Using momentum instead of a controlled lift.",
-      "Cutting the movement short.",
-    ],
-    breath: "Breathe out as you rise, in as you lower.",
-  },
-];
+/* ---------- UI strings, per language ---------- */
+const UI = {
+  en: {
+    locale: "en-GB",
+    greetingMorning: "Good morning",
+    greetingAfternoon: "Good afternoon",
+    greetingEvening: "Good evening",
+    readyToday: "Ready for today?",
+    langLabel: "Language",
+    todaysWorkout: "Today's workout",
+    workoutName: "Full-Body Strength",
+    exercisesCount: (n) => `${n} exercises`,
+    aboutMinutes: "About 50 minutes",
+    doneToday: "You've done this today, lovely!",
+    startWorkout: "Start Workout",
+    doItAgain: "Do it again",
+    seePlanTitle: "See the full plan",
+    seePlanSub: "All exercises and how to progress",
+    howHardTitle: "How hard should it feel?",
+    howHardSub: "A simple guide to effort",
+    stayingSafeTitle: "Staying safe",
+    stayingSafeSub: "When to stop and get help",
+    homeFoot: "Move at your own pace. There's no rush, and no prizes for going heavy.<br/>If anything hurts, stop.",
+    stepXofY: (i, n) => `Step ${i} of ${n}`,
+    closeWorkout: "Close workout",
+    back: "Back",
+    next: "Next",
+    finish: "Finish",
+    exerciseXofY: (i, n) => `Exercise ${i} of ${n}`,
+    doLabel: "Do",
+    ofReps: (reps) => `of ${reps}`,
+    howHardLabel: "How hard",
+    setUp: "Set up",
+    doThisHead: "Do this",
+    avoidHead: "Avoid",
+    allDone: "All done!",
+    doneText: "Wonderful work. Every session keeps you stronger and steadier. See you next time.",
+    backToStart: "Back to start",
 
-const WARMUP = {
-  title: "Warm-Up First",
-  kicker: "5–8 minutes",
-  intro: "A few easy minutes to get your body ready. Please don't skip this.",
-  items: [
-    { b: "5 minutes of easy cardio", s: "Recumbent bike, cross-trainer, or a brisk walk. Gentle enough to chat." },
-    { b: "Loosen your joints", s: "Small circles: ankles, hips, arms — 10 each way." },
-    { b: "A few practice sit-to-stands", s: "Stand up and sit down from a chair 8–10 times, plus some shoulder rolls." },
-  ],
-  tip: "Save stretching for the very end — muscles stretch better once they're warm.",
+    planTitle: "The Full Plan",
+    planIntro: "The same 8 exercises, <strong>3 days a week</strong>, for example Monday, Wednesday and Friday, with a rest day in between. Each session takes about 50 minutes.",
+    planBefore: `<b style="display:inline; margin-left:0.4rem">Before you begin</b><br/>If you've never had a bone-density (DEXA) scan, or you have any joint replacement, disc problem, osteopenia or osteoporosis, please get the all-clear from your doctor first.`,
+    planWarmup: "Warm-up",
+    planExercises: "The exercises",
+    planTapAny: "Tap any exercise to see how to do it.",
+    planCooldown: "Cool-down",
+    planStronger: "Getting stronger over time",
+    planStrongerP1: "Only add a little weight when you can finish every set comfortably with good form, and it still feels like you had 2-3 reps left in you.",
+    planStrongerP2: "Go up in <strong>small steps</strong> (the smallest the machine allows). If your form gets messy during a set, that's your stopping point, never push through it.",
+    planExtras: `<b>Two optional extras (ask first)</b>Once you've done the basic plan well for a couple of months, a slightly heavier block on the leg and chest press, and some gentle heel-drops for bone strength, can be added. These specifically need a doctor or physio's OK if there's any bone or joint concern, so please check before adding them.`,
+
+    effortIntro: "You don't need to push to your limit. The aim is <strong>comfortably hard</strong>, working, but always in control.",
+    effortTestTitle: "A simple test",
+    effortTestP: "At the end of each set, ask yourself: <strong>could I have done a few more?</strong> If the answer is yes, about 2 or 3 more, you've got it just right.",
+    effortLevelsTitle: "The levels",
+    effortLighter: `<b>If in doubt, go lighter</b>A weight that's a little too easy is far better than one that's too heavy. You can always add a little next time.`,
+    effortSharp: `<b style="display:inline;margin-left:0.4rem">Sharp pain is different</b><br/>A gentle muscle "burn" is normal. Sharp, pinching or shooting pain is not, stop straight away.`,
+
+    safetyTitle: "Staying safe",
+    safetyIntro: "This program is built to be gentle on your joints. Listening to your body is the most important rule of all.",
+    safetyUnwell: `<b style="display:inline;margin-left:0.4rem">Stop and rest if you feel unwell</b><br/>Dizziness, chest pain, breathlessness beyond normal effort, or feeling faint, stop, sit down, and seek help.`,
+    safetyStopTitle: "Stop and see a professional if…",
+    safetyStops: [
+      "Sharp, pinching or shooting pain in a joint (different from normal muscle tiredness).",
+      "Pain that carries on or gets worse two days after a session.",
+      "Clicking, catching or a feeling that a joint might give way.",
+      "Numbness or tingling anywhere during or after exercise.",
+      "You simply can't feel the right muscle working, even after following the set-up.",
+    ],
+    safetyWorth: `<b>Worth doing</b>One session with a physiotherapist or trainer to check your set-up on the machines is a great investment, even if you do the rest on your own.`,
+    safetyCheck: `<b>Check with your doctor first if you have</b>any joint replacement, a disc problem, or diagnosed osteopenia or osteoporosis, ideally before starting this program at all.`,
+    safetyDisclaimer: "This app is a friendly guide, not medical advice. Your doctor and physio know you best.",
+
+    mediaAlt: (name) => `How to do the ${name}`,
+    mediaPlaceholderTitle: "Form video goes here",
+    mediaPlaceholderHint: "To change it, save a clip as",
+  },
+  vi: {
+    locale: "vi-VN",
+    greetingMorning: "Chào buổi sáng",
+    greetingAfternoon: "Chào buổi chiều",
+    greetingEvening: "Chào buổi tối",
+    readyToday: "Sẵn sàng cho hôm nay chưa?",
+    langLabel: "Ngôn ngữ",
+    todaysWorkout: "Bài tập hôm nay",
+    workoutName: "Sức mạnh toàn thân",
+    exercisesCount: (n) => `${n} bài tập`,
+    aboutMinutes: "Khoảng 50 phút",
+    doneToday: "Bạn đã hoàn thành hôm nay rồi, tuyệt vời!",
+    startWorkout: "Bắt đầu tập",
+    doItAgain: "Tập lại",
+    seePlanTitle: "Xem toàn bộ kế hoạch",
+    seePlanSub: "Tất cả bài tập và cách tiến bộ",
+    howHardTitle: "Nên tập nặng đến mức nào?",
+    howHardSub: "Hướng dẫn đơn giản về mức gắng sức",
+    stayingSafeTitle: "Giữ an toàn",
+    stayingSafeSub: "Khi nào nên dừng và tìm trợ giúp",
+    homeFoot: "Hãy tập theo nhịp độ của riêng bạn. Không cần vội, và không có giải thưởng cho việc tập nặng.<br/>Nếu thấy đau, hãy dừng lại.",
+    stepXofY: (i, n) => `Bước ${i} trên ${n}`,
+    closeWorkout: "Đóng bài tập",
+    back: "Quay lại",
+    next: "Tiếp",
+    finish: "Hoàn tất",
+    exerciseXofY: (i, n) => `Bài tập ${i} trên ${n}`,
+    doLabel: "Thực hiện",
+    ofReps: (reps) => `mỗi hiệp ${reps}`,
+    howHardLabel: "Mức gắng sức",
+    setUp: "Chuẩn bị",
+    doThisHead: "Nên làm",
+    avoidHead: "Tránh",
+    allDone: "Xong hết rồi!",
+    doneText: "Làm tốt lắm. Mỗi buổi tập giúp bạn khỏe hơn và vững vàng hơn. Hẹn gặp lại lần sau.",
+    backToStart: "Về trang đầu",
+
+    planTitle: "Kế Hoạch Đầy Đủ",
+    planIntro: "Vẫn 8 bài tập đó, <strong>3 ngày một tuần</strong>, ví dụ Thứ Hai, Thứ Tư và Thứ Sáu, với một ngày nghỉ xen giữa. Mỗi buổi mất khoảng 50 phút.",
+    planBefore: `<b style="display:inline; margin-left:0.4rem">Trước khi bắt đầu</b><br/>Nếu bạn chưa từng đo mật độ xương (DEXA), hoặc có thay khớp, vấn đề đĩa đệm, thiếu xương hoặc loãng xương, xin hãy được bác sĩ cho phép trước.`,
+    planWarmup: "Khởi động",
+    planExercises: "Các bài tập",
+    planTapAny: "Chạm vào bài tập bất kỳ để xem cách thực hiện.",
+    planCooldown: "Thả lỏng",
+    planStronger: "Mạnh hơn theo thời gian",
+    planStrongerP1: "Chỉ tăng thêm một chút tạ khi bạn có thể hoàn thành mọi hiệp thoải mái với tư thế tốt, và vẫn cảm thấy như còn dư 2-3 lần.",
+    planStrongerP2: "Tăng theo <strong>các bước nhỏ</strong> (mức nhỏ nhất máy cho phép). Nếu tư thế của bạn trở nên lộn xộn giữa hiệp, đó là điểm dừng, đừng bao giờ cố ép.",
+    planExtras: `<b>Hai phần thêm tùy chọn (hỏi trước)</b>Sau khi bạn đã tập tốt kế hoạch cơ bản trong vài tháng, có thể thêm một khối nặng hơn một chút cho đạp chân và đẩy ngực, cùng vài động tác thả gót nhẹ nhàng để tăng sức mạnh xương. Những phần này đặc biệt cần sự cho phép của bác sĩ hoặc chuyên viên vật lý trị liệu nếu có bất kỳ lo ngại nào về xương hoặc khớp, nên xin hãy hỏi trước khi thêm.`,
+
+    effortIntro: "Bạn không cần phải gắng đến giới hạn. Mục tiêu là <strong>nặng vừa phải</strong>, có gắng sức nhưng luôn trong tầm kiểm soát.",
+    effortTestTitle: "Một phép thử đơn giản",
+    effortTestP: "Ở cuối mỗi hiệp, hãy tự hỏi: <strong>mình có thể làm thêm vài lần nữa không?</strong> Nếu câu trả lời là có, khoảng 2 hoặc 3 lần nữa, thì bạn đã làm vừa đúng.",
+    effortLevelsTitle: "Các mức độ",
+    effortLighter: `<b>Nếu còn phân vân, hãy chọn nhẹ hơn</b>Một mức tạ hơi quá nhẹ vẫn tốt hơn nhiều so với mức quá nặng. Bạn luôn có thể thêm một chút vào lần sau.`,
+    effortSharp: `<b style="display:inline;margin-left:0.4rem">Đau nhói thì khác</b><br/>Cảm giác cơ bắp "rát" nhẹ là bình thường. Đau nhói, đau nhức hoặc đau buốt thì không, hãy dừng ngay lập tức.`,
+
+    safetyTitle: "Giữ an toàn",
+    safetyIntro: "Chương trình này được xây dựng để nhẹ nhàng với các khớp của bạn. Lắng nghe cơ thể là quy tắc quan trọng nhất.",
+    safetyUnwell: `<b style="display:inline;margin-left:0.4rem">Dừng lại và nghỉ nếu thấy không khỏe</b><br/>Chóng mặt, đau ngực, khó thở quá mức bình thường, hoặc cảm giác sắp ngất, hãy dừng lại, ngồi xuống và tìm trợ giúp.`,
+    safetyStopTitle: "Dừng lại và gặp chuyên gia nếu…",
+    safetyStops: [
+      "Đau nhói, đau nhức hoặc đau buốt ở khớp (khác với mỏi cơ bình thường).",
+      "Đau kéo dài hoặc nặng hơn hai ngày sau buổi tập.",
+      "Tiếng lục cục, cảm giác kẹt hoặc như khớp sắp khuỵu.",
+      "Tê hoặc ngứa ran ở bất cứ đâu trong hoặc sau khi tập.",
+      "Bạn đơn giản là không cảm nhận được đúng cơ đang hoạt động, dù đã làm theo phần chuẩn bị.",
+    ],
+    safetyWorth: `<b>Đáng để làm</b>Một buổi với chuyên viên vật lý trị liệu hoặc huấn luyện viên để kiểm tra cách bạn chỉnh máy là một khoản đầu tư tuyệt vời, kể cả khi bạn tự tập phần còn lại.`,
+    safetyCheck: `<b>Hãy hỏi bác sĩ trước nếu bạn có</b>bất kỳ khớp thay thế nào, vấn đề đĩa đệm, hoặc được chẩn đoán thiếu xương hoặc loãng xương, tốt nhất là trước khi bắt đầu chương trình này.`,
+    safetyDisclaimer: "Ứng dụng này là một người bạn hướng dẫn thân thiện, không phải lời khuyên y tế. Bác sĩ và chuyên viên vật lý trị liệu hiểu bạn rõ nhất.",
+
+    mediaAlt: (name) => `Cách thực hiện ${name}`,
+    mediaPlaceholderTitle: "Video hướng dẫn động tác ở đây",
+    mediaPlaceholderHint: "Để thay đổi, lưu một đoạn clip thành",
+  },
 };
 
-const COOLDOWN = {
-  title: "Cool-Down",
-  kicker: "5–8 minutes",
-  intro: "Lovely work. Finish with some gentle stretches while your muscles are warm.",
-  items: [
-    { b: "Stretch the muscles you used", s: "Thighs, hips, chest, upper back, shoulders and calves." },
-    { b: "Hold each stretch 20–30 seconds", s: "Breathe normally, no bouncing. It should feel pleasant, never painful." },
-    { b: "Optional easy walk", s: "3–5 minutes of gentle walking to wind down." },
-  ],
-  tip: "Have a glass of water and a little protein with your next meal — it helps you recover.",
-};
+/* ---------- language-aware accessors ---------- */
+const C = () => CONTENT[LANG];
+const T = () => UI[LANG];
 
 /* ---------- state ---------- */
 const STORE_KEY = "mums-workout-v1";
@@ -268,7 +660,7 @@ function markDone() {
 function buildSteps() {
   return [
     { type: "warmup" },
-    ...EXERCISES.map((ex, i) => ({ type: "exercise", ex, exIndex: i })),
+    ...C().EXERCISES.map((ex, i) => ({ type: "exercise", ex, exIndex: i })),
     { type: "cooldown" },
   ];
 }
@@ -277,13 +669,13 @@ function buildSteps() {
 function mediaHTML(ex) {
   return `
     <figure class="media" data-slug="${ex.slug}">
-      <img alt="How to do the ${ex.name}" src="assets/exercises/${ex.slug}.gif"
+      <img alt="${T().mediaAlt(ex.name)}" src="assets/exercises/${ex.slug}.gif"
            onerror="this.remove(); this.closest('.media').classList.add('is-missing');" />
       <span class="media-credit">Demo: ExerciseDB</span>
       <div class="media-placeholder" aria-hidden="true">
         <span class="mp-emoji">🎬</span>
-        <b>Form video goes here</b>
-        <small>To change it, save a clip as</small>
+        <b>${T().mediaPlaceholderTitle}</b>
+        <small>${T().mediaPlaceholderHint}</small>
         <code>assets/exercises/${ex.slug}.gif</code>
       </div>
     </figure>`;
@@ -305,6 +697,7 @@ function wireMedia(root) {
    ROUTER
    ============================================================ */
 let flowIndex = 0;
+let currentRoute = "home";
 
 function go(route, opts = {}) {
   if (route === "flow") flowIndex = opts.index ?? 0;
@@ -313,6 +706,7 @@ function go(route, opts = {}) {
 }
 
 function render(route, opts = {}) {
+  currentRoute = route;
   const root = app();
   switch (route) {
     case "home":     root.innerHTML = viewHome(); break;
@@ -334,59 +728,72 @@ function render(route, opts = {}) {
 
 function greeting() {
   const h = new Date().getHours();
-  if (h < 12) return "Good morning";
-  if (h < 17) return "Good afternoon";
-  return "Good evening";
+  if (h < 12) return T().greetingMorning;
+  if (h < 17) return T().greetingAfternoon;
+  return T().greetingEvening;
 }
 function niceDate() {
-  return new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });
+  return new Date().toLocaleDateString(T().locale, { weekday: "long", day: "numeric", month: "long" });
+}
+
+function langToggle() {
+  const opts = Object.keys(LANGS).map((code) =>
+    `<button class="lang-opt ${LANG === code ? "on" : ""}" data-lang="${code}"
+      aria-pressed="${LANG === code ? "true" : "false"}">${LANGS[code]}</button>`
+  ).join("");
+  return `
+    <div class="lang-switch" role="group" aria-label="${T().langLabel}">
+      <span class="lang-switch-label">${icon.globe}<span>${T().langLabel}</span></span>
+      <div class="lang-opts">${opts}</div>
+    </div>`;
 }
 
 function viewHome() {
   const done = doneToday();
   return `
   <main class="view">
+    ${langToggle()}
     <header class="home-hero">
       <div class="greeting">${greeting()} 🌸</div>
-      <h1>Ready for today?</h1>
+      <h1>${T().readyToday}</h1>
       <div class="home-date">${niceDate()}</div>
     </header>
 
     <section class="today-card">
-      <span class="tag">${icon.calendar} Today's workout</span>
-      <h2>Full-Body Strength</h2>
+      <span class="tag">${icon.calendar} ${T().todaysWorkout}</span>
+      <h2>${T().workoutName}</h2>
       <div class="today-meta">
-        <span>${icon.dumbbell} 8 exercises</span>
-        <span>${icon.clock} About 50 minutes</span>
+        <span>${icon.dumbbell} ${T().exercisesCount(C().EXERCISES.length)}</span>
+        <span>${icon.clock} ${T().aboutMinutes}</span>
       </div>
-      ${done ? `<div class="done-today">${icon.check} You've done this today — lovely!</div>` : ``}
-      <button class="btn btn-go" data-go="flow">${done ? "Do it again" : "Start Workout"} ${icon.chev}</button>
+      ${done ? `<div class="done-today">${icon.check} ${T().doneToday}</div>` : ``}
+      <button class="btn btn-go" data-go="flow">${done ? T().doItAgain : T().startWorkout} ${icon.chev}</button>
     </section>
 
     <nav class="quick-links" aria-label="More">
       <button class="quick-link" data-go="plan">
         <span class="ql-icon">${icon.book}</span>
-        <span class="ql-text"><b>See the full plan</b><small>All exercises and how to progress</small></span>
+        <span class="ql-text"><b>${T().seePlanTitle}</b><small>${T().seePlanSub}</small></span>
         <span class="ql-chev">${icon.chev}</span>
       </button>
       <button class="quick-link" data-go="effort">
         <span class="ql-icon">${icon.gauge}</span>
-        <span class="ql-text"><b>How hard should it feel?</b><small>A simple guide to effort</small></span>
+        <span class="ql-text"><b>${T().howHardTitle}</b><small>${T().howHardSub}</small></span>
         <span class="ql-chev">${icon.chev}</span>
       </button>
       <button class="quick-link" data-go="safety">
         <span class="ql-icon">${icon.shield}</span>
-        <span class="ql-text"><b>Staying safe</b><small>When to stop and get help</small></span>
+        <span class="ql-text"><b>${T().stayingSafeTitle}</b><small>${T().stayingSafeSub}</small></span>
         <span class="ql-chev">${icon.chev}</span>
       </button>
     </nav>
 
-    <p class="home-foot">Move at your own pace. There's no rush, and no prizes for going heavy.<br/>If anything hurts, stop.</p>
+    <p class="home-foot">${T().homeFoot}</p>
   </main>`;
 }
 
 function effortBars(level) {
-  const e = EFFORT[level];
+  const e = C().EFFORT[level];
   let bars = "";
   for (let i = 0; i < 3; i++) bars += `<i class="${i < e.on ? "on" : ""}"></i>`;
   return { bars, word: e.word, note: e.note };
@@ -397,9 +804,9 @@ function stepChrome(index, total, inner) {
   return `
   <div class="flow-header">
     <div class="flow-header-row">
-      <button class="icon-btn" data-go="home" aria-label="Close workout">${icon.close}</button>
+      <button class="icon-btn" data-go="home" aria-label="${T().closeWorkout}">${icon.close}</button>
       <div class="flow-progress">
-        <div class="flow-step-label"><span>Step ${index + 1} of ${total}</span></div>
+        <div class="flow-step-label"><span>${T().stepXofY(index + 1, total)}</span></div>
         <div class="pbar"><i style="width:${pct}%"></i></div>
       </div>
     </div>
@@ -412,9 +819,9 @@ function flowFooter(index, total) {
   return `
   <div class="flow-footer">
     <div class="flow-footer-row">
-      ${index > 0 ? `<button class="btn btn-ghost btn-back" data-flow="prev">${icon.back}</button>` : ``}
+      ${index > 0 ? `<button class="btn btn-ghost btn-back" data-flow="prev" aria-label="${T().back}">${icon.back}</button>` : ``}
       <button class="btn ${last ? "btn-go" : "btn-primary"} btn-next" data-flow="next">
-        ${last ? `Finish ${icon.check}` : `Next ${icon.chev}`}
+        ${last ? `${T().finish} ${icon.check}` : `${T().next} ${icon.chev}`}
       </button>
     </div>
   </div>`;
@@ -426,8 +833,8 @@ function viewFlow(index) {
   const step = steps[index];
   let inner = "";
 
-  if (step.type === "warmup") inner = warmupStep(WARMUP);
-  else if (step.type === "cooldown") inner = warmupStep(COOLDOWN);
+  if (step.type === "warmup") inner = warmupStep(C().WARMUP);
+  else if (step.type === "cooldown") inner = warmupStep(C().COOLDOWN);
   else inner = exerciseStep(step.ex, step.exIndex);
 
   return stepChrome(index, total, inner) + flowFooter(index, total);
@@ -453,7 +860,7 @@ function exerciseStep(ex, exIndex) {
   const doThis = ex.doThis.map((s) => `<li>${s}</li>`).join("");
   const avoid = ex.avoid.map((s) => `<li>${s}</li>`).join("");
   return `
-    <div class="step-kicker">Exercise ${exIndex + 1} of ${EXERCISES.length}</div>
+    <div class="step-kicker">${T().exerciseXofY(exIndex + 1, C().EXERCISES.length)}</div>
     <h2 class="step-title">${ex.name}</h2>
     <p class="works">${ex.works}</p>
 
@@ -461,29 +868,29 @@ function exerciseStep(ex, exIndex) {
 
     <div class="vitals">
       <div class="vital">
-        <div class="vlabel">Do</div>
+        <div class="vlabel">${T().doLabel}</div>
         <div class="vbig">${ex.sets}</div>
-        <div class="vsub">of ${ex.reps}</div>
+        <div class="vsub">${T().ofReps(ex.reps)}</div>
       </div>
       <div class="vital effort">
-        <div class="vlabel">How hard</div>
+        <div class="vlabel">${T().howHardLabel}</div>
         <div class="meter" aria-hidden="true">${eff.bars}</div>
         <div class="vsub"><b style="font-weight:700">${eff.word}.</b> ${eff.note}</div>
       </div>
     </div>
 
     <section class="block setup">
-      <div class="block-head">Set up</div>
+      <div class="block-head">${T().setUp}</div>
       <ol>${setup}</ol>
     </section>
 
     <section class="block do">
-      <div class="block-head">${icon.check} Do this</div>
+      <div class="block-head">${icon.check} ${T().doThisHead}</div>
       <ul>${doThis}</ul>
     </section>
 
     <section class="block avoid">
-      <div class="block-head">${icon.alert} Avoid</div>
+      <div class="block-head">${icon.alert} ${T().avoidHead}</div>
       <ul>${avoid}</ul>
     </section>
 
@@ -495,15 +902,15 @@ function viewDone() {
   return `
   <main class="view done">
     <div class="burst">${icon.checkBig}</div>
-    <h1>All done!</h1>
-    <p>Wonderful work. Every session keeps you stronger and steadier. See you next time.</p>
-    <button class="btn btn-primary" data-go="home">Back to start</button>
+    <h1>${T().allDone}</h1>
+    <p>${T().doneText}</p>
+    <button class="btn btn-primary" data-go="home">${T().backToStart}</button>
   </main>`;
 }
 
 /* ---------- Full plan ---------- */
 function viewPlan() {
-  const acc = EXERCISES.map((ex, i) => {
+  const acc = C().EXERCISES.map((ex, i) => {
     const eff = effortBars(ex.effort);
     return `
     <div class="acc-item">
@@ -515,42 +922,40 @@ function viewPlan() {
       <div class="acc-panel">
         ${mediaHTML(ex)}
         <div class="vitals" style="margin-top:0.9rem">
-          <div class="vital"><div class="vlabel">Do</div><div class="vbig" style="font-size:1.5rem">${ex.sets}</div><div class="vsub">of ${ex.reps}</div></div>
-          <div class="vital effort"><div class="vlabel">How hard</div><div class="meter">${eff.bars}</div><div class="vsub">${eff.word}</div></div>
+          <div class="vital"><div class="vlabel">${T().doLabel}</div><div class="vbig" style="font-size:1.5rem">${ex.sets}</div><div class="vsub">${T().ofReps(ex.reps)}</div></div>
+          <div class="vital effort"><div class="vlabel">${T().howHardLabel}</div><div class="meter">${eff.bars}</div><div class="vsub">${eff.word}</div></div>
         </div>
-        <section class="block setup"><div class="block-head">Set up</div><ol>${ex.setup.map((s) => `<li>${s}</li>`).join("")}</ol></section>
-        <section class="block do"><div class="block-head">${icon.check} Do this</div><ul>${ex.doThis.map((s) => `<li>${s}</li>`).join("")}</ul></section>
-        <section class="block avoid"><div class="block-head">${icon.alert} Avoid</div><ul>${ex.avoid.map((s) => `<li>${s}</li>`).join("")}</ul></section>
+        <section class="block setup"><div class="block-head">${T().setUp}</div><ol>${ex.setup.map((s) => `<li>${s}</li>`).join("")}</ol></section>
+        <section class="block do"><div class="block-head">${icon.check} ${T().doThisHead}</div><ul>${ex.doThis.map((s) => `<li>${s}</li>`).join("")}</ul></section>
+        <section class="block avoid"><div class="block-head">${icon.alert} ${T().avoidHead}</div><ul>${ex.avoid.map((s) => `<li>${s}</li>`).join("")}</ul></section>
       </div>
     </div>`;
   }).join("");
 
   return `
-  ${pageHeader("The Full Plan")}
+  ${pageHeader(T().planTitle)}
   <main class="view">
-    <p class="section-intro">The same 8 exercises, <strong>3 days a week</strong> — for example Monday, Wednesday and Friday, with a rest day in between. Each session takes about 50 minutes.</p>
+    <p class="section-intro">${T().planIntro}</p>
 
-    <div class="callout info">${icon.shield}<b style="display:inline; margin-left:0.4rem">Before you begin</b><br/>
-    If you've never had a bone-density (DEXA) scan, or you have any joint replacement, disc problem, osteopenia or osteoporosis, please get the all-clear from your doctor first.</div>
+    <div class="callout info">${icon.shield}${T().planBefore}</div>
 
-    <h2 class="section-title">Warm-up</h2>
-    <ul class="plan-list">${WARMUP.items.map((it) => `<li>${icon.dot}<span><strong>${it.b}.</strong> ${it.s}</span></li>`).join("")}</ul>
+    <h2 class="section-title">${T().planWarmup}</h2>
+    <ul class="plan-list">${C().WARMUP.items.map((it) => `<li>${icon.dot}<span><strong>${it.b}.</strong> ${it.s}</span></li>`).join("")}</ul>
 
-    <h2 class="section-title">The exercises</h2>
-    <p class="section-intro">Tap any exercise to see how to do it.</p>
+    <h2 class="section-title">${T().planExercises}</h2>
+    <p class="section-intro">${T().planTapAny}</p>
     <div class="acc">${acc}</div>
 
-    <h2 class="section-title">Cool-down</h2>
-    <ul class="plan-list">${COOLDOWN.items.map((it) => `<li>${icon.dot}<span><strong>${it.b}.</strong> ${it.s}</span></li>`).join("")}</ul>
+    <h2 class="section-title">${T().planCooldown}</h2>
+    <ul class="plan-list">${C().COOLDOWN.items.map((it) => `<li>${icon.dot}<span><strong>${it.b}.</strong> ${it.s}</span></li>`).join("")}</ul>
 
-    <h2 class="section-title">Getting stronger over time</h2>
+    <h2 class="section-title">${T().planStronger}</h2>
     <div class="prose">
-      <p>Only add a little weight when you can finish every set comfortably with good form — and it still feels like you had 2–3 reps left in you.</p>
-      <p>Go up in <strong>small steps</strong> (the smallest the machine allows). If your form gets messy during a set, that's your stopping point — never push through it.</p>
+      <p>${T().planStrongerP1}</p>
+      <p>${T().planStrongerP2}</p>
     </div>
 
-    <div class="callout warn"><b>Two optional extras (ask first)</b>
-    Once you've done the basic plan well for a couple of months, a slightly heavier block on the leg and chest press, and some gentle heel-drops for bone strength, can be added. These specifically need a doctor or physio's OK if there's any bone or joint concern — so please check before adding them.</div>
+    <div class="callout warn">${T().planExtras}</div>
 
     ${bdiscReturn()}
   </main>`;
@@ -566,23 +971,21 @@ function viewEffort() {
     </div>`;
   };
   return `
-  ${pageHeader("How hard should it feel?")}
+  ${pageHeader(T().howHardTitle)}
   <main class="view">
-    <p class="section-intro">You don't need to push to your limit. The aim is <strong>comfortably hard</strong> — working, but always in control.</p>
+    <p class="section-intro">${T().effortIntro}</p>
 
-    <h2 class="section-title">A simple test</h2>
-    <div class="prose"><p>At the end of each set, ask yourself: <strong>could I have done a few more?</strong> If the answer is yes — about 2 or 3 more — you've got it just right.</p></div>
+    <h2 class="section-title">${T().effortTestTitle}</h2>
+    <div class="prose"><p>${T().effortTestP}</p></div>
 
-    <h2 class="section-title">The levels</h2>
+    <h2 class="section-title">${T().effortLevelsTitle}</h2>
     ${row("moderate")}
     ${row("steady")}
     ${row("easy")}
 
-    <div class="callout warn" style="margin-top:1.2rem"><b>If in doubt, go lighter</b>
-    A weight that's a little too easy is far better than one that's too heavy. You can always add a little next time.</div>
+    <div class="callout warn" style="margin-top:1.2rem">${T().effortLighter}</div>
 
-    <div class="callout danger" style="margin-top:1rem">${icon.alert}<b style="display:inline;margin-left:0.4rem">Sharp pain is different</b><br/>
-    A gentle muscle "burn" is normal. Sharp, pinching or shooting pain is not — stop straight away.</div>
+    <div class="callout danger" style="margin-top:1rem">${icon.alert}${T().effortSharp}</div>
 
     ${bdiscReturn()}
   </main>`;
@@ -590,33 +993,24 @@ function viewEffort() {
 
 /* ---------- Safety ---------- */
 function viewSafety() {
-  const stops = [
-    "Sharp, pinching or shooting pain in a joint (different from normal muscle tiredness).",
-    "Pain that carries on or gets worse two days after a session.",
-    "Clicking, catching or a feeling that a joint might give way.",
-    "Numbness or tingling anywhere during or after exercise.",
-    "You simply can't feel the right muscle working, even after following the set-up.",
-  ];
+  const stops = T().safetyStops;
   return `
-  ${pageHeader("Staying safe")}
+  ${pageHeader(T().safetyTitle)}
   <main class="view">
-    <p class="section-intro">This program is built to be gentle on your joints. Listening to your body is the most important rule of all.</p>
+    <p class="section-intro">${T().safetyIntro}</p>
 
-    <div class="callout danger">${icon.alert}<b style="display:inline;margin-left:0.4rem">Stop and rest if you feel unwell</b><br/>
-    Dizziness, chest pain, breathlessness beyond normal effort, or feeling faint — stop, sit down, and seek help.</div>
+    <div class="callout danger">${icon.alert}${T().safetyUnwell}</div>
 
-    <h2 class="section-title">Stop and see a professional if…</h2>
+    <h2 class="section-title">${T().safetyStopTitle}</h2>
     <div class="stop-list">
       ${stops.map((s) => `<div class="stop-item">${icon.alert}<span>${s}</span></div>`).join("")}
     </div>
 
-    <div class="callout info" style="margin-top:1.4rem"><b>Worth doing</b>
-    One session with a physiotherapist or trainer to check your set-up on the machines is a great investment — even if you do the rest on your own.</div>
+    <div class="callout info" style="margin-top:1.4rem">${T().safetyWorth}</div>
 
-    <div class="callout warn"><b>Check with your doctor first if you have</b>
-    any joint replacement, a disc problem, or diagnosed osteopenia or osteoporosis — ideally before starting this program at all.</div>
+    <div class="callout warn">${T().safetyCheck}</div>
 
-    <p class="section-intro" style="margin-top:1.4rem">This app is a friendly guide, not medical advice. Your doctor and physio know you best.</p>
+    <p class="section-intro" style="margin-top:1.4rem">${T().safetyDisclaimer}</p>
 
     ${bdiscReturn()}
   </main>`;
@@ -626,19 +1020,26 @@ function pageHeader(title) {
   return `
   <div class="page-header">
     <div class="page-header-row">
-      <button class="icon-btn" data-go="home" aria-label="Back to start">${icon.back}</button>
+      <button class="icon-btn" data-go="home" aria-label="${T().backToStart}">${icon.back}</button>
       <h1>${title}</h1>
     </div>
   </div>`;
 }
 function bdiscReturn() {
-  return `<button class="btn btn-primary btn-lg" data-go="home" style="margin-top:2rem">Back to start</button>`;
+  return `<button class="btn btn-primary btn-lg" data-go="home" style="margin-top:2rem">${T().backToStart}</button>`;
 }
 
 /* ============================================================
    EVENTS (single delegated listener)
    ============================================================ */
 document.addEventListener("click", (e) => {
+  const langEl = e.target.closest("[data-lang]");
+  if (langEl) {
+    const code = langEl.getAttribute("data-lang");
+    if (code !== LANG) { setLang(code); render(currentRoute); }
+    return;
+  }
+
   const goEl = e.target.closest("[data-go]");
   if (goEl) { go(goEl.getAttribute("data-go")); return; }
 
@@ -672,4 +1073,5 @@ document.addEventListener("click", (e) => {
 });
 
 /* boot */
+document.documentElement.lang = LANG;
 render("home");
