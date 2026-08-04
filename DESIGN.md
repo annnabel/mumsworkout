@@ -51,6 +51,12 @@ typography:
     fontWeight: 700
     lineHeight: 1.2
     letterSpacing: "0.06em"
+  # Same roles, same sizes and weights - only the family changes, and only for
+  # Vietnamese text. Figtree has no Vietnamese glyphs; Mulish does.
+  vietnamese:
+    fontFamily: "Mulish, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+    fontWeight: 400
+    lineHeight: 1.55
 rounded:
   sm: "12px"
   md: "18px"
@@ -158,8 +164,11 @@ A pure-white daylight surface, one confident blue for guidance, and a discipline
 
 **Display Font:** Figtree (with `ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`)
 **Body Font:** Figtree — the same family, in lighter weights.
+**Vietnamese Font:** Mulish (same fallback stack), applied by `:lang(vi)`.
 
 **Character:** One highly legible humanist sans, used from 400 to 800, at large sizes. Humanist warmth keeps it human rather than clinical; a single family keeps every screen quiet and consistent. There is no display/body pairing — the range is created by weight and size alone.
+
+**Why there are two families.** Figtree contains no Vietnamese glyphs at all — nothing in `U+1EA0–U+1EF9` — so Vietnamese set in Figtree renders every toned vowel in whatever fallback the phone happens to have, and "Bắt đầu tập" arrives in two typefaces at once. Mulish covers Vietnamese completely and shares Figtree's humanist-geometric skeleton, high x-height, and open apertures. This is not a display/body pairing: the two never meet inside a word, and only one is on screen at a time. Both are self-hosted from `assets/fonts/` (variable, 400–800), so the app carries its own type and needs no network to render.
 
 ### Hierarchy
 - **Display** (800, `clamp(2rem, 9vw, 2.6rem)`, lh 1.15, ls −0.02em): The Home greeting headline and the Done screen. `text-wrap: balance` for even lines.
@@ -169,7 +178,7 @@ A pure-white daylight surface, one confident blue for guidance, and a discipline
 - **Label** (700, `0.92rem`, ls 0.06em, uppercase): The small "SETS × REPS" / "EFFORT" vital labels only.
 
 ### Named Rules
-**The One-Voice Rule.** One family, Figtree, everywhere. No second font is introduced for headings, numbers, or labels. Hierarchy comes from weight (400/500/600/700/800) and size, never from a new typeface.
+**The One-Voice Rule.** One family per language — Figtree for English, Mulish for Vietnamese — and nothing else. No second font is introduced for headings, numbers, or labels. Hierarchy comes from weight (400/500/600/700/800) and size, never from a new typeface. A language face is selected only by `:lang()`, never by hand on individual elements.
 
 **The Read-It-Once Rule.** Nothing that must be understood drops below body size (`1.15rem` on an 18px root). Uppercase tracking is confined to the two tiny vital labels; body and cues are always sentence case and plain-spoken.
 
@@ -215,8 +224,17 @@ Color-coded content blocks that carry the injury-prevention cues:
 ### Media Frame (signature)
 - A 4:3 rounded frame holding the form-demo GIF, `object-fit: contain` so the whole movement (head to feet) is always visible — **never cropped**. A missing GIF shows a friendly striped placeholder naming the exact filename the maintainer must add.
 
+### Language Switch (signature)
+Two shapes for the same control, because it has to be reachable on every screen without crowding any of them:
+- **Full** (Home only): a globe-and-label row with both languages as pills side by side, each written in its own language and carrying its own `lang` attribute. The current one is a filled blue pill.
+- **Compact** (workout flow and all reference pages): a single blue-wash pill naming the language it switches *to*, written in that language — it reads to whoever needs it. One tap, no menu; there are only ever two.
+
+Switching never costs her anything: the same screen re-renders in place, keeping her step, her scroll position, her ticks and her open accordions, with focus returned to the switch and a polite live-region announcement.
+
 ### Navigation & Chrome
-- No persistent app nav. Movement is a linear flow (Start → warm-up → 8 exercises → cool-down → Done) driven by a big **Next** button in a sticky footer and a back icon in a sticky header. Reference pages use a simple sticky header with a back button and title. There are no hidden menus or gestures.
+- No persistent app nav. Movement is a linear flow (Start → warm-up → 8 exercises → cool-down → Done) driven by a big **Next** button in a sticky footer and a back icon in a sticky header.
+- **Sticky headers are two rows:** controls on top (close/back on the left, language pill on the right), then the title — or, in the flow, the step count and progress bar. Three items on one row cannot fit a 320px phone once the labels are Vietnamese, and neither the step count nor the page title is a thing to abbreviate away.
+- There are no hidden menus or gestures.
 
 ## 6. Do's and Don'ts
 

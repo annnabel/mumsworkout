@@ -4,16 +4,36 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#ffffff" />
+  <meta name="color-scheme" content="light" />
   <title>Mum's Workout</title>
   <meta name="description" content="A simple, one-exercise-at-a-time guide to today's workout." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Type is self-hosted (see the @font-face block in styles.css): no
+       third-party request, so the app still paints in full on a dead
+       gym connection. -->
+  <link rel="preload" href="assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div id="app"><!-- views render here --></div>
+
+  <!-- Announces changes that don't move focus, e.g. the language switching
+       under her, so screen-reader users hear that it worked. -->
+  <div id="sr-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <noscript>
+    <div style="max-width:34rem;margin:0 auto;padding:2rem 1.4rem;line-height:1.5">
+      <h1 style="font-size:1.8rem">Please turn on JavaScript</h1>
+      <p style="margin-top:0.8rem;font-size:1.1rem">
+        This workout guide needs JavaScript to show the exercises. Turn it on in
+        your browser settings, then reload this page.
+      </p>
+      <p lang="vi" style="margin-top:1rem;font-size:1.1rem">
+        Ứng dụng này cần JavaScript để hiển thị các bài tập. Hãy bật JavaScript
+        trong cài đặt trình duyệt, rồi tải lại trang.
+      </p>
+    </div>
+  </noscript>
 
   <script src="app.js" defer></script>
 </body>

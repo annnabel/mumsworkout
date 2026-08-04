@@ -4,6 +4,60 @@
    calm palette. Injury-prevention content is colour-coded.
    ============================================================ */
 
+/* ------------------------------------------------------------
+   TYPE FILES - self-hosted, so the app paints instantly and works
+   with no signal at all in the gym. No third-party request.
+
+   Figtree carries English. It has no Vietnamese glyphs whatsoever
+   (nothing in U+1EA0-1EF9), so Vietnamese set in Figtree renders
+   every toned vowel in whatever fallback the phone happens to have:
+   "Bắt đầu tập" comes out in two different typefaces mid-word.
+   Mulish covers Vietnamese fully and shares Figtree's humanist-
+   geometric skeleton, so it carries anything marked lang="vi".
+   The two never meet inside a word - only one language is ever
+   on screen at a time.
+   ------------------------------------------------------------ */
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("assets/fonts/figtree-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("assets/fonts/figtree-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("assets/fonts/mulish-vietnamese.woff2") format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("assets/fonts/mulish-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("assets/fonts/mulish-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   /* Surfaces */
   --bg:            oklch(1 0 0);                /* pure white */
@@ -40,7 +94,8 @@
   --danger-ink:    oklch(0.45 0.16 25);
 
   /* Type */
-  --font: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font:    "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-vi: "Mulish", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   /* Radius & shadow */
   --r-sm: 12px;
@@ -77,10 +132,26 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Anything marked as Vietnamese gets the face that can actually draw it -
+   whether that's the whole document or a single button label sitting on an
+   English screen. */
+:lang(vi) { font-family: var(--font-vi); }
+
 h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; letter-spacing: -0.02em; }
 p { margin: 0; text-wrap: pretty; }
 
 button { font-family: inherit; }
+
+/* Visible to screen readers, invisible on screen. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
 
 :focus-visible {
   outline: 3px solid var(--primary);
@@ -144,7 +215,6 @@ button { font-family: inherit; }
   appearance: none;
   border: 0;
   cursor: pointer;
-  font-family: inherit;
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--ink-soft);
@@ -152,6 +222,9 @@ button { font-family: inherit; }
   padding: 0.5rem 0.95rem;
   border-radius: 999px;
   min-height: 2.5rem;
+  touch-action: manipulation;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: background 0.15s ease, color 0.15s ease;
 }
 .lang-opt.on {
@@ -163,6 +236,35 @@ button { font-family: inherit; }
   outline: 3px solid var(--primary);
   outline-offset: 2px;
 }
+
+/* Compact switch for the workout flow and the reference pages, where the full
+   control won't fit. It names the language it takes you TO, written in that
+   language, so it reads to whoever needs it. One tap, no menu - there are
+   only ever two. */
+.lang-jump {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 9.5rem;
+  min-height: 2.9rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-strong);
+  background: var(--primary-wash);
+  border: 1px solid color-mix(in oklch, var(--primary) 20%, var(--line));
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: manipulation;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 150ms ease, transform 120ms ease;
+}
+.lang-jump svg { flex: none; }
+.lang-jump span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lang-jump:hover { background: color-mix(in oklch, var(--primary) 12%, var(--bg)); }
+.lang-jump:active { transform: scale(0.96); }
 
 .home-hero {
   padding-top: 0.25rem;
@@ -268,6 +370,7 @@ button { font-family: inherit; }
   border-radius: var(--r);
   cursor: pointer;
   transition: transform 120ms ease, background-color 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 .btn:active { transform: scale(0.985); }
@@ -316,6 +419,7 @@ button { font-family: inherit; }
   border-radius: var(--r);
   cursor: pointer;
   transition: background-color 150ms ease, border-color 150ms ease, transform 120ms ease;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 .quick-link:active { transform: scale(0.99); }
@@ -358,6 +462,7 @@ button { font-family: inherit; }
   margin-inline: auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.8rem;
 }
 .icon-btn {
@@ -369,23 +474,34 @@ button { font-family: inherit; }
   border-radius: 14px;
   color: var(--ink);
   cursor: pointer;
+  touch-action: manipulation;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   transition: background-color 150ms ease, transform 120ms ease;
 }
 .icon-btn:hover { background: var(--surface-2); }
 .icon-btn:active { transform: scale(0.94); }
 
-.flow-progress { flex: 1; }
-.flow-step-label {
+/* "Step 3 of 10" and the bar share their own line under the close/language
+   row. Three items on one row can't fit a 320px phone once the step count is
+   in Vietnamese, and the step count is not a thing to abbreviate away. */
+.flow-progress {
+  max-width: var(--wrap);
+  margin: 0.55rem auto 0;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
+  gap: 0.7rem;
+}
+.flow-step-label {
+  flex: none;
   font-weight: 700;
   font-size: 1rem;
-  margin-bottom: 0.45rem;
+  white-space: nowrap;
 }
 .flow-step-label .muted { color: var(--ink-soft); font-weight: 600; font-size: 0.9rem; }
 .pbar {
+  flex: 1;
+  min-width: 4rem;
   height: 12px;
   border-radius: 999px;
   background: var(--surface-2);
@@ -436,6 +552,7 @@ button { font-family: inherit; }
   font-size: 0.78rem;
   color: var(--ink-soft);
 }
+.media-placeholder[hidden] { display: none; }
 .media-placeholder {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
@@ -461,9 +578,12 @@ button { font-family: inherit; }
 .media-placeholder small { max-width: 22ch; }
 
 /* Big numbers: sets × reps + effort */
+/* Side by side when both cards can hold a readable line, stacked when they
+   can't. Vietnamese runs longer than English, and two 130px columns turn the
+   effort note into a ribbon of one or two words per line. */
 .vitals {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
   gap: 0.8rem;
   margin-top: 1.3rem;
 }
@@ -600,6 +720,7 @@ button { font-family: inherit; }
   cursor: pointer;
   font-size: 1.12rem;
   transition: background-color 150ms ease, border-color 150ms ease;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 .check-item .box {
@@ -646,6 +767,7 @@ button { font-family: inherit; }
   border: 1px solid var(--line);
   background: var(--bg);
   cursor: pointer;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 .cool-tick .box {
@@ -733,6 +855,11 @@ button { font-family: inherit; }
   animation: pop 500ms cubic-bezier(0.22, 1.4, 0.4, 1);
 }
 @keyframes pop { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+/* Last-resort screen when a view fails to build. Same calm shape as the done
+   screen, amber rather than green: something to fix, not something to fear. */
+.done .burst-warn { background: var(--caution-wash); color: var(--caution-ink); }
+.done .burst-warn svg { width: 3.2rem; height: 3.2rem; }
+.error-view .btn { max-width: 22rem; }
 .done h1 { font-size: clamp(2rem, 9vw, 2.6rem); font-weight: 800; }
 .done p { margin-top: 0.8rem; color: var(--ink-soft); font-size: 1.15rem; max-width: 26ch; }
 .done .btn { margin-top: 2rem; max-width: 22rem; }
@@ -747,11 +874,20 @@ button { font-family: inherit; }
   border-bottom: 1px solid var(--line);
   padding: max(0.7rem, env(safe-area-inset-top)) var(--pad) 0.7rem;
 }
+/* Same two-row shape as the workout header: controls on top, title below with
+   the full width it needs. "The Full Plan" beside a language pill on a 320px
+   phone leaves the title about four characters wide. */
 .page-header-row {
   max-width: var(--wrap); margin-inline: auto;
-  display: flex; align-items: center; gap: 0.9rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 0.7rem;
 }
-.page-header h1 { font-size: 1.4rem; font-weight: 800; }
+.page-header h1 {
+  max-width: var(--wrap);
+  margin: 0.5rem auto 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  overflow-wrap: break-word;
+}
 
 .section-title {
   font-size: 1.5rem; font-weight: 800;
@@ -768,6 +904,7 @@ button { font-family: inherit; }
   padding: 1.1rem 1.2rem;
   background: var(--bg);
   border: 0; cursor: pointer;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 .acc-btn:hover { background: var(--surface); }

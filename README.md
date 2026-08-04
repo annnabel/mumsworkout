@@ -17,7 +17,13 @@ someone who doesn't use technology often, with injury prevention as the priority
 - **Plain-language effort guide** (no jargon like "RPE").
 - **Staying safe** page - when to stop and see a professional.
 - **The full plan** - all exercises, warm-up/cool-down, and how to progress.
-- Remembers when today's session is done (stored on the phone; no account, no data collected).
+- **English or Vietnamese**, switchable from every screen - mid-workout too, without
+  losing your place. Remembered between visits, and a Vietnamese-set phone opens in
+  Vietnamese by itself.
+- **Works with no signal.** After the first visit the whole app, including every demo
+  GIF, is stored on the phone, so a gym basement with no bars changes nothing.
+- Remembers when today's session is done, and offers to resume an interrupted workout
+  (stored on the phone; no account, no data collected).
 
 ## Running it
 It's a plain static site - no build step. Open `index.html`, or serve the folder:
@@ -38,8 +44,14 @@ friendly placeholder telling you which name to use.
 ## Files
 - `index.html` - page shell
 - `styles.css` - the design system (large type, high contrast, calm palette)
-- `app.js` - all content (the program) + the screen-to-screen logic
+- `app.js` - all content (the program, in both languages) + the screen-to-screen logic
+- `sw.js` - service worker; keeps the app and its GIFs working offline
 - `assets/exercises/` - the form demo GIFs
+- `assets/fonts/` - the two self-hosted typefaces (see
+  [`assets/fonts/README.md`](assets/fonts/README.md))
+
+After changing `styles.css`, `app.js` or `index.html`, bump `CACHE` in `sw.js` so
+phones that already have the old version pick the new one up.
 
 ## A note
 This app is a friendly guide, not medical advice. Anyone with a joint replacement,
