@@ -9,8 +9,10 @@
 const $ = (sel, root = document) => root.querySelector(sel);
 const app = () => document.getElementById("app");
 
-// Minimal inline icons (stroke = currentColor)
-const icon = {
+// Minimal inline icons (stroke = currentColor). They're decorative - every one
+// sits next to a text label or inside a button with an aria-label - so they're
+// hidden from screen readers and kept out of the tab order.
+const rawIcon = {
   back: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`,
   close: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>`,
   chev: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>`,
@@ -28,28 +30,57 @@ const icon = {
   globe: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9S14.5 18.3 12 21C9.5 18.3 8.2 15.3 8.2 12S9.5 5.7 12 3z"/></svg>`,
   dot: `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>`,
 };
+const icon = Object.fromEntries(
+  Object.entries(rawIcon).map(([k, svg]) => [k, svg.replace("<svg ", `<svg aria-hidden="true" focusable="false" `)])
+);
 
 /* ============================================================
-   LANGUAGE - English (default) and Vietnamese
+   LANGUAGE - English and Vietnamese
    Saved to localStorage so it persists between visits.
    ============================================================ */
 const LANG_KEY = "mums-workout-lang";
 const LANGS = { en: "English", vi: "Tiếng Việt" };
+const FALLBACK_LANG = "en";
+const isLang = (l) => Object.prototype.hasOwnProperty.call(LANGS, l);
+const otherLang = () => (LANG === "vi" ? "en" : "vi");
 
+// First visit only: follow the phone's own language if we speak it, so a
+// Vietnamese-set phone opens in Vietnamese without anyone hunting for a switch.
+function detectLang() {
+  try {
+    const tags = navigator.languages?.length ? navigator.languages : [navigator.language];
+    for (const tag of tags) {
+      const base = String(tag || "").toLowerCase().split("-")[0];
+      if (isLang(base)) return base;
+    }
+  } catch { /* no navigator.languages - fall through */ }
+  return FALLBACK_LANG;
+}
 function loadLang() {
   try {
     const l = localStorage.getItem(LANG_KEY);
-    return l === "vi" ? "vi" : "en";
-  } catch { return "en"; }
+    if (isLang(l)) return l;
+  } catch { /* private mode / storage blocked */ }
+  return detectLang();
 }
 function saveLang(l) {
   try { localStorage.setItem(LANG_KEY, l); } catch { /* ignore */ }
 }
 let LANG = loadLang();
 function setLang(l) {
-  LANG = l === "vi" ? "vi" : "en";
+  LANG = isLang(l) ? l : FALLBACK_LANG;
   saveLang(LANG);
   document.documentElement.lang = LANG;
+}
+
+// Say something to a screen reader without stealing focus.
+function announce(msg) {
+  const el = document.getElementById("sr-status");
+  if (!el) return;
+  el.textContent = "";
+  // Clearing first, then setting on the next frame, makes a repeated message
+  // announce again instead of being swallowed as "no change".
+  requestAnimationFrame(() => { el.textContent = msg; });
 }
 
 /* ============================================================
@@ -865,6 +896,9 @@ const UI = {
     greetingEvening: "Good evening",
     readyToday: "Ready for today?",
     langLabel: "Language",
+    // Written in the language it switches TO, so it reads to whoever needs it.
+    switchTo: "Switch to English",
+    nowInLang: "The app is now in English",
     todaysWorkout: "Today's workout",
     workoutName: "Full-Body Strength",
     exercisesCount: (n) => `${n} exercises`,
@@ -937,6 +971,10 @@ const UI = {
     mediaAlt: (name) => `How to do the ${name}`,
     mediaPlaceholderTitle: "Form video goes here",
     mediaPlaceholderHint: "To change it, save a clip as",
+
+    errorTitle: "Something went wrong",
+    errorText: "Sorry about that. Starting again should fix it, and it won't affect your workout.",
+    errorAction: "Start again",
   },
   vi: {
     locale: "vi-VN",
@@ -945,6 +983,8 @@ const UI = {
     greetingEvening: "Chào buổi tối",
     readyToday: "Sẵn sàng cho hôm nay chưa?",
     langLabel: "Ngôn ngữ",
+    switchTo: "Chuyển sang Tiếng Việt",
+    nowInLang: "Ứng dụng hiện đang dùng Tiếng Việt",
     todaysWorkout: "Bài tập hôm nay",
     workoutName: "Sức mạnh toàn thân",
     exercisesCount: (n) => `${n} bài tập`,
@@ -1017,6 +1057,10 @@ const UI = {
     mediaAlt: (name) => `Cách thực hiện ${name}`,
     mediaPlaceholderTitle: "Video hướng dẫn động tác ở đây",
     mediaPlaceholderHint: "Để thay đổi, lưu một đoạn clip thành",
+
+    errorTitle: "Đã có lỗi xảy ra",
+    errorText: "Xin lỗi bạn. Bắt đầu lại là được, và bài tập của bạn vẫn được giữ nguyên.",
+    errorAction: "Bắt đầu lại",
   },
 };
 
@@ -1026,12 +1070,26 @@ const T = () => UI[LANG];
 
 /* ---------- state ---------- */
 const STORE_KEY = "mums-workout-v1";
+// How long an interrupted workout stays resumable. Long enough to cover a
+// break, a phone call or a session that runs past midnight; short enough that
+// yesterday's workout never greets her this morning.
+const RESUME_WINDOW_MS = 8 * 60 * 60 * 1000;
+
 function loadStore() {
-  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
-  catch { return {}; }
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return {};
+    const s = JSON.parse(raw);
+    // Anything that isn't a plain object (corrupted, hand-edited, written by an
+    // older version) is treated as "no saved state" rather than crashing.
+    return s && typeof s === "object" && !Array.isArray(s) ? s : {};
+  } catch { return {}; }
 }
 function saveStore(s) {
-  try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch { /* ignore */ }
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch { /* full or blocked */ }
+}
+function clearStore() {
+  try { localStorage.removeItem(STORE_KEY); } catch { /* ignore */ }
 }
 function todayKey() {
   const d = new Date();
@@ -1040,8 +1098,11 @@ function todayKey() {
 function doneToday() { return loadStore().lastDone === todayKey(); }
 function markDone() {
   const s = loadStore();
-  s.lastDone = todayKey();
-  s.count = (s.count || 0) + 1;
+  const key = todayKey();
+  // Finishing twice in one day (e.g. Back, then Finish again) shouldn't count
+  // as two workouts.
+  if (s.lastDone !== key) s.count = (s.count || 0) + 1;
+  s.lastDone = key;
   delete s.progress;                       // workout finished - nothing to resume
   saveStore(s);
 }
@@ -1050,7 +1111,7 @@ function markDone() {
 // a text, the tab being evicted) never drops her back to step 1.
 function saveProgress(index) {
   const s = loadStore();
-  s.progress = { dateKey: todayKey(), index };
+  s.progress = { at: Date.now(), index };
   saveStore(s);
 }
 function clearProgress() {
@@ -1058,11 +1119,15 @@ function clearProgress() {
   delete s.progress;
   saveStore(s);
 }
-// An in-progress workout worth resuming: from today, past the first step,
-// and not already at the end. Returns { index, total } or null.
+// An in-progress workout worth resuming: recent, past the first step, and not
+// already at the end. Returns { index, total } or null.
 function inProgress() {
   const p = loadStore().progress;
-  if (!p || p.dateKey !== todayKey()) return null;
+  if (!p || typeof p.index !== "number" || !Number.isFinite(p.index)) return null;
+  // Judged on elapsed time, not the calendar date, so a workout that runs past
+  // midnight is still the same workout.
+  const at = typeof p.at === "number" ? p.at : 0;
+  if (!at || Date.now() - at > RESUME_WINDOW_MS) return null;
   const total = buildSteps().length;
   if (p.index < 1 || p.index >= total) return null;
   return { index: p.index, total };
@@ -1078,15 +1143,18 @@ function buildSteps() {
 }
 
 /* ---------- media (GIF with graceful placeholder) ---------- */
-function mediaHTML(ex) {
+// `eager` is for the one demo that's already on screen when a view opens; every
+// other GIF on a scrolling page waits until she reaches it, so a page of five
+// demos doesn't pull ~1.5 MB down a gym connection at once.
+function mediaHTML(ex, { eager = false } = {}) {
   // Warm-up & cool-down GIFs come from ExerciseGymGifsDB; strength from ExerciseDB.
   const gym = ex.slug.startsWith("warmup-") || ex.slug.startsWith("cooldown-");
   const credit = gym ? "ExerciseGymGifsDB" : "ExerciseDB";
   return `
     <figure class="media" data-slug="${ex.slug}">
       <img alt="${T().mediaAlt(ex.name)}" src="assets/exercises/${ex.slug}.gif"
-           onerror="this.remove(); this.closest('.media').classList.add('is-missing');" />
-      <div class="media-placeholder" aria-hidden="true">
+           loading="${eager ? "eager" : "lazy"}" decoding="async" />
+      <div class="media-placeholder" aria-hidden="true" hidden>
         <span class="mp-emoji">🎬</span>
         <b>${T().mediaPlaceholderTitle}</b>
         <small>${T().mediaPlaceholderHint}</small>
@@ -1095,17 +1163,36 @@ function mediaHTML(ex) {
     </figure>
     <p class="media-credit">Demo: ${credit}</p>`;
 }
-// Show placeholder only when img failed. If img loads, hide placeholder.
+// A demo that won't load (missing file, or no signal and not cached yet) falls
+// back to the labelled placeholder instead of an empty frame.
 function wireMedia(root) {
   root.querySelectorAll(".media").forEach((fig) => {
     const img = fig.querySelector("img");
     const ph = fig.querySelector(".media-placeholder");
-    if (!img) { if (ph) ph.style.display = "flex"; return; }
-    // img present but may still fail; hide placeholder while it tries
-    if (ph) ph.style.display = "none";
-    img.addEventListener("error", () => { if (ph) ph.style.display = "flex"; });
-    if (img.complete && img.naturalWidth === 0 && ph) ph.style.display = "flex";
+    if (!ph) return;
+    const fail = () => {
+      fig.classList.add("is-missing");
+      ph.hidden = false;
+      if (img && img.isConnected) img.remove();
+    };
+    if (!img) { fail(); return; }
+    img.addEventListener("error", fail, { once: true });
+    // A cached failure never fires `error`, so check the already-settled case.
+    if (img.complete && img.naturalWidth === 0) fail();
   });
+}
+
+// Every demo GIF the program refers to. The service worker is handed this list
+// rather than keeping its own copy, so adding an exercise never means
+// remembering to update a second file.
+function mediaUrls() {
+  const c = CONTENT[FALLBACK_LANG];   // slugs are the same in every language
+  const slugs = [
+    ...c.EXERCISES.map((ex) => ex.slug),
+    ...(c.WARMUP_EXERCISES || []).map((ex) => ex.slug),
+    ...c.COOLDOWN.moves.map((m) => m.slug),
+  ];
+  return [...new Set(slugs)].map((slug) => `assets/exercises/${slug}.gif`);
 }
 
 /* ============================================================
@@ -1127,23 +1214,38 @@ function go(route, opts = {}) {
   render(route, opts);
 }
 
+function viewFor(route) {
+  switch (route) {
+    case "flow":   return viewFlow(flowIndex);
+    case "done":   return viewDone();
+    case "plan":   return viewPlan();
+    case "safety": return viewSafety();
+    case "effort": return viewEffort();
+    case "home":
+    default:       return viewHome();
+  }
+}
+
 function render(route, opts = {}) {
   currentRoute = route;
   if (route === "flow") saveProgress(flowIndex);   // remember her place on every step
   const root = app();
-  switch (route) {
-    case "home":     root.innerHTML = viewHome(); break;
-    case "flow":     root.innerHTML = viewFlow(flowIndex); break;
-    case "done":     root.innerHTML = viewDone(); break;
-    case "plan":     root.innerHTML = viewPlan(); break;
-    case "safety":   root.innerHTML = viewSafety(); break;
-    case "effort":   root.innerHTML = viewEffort(); break;
-    default:         root.innerHTML = viewHome();
+  let html;
+  try {
+    html = viewFor(route);
+  } catch (err) {
+    // One bad screen must never leave her staring at a blank white page.
+    console.error("Failed to render", route, err);
+    html = viewError();
   }
+  root.innerHTML = html;
   wireMedia(root);
-  const v = root.firstElementChild;
-  if (v) v.classList.add("view-enter");
-  moveFocusToHeading(root);
+  if (opts.animate !== false) {
+    const v = root.firstElementChild;
+    if (v) v.classList.add("view-enter");
+  }
+  if (opts.focus === "lang") restoreLangFocus(root);
+  else moveFocusToHeading(root);
 }
 
 // Send focus to the new screen's heading after each swap so keyboard and
@@ -1151,6 +1253,24 @@ function render(route, opts = {}) {
 function moveFocusToHeading(root) {
   const h = root.querySelector(".step-title, .home-hero h1, .page-header h1, .done h1");
   if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+}
+
+// Switching language re-renders the whole screen, so put focus back on the
+// switch she just used rather than throwing her to the top of the page.
+function restoreLangFocus(root) {
+  const el = root.querySelector(`.lang-opt[data-lang="${LANG}"], .lang-jump`);
+  if (el) el.focus({ preventScroll: true });
+}
+
+// Change language without losing her place: same screen, same scroll position,
+// same ticks, focus back where her finger was.
+function switchLang(code) {
+  if (!isLang(code) || code === LANG) return;
+  const y = window.scrollY;
+  setLang(code);
+  render(currentRoute, { animate: false, focus: "lang" });
+  window.scrollTo(0, y);
+  announce(T().nowInLang);
 }
 
 // The phone/browser Back button (and Android's back gesture) restores the
@@ -1173,12 +1293,17 @@ function greeting() {
   return T().greetingEvening;
 }
 function niceDate() {
-  return new Date().toLocaleDateString(T().locale, { weekday: "long", day: "numeric", month: "long" });
+  const d = new Date();
+  const opts = { weekday: "long", day: "numeric", month: "long" };
+  try { return d.toLocaleDateString(T().locale, opts); }
+  catch { return d.toLocaleDateString(undefined, opts); }   // locale data missing
 }
 
+// Home: both languages side by side, each written in its own language and
+// marked with its own `lang` so it's spelled and spoken correctly.
 function langToggle() {
   const opts = Object.keys(LANGS).map((code) =>
-    `<button class="lang-opt ${LANG === code ? "on" : ""}" data-lang="${code}"
+    `<button class="lang-opt ${LANG === code ? "on" : ""}" data-lang="${code}" lang="${code}"
       aria-pressed="${LANG === code ? "true" : "false"}">${LANGS[code]}</button>`
   ).join("");
   return `
@@ -1186,6 +1311,18 @@ function langToggle() {
       <span class="lang-switch-label">${icon.globe}<span>${T().langLabel}</span></span>
       <div class="lang-opts">${opts}</div>
     </div>`;
+}
+
+// Everywhere else - mid-workout, mid-plan, mid-safety-page - one tap, labelled
+// with the language it takes you to. She should never have to leave the screen
+// she's on (or worse, the workout she's in) to read it in her own language.
+function langJump() {
+  const to = otherLang();
+  return `
+    <button class="lang-jump" data-lang="${to}" lang="${to}"
+      aria-label="${UI[to].switchTo}" title="${UI[to].switchTo}">
+      ${icon.globe}<span>${LANGS[to]}</span>
+    </button>`;
 }
 
 function viewHome() {
@@ -1254,9 +1391,13 @@ function stepChrome(index, total, inner) {
   <div class="flow-header">
     <div class="flow-header-row">
       <button class="icon-btn" data-go="home" aria-label="${T().closeWorkout}">${icon.close}</button>
-      <div class="flow-progress">
-        <div class="flow-step-label"><span>${T().stepXofY(index + 1, total)}</span></div>
-        <div class="pbar"><i style="width:${pct}%"></i></div>
+      ${langJump()}
+    </div>
+    <div class="flow-progress">
+      <span class="flow-step-label">${T().stepXofY(index + 1, total)}</span>
+      <div class="pbar" role="progressbar" aria-valuemin="1" aria-valuemax="${total}"
+           aria-valuenow="${index + 1}" aria-label="${T().stepXofY(index + 1, total)}">
+        <i style="width:${pct}%"></i>
       </div>
     </div>
   </div>
@@ -1279,7 +1420,12 @@ function flowFooter(index, total) {
 function viewFlow(index) {
   const steps = buildSteps();
   const total = steps.length;
-  const step = steps[index];
+  // A stale history entry (or an edited program) must never land on a step
+  // that no longer exists.
+  const safe = Math.min(Math.max(0, Math.trunc(index) || 0), total - 1);
+  if (safe !== index) flowIndex = safe;
+  const step = steps[safe];
+  index = safe;
   let inner = "";
 
   if (step.type === "warmup") inner = warmupStep(C().WARMUP);
@@ -1314,7 +1460,7 @@ function cooldownStep(data) {
       <div class="cool-kicker">${i + 1} &middot; ${m.focus} &middot; ${m.hold}</div>
       <h3 class="cool-name">${m.name}</h3>
       <p class="cool-works">${m.works}</p>
-      ${mediaHTML(m)}
+      ${mediaHTML(m, { eager: i === 0 })}
       <section class="block do" style="margin-top:1rem">
         <div class="block-head">${icon.check} ${T().doThisHead}</div>
         <ul>${cues}</ul>
@@ -1383,7 +1529,7 @@ function warmupStep(data) {
       <div class="cool-kicker">${i + 1} &middot; ${ex.focus} &middot; ${ex.dose}</div>
       <h3 class="cool-name">${ex.name}</h3>
       <p class="cool-works">${ex.works}</p>
-      ${mediaHTML(ex)}
+      ${mediaHTML(ex, { eager: i === 0 })}
       <div class="vitals" style="margin-top:1rem">
         <div class="vital">
           <div class="vlabel">${T().warmupAim}</div>
@@ -1431,7 +1577,7 @@ function exerciseStep(ex, exIndex) {
     <h2 class="step-title">${ex.name}</h2>
     <p class="works">${ex.works}</p>
 
-    ${mediaHTML(ex)}
+    ${mediaHTML(ex, { eager: true })}
 
     <div class="vitals">
       <div class="vital">
@@ -1472,6 +1618,20 @@ function viewDone() {
     <h1>${T().allDone}</h1>
     <p>${T().doneText}</p>
     <button class="btn btn-primary" data-go="home">${T().backToStart}</button>
+  </main>`;
+}
+
+/* ---------- Last resort ---------- */
+// Shown when a view throws. Deliberately built from nothing but UI strings, so
+// it still renders if the thing that broke was the program content itself.
+function viewError() {
+  const t = UI[LANG] || UI[FALLBACK_LANG];
+  return `
+  <main class="view done error-view">
+    <div class="burst burst-warn">${icon.alert}</div>
+    <h1>${t.errorTitle}</h1>
+    <p>${t.errorText}</p>
+    <button class="btn btn-primary" data-reset>${t.errorAction}</button>
   </main>`;
 }
 
@@ -1603,8 +1763,9 @@ function pageHeader(title) {
   <div class="page-header">
     <div class="page-header-row">
       <button class="icon-btn" data-go="home" aria-label="${T().backToStart}">${icon.back}</button>
-      <h1>${title}</h1>
+      ${langJump()}
     </div>
+    <h1>${title}</h1>
   </div>`;
 }
 function bdiscReturn() {
@@ -1615,12 +1776,13 @@ function bdiscReturn() {
    EVENTS (single delegated listener)
    ============================================================ */
 document.addEventListener("click", (e) => {
+  if (!(e.target instanceof Element)) return;
+
   const langEl = e.target.closest("[data-lang]");
-  if (langEl) {
-    const code = langEl.getAttribute("data-lang");
-    if (code !== LANG) { setLang(code); render(currentRoute); }
-    return;
-  }
+  if (langEl) { switchLang(langEl.getAttribute("data-lang")); return; }
+
+  const resetEl = e.target.closest("[data-reset]");
+  if (resetEl) { clearStore(); flowIndex = 0; go("home"); return; }
 
   const resumeEl = e.target.closest("[data-resume]");
   if (resumeEl) { const p = inProgress(); go("flow", { index: p ? p.index : 0 }); return; }
@@ -1666,7 +1828,31 @@ document.addEventListener("click", (e) => {
   }
 });
 
-/* boot */
+/* ============================================================
+   BOOT
+   ============================================================ */
 document.documentElement.lang = LANG;
-history.replaceState({ route: "home", index: 0 }, "");
+try {
+  history.replaceState({ route: "home", index: 0 }, "");
+} catch { /* history unavailable (rare, e.g. some in-app browsers) */ }
 render("home");
+
+// Keep working with no signal at all: the gym is the one place this app is
+// used and the one place the connection tends to give up. Failing to register
+// is fine - the app just behaves as it always did.
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {
+      /* offline-first is a bonus here, never a requirement */
+    });
+    // `ready` waits for a worker that's actually active - on a first visit the
+    // one we just registered is still installing and can't be messaged yet.
+    navigator.serviceWorker.ready.then((reg) => {
+      // Pull the demo GIFs into the cache in the background once the page is
+      // settled, so the first workout with no signal still has its form
+      // videos. Skipped on Data Saver: that's her asking us not to.
+      if (!reg.active || navigator.connection?.saveData === true) return;
+      reg.active.postMessage({ type: "warm-media", urls: mediaUrls() });
+    }).catch(() => { /* no worker - the app works exactly as before */ });
+  });
+}
