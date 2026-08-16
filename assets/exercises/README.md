@@ -2,17 +2,25 @@
 
 Each exercise and warm-up move in the app looks for its form video here, by file name.
 
-## Warm-up moves
+## Warm-up
 
 | File                        | Warm-up move                 | Focus                    |
 |-----------------------------|------------------------------|--------------------------|
-| `warmup-cardio.gif`         | General Raise                | Heart & whole body       |
-| `warmup-upper-back.gif`     | Shoulder & Upper-Back Reach  | Shoulders & upper back   |
-| `warmup-midback-twists.gif` | Seated Mid-Back Twists       | Mid-back & posture       |
+| `warmup-cardio.gif`         | Whole-Body Cardio            | Heart & whole body       |
+
+## At-home moves (full plan only)
+
+These two used to be warm-up moves. They now live in the full plan as optional
+work for the days between gym sessions, so they keep their `warmup-` file names.
+
+| File                        | Move                         | Focus                    |
+|-----------------------------|------------------------------|--------------------------|
 | `warmup-glute-bridges.gif`  | Glute Bridges                | Hips & glutes            |
 | `warmup-squats.gif`         | Supported Squats             | Legs & hips              |
 
-## Cool-down stretches
+## Cool-down
+
+`warmup-cardio.gif` is shown again at the top of the cool-down (same movement).
 
 | File                        | Cool-down stretch            | Focus                    |
 |-----------------------------|------------------------------|--------------------------|

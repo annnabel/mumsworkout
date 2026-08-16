@@ -10,8 +10,9 @@ A single user, 50+, uses it on her **phone** at the gym. She does not use techno
 Get her through today's workout **safely**. Injury prevention is the north star:
 - Clear form demonstrations (a GIF per exercise, dropped in by the daughter who maintains this).
 - Setup steps, "do this" cues, and "avoid this" common mistakes for every exercise.
-- Plain-language effort guidance (never "RPE").
-- Warm-up and cool-down built into the flow.
+- Plain-language effort guidance (never "RPE"), aimed at ~2 reps in reserve.
+- Cardio warm-up and cool-down built into the flow, plus per-machine light sets.
+- Eat-before-you-lift guidance, surfaced early enough to act on.
 - A prominent, always-reachable "when to stop and see a professional" safety section.
 
 ## Primary flow
@@ -23,6 +24,8 @@ Register: product (design serves the task). Deliberately **low-density** and ove
 
 ## Content source
 Program: "Machine-Based Strength Program: Longevity & Joint Health for Women 50+ (Revised)" - 3 days/week full-body, same 8 machines each session. The daily flow shows the base program; heavier blocks, impact add-on, and progression live in the full-plan reference.
+
+Revised August 2026 on a physiotherapist's review: warm-up cut to a single whole-body cardio block (the mobility moves moved to optional at-home work), machines moved from 2×10-12 to 4×4-6 at ~2 reps in reserve, per-machine ramp-up sets added, cool-down led by a second cardio block, balance dosage raised to 3×30s building to 3×60s, and pre-workout carbohydrate guidance added.
 
 ## Tech
 Static site: plain HTML + CSS + vanilla JS, no build step. Deployable to any static host. GIFs live in `assets/exercises/<slug>.gif`; a missing file shows a labelled placeholder telling the maintainer exactly which filename to add.
