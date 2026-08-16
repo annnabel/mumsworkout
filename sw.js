@@ -9,7 +9,7 @@
    Bump CACHE on any release so the old one is cleared out.
    ============================================================ */
 
-const CACHE = "mums-workout-v1";
+const CACHE = "mums-workout-v2";
 
 // The app itself. Small enough to fetch on install, and the reason she can
 // open the app at all with no signal.

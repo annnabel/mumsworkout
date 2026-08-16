@@ -7,16 +7,24 @@ someone who doesn't use technology often, with injury prevention as the priority
 ## What it does
 - **Today's Workout** - a big "Start" button leads through a warm-up → 8 exercises → cool-down,
   one screen at a time with a large **Next** button and a progress bar.
-- **A mobility & longevity warm-up** - 5 gentle moves (general raise, shoulder & upper-back
-  reach, seated mid-back twists, glute bridges, supported squats), each on its own screen with a
-  demo GIF and cues, warming every joint the workout will use.
+- **A whole-body cardio warm-up** - 5-10 minutes on the cross-trainer, with a demo GIF
+  and cues. Each machine is then warmed up on the spot with 1-2 light sets before the
+  working sets, which is prompted on every exercise screen.
+- **4 sets of 4-6 reps** on the machines, stopping each set with about 2 reps left. Fewer
+  reps with a little more weight is what builds bone as well as muscle.
 - **Form demo GIF** for every exercise and warm-up move (exercises from
   [ExerciseDB](https://exercisedb.dev); warm-ups from
   [ExerciseGymGifsDB](https://github.com/JahelCuadrado/ExerciseGymGifsDB)).
 - **Do this / Avoid** cues, colour-coded, plus a breathing reminder.
-- **Plain-language effort guide** (no jargon like "RPE").
+- **Plain-language effort guide** (no jargon like "RPE"), including the trap most beginners
+  fall into of thinking they have 2 reps left when they really have 5 or 6.
+- **A cool-down that leads with cardio** - another easy 5-10 minutes, then the stretches,
+  then balance practice at 3 × 30 seconds a side, building to 60.
+- **Eat-before-you-lift reminder** - carbohydrate 30-45 minutes ahead, so she doesn't go
+  in hungry and end up weak or dizzy.
 - **Staying safe** page - when to stop and see a professional.
-- **The full plan** - all exercises, warm-up/cool-down, and how to progress.
+- **The full plan** - all exercises, warm-up/cool-down, two at-home moves for the days
+  between sessions, and how to progress.
 - **English or Vietnamese**, switchable from every screen - mid-workout too, without
   losing your place. Remembered between visits, and a Vietnamese-set phone opens in
   Vietnamese by itself.

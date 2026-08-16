@@ -91,8 +91,8 @@ const CONTENT = {
   en: {
     // Effort levels -> filled bars (out of 3) + plain words
     EFFORT: {
-      moderate: { on: 2, word: "Comfortably hard", note: "At the end you could still do about 3 more." },
-      easy:     { on: 1, word: "Take it gently",   note: "This joint needs extra care. Keep 3-4 in reserve." },
+      moderate: { on: 2, word: "Comfortably hard", note: "At the end you could still do about 2 more, no more than that." },
+      easy:     { on: 1, word: "Take it gently",   note: "This joint needs extra care. Build up slowly and keep about 3 in reserve." },
       steady:   { on: 2, word: "Steady effort",    note: "Controlled and smooth, no straining." },
       gentle:   { on: 1, word: "Easy and gentle",  note: "Just waking the body up, no strain at all." },
     },
@@ -101,7 +101,7 @@ const CONTENT = {
         slug: "leg-press",
         name: "Leg Press",
         works: "Your legs and hips, the big movement, like standing up from a chair.",
-        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        sets: "4 sets", reps: "4-6 reps", effort: "moderate", rampUp: true,
         setup: [
           "Set the seat so your knees bend to about a right angle at the bottom, no deeper.",
           "Feet flat on the plate, about shoulder-width apart, placed a little high.",
@@ -123,7 +123,7 @@ const CONTENT = {
         slug: "chest-press",
         name: "Chest Press",
         works: "Chest, shoulders and the backs of your arms, pushing strength.",
-        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        sets: "4 sets", reps: "4-6 reps", effort: "moderate", rampUp: true,
         setup: [
           "Set the seat height so the handles line up with the middle of your chest.",
           "Sit tall, back flat, shoulders gently drawn back and down.",
@@ -145,7 +145,7 @@ const CONTENT = {
         slug: "seated-row",
         name: "Seated Row",
         works: "Your upper back and posture, helps you stand tall.",
-        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        sets: "4 sets", reps: "4-6 reps", effort: "moderate", rampUp: true,
         setup: [
           "Sit with your chest resting firmly against the pad, if there is one.",
           "Take hold of the handles at about chest height.",
@@ -167,7 +167,7 @@ const CONTENT = {
         slug: "prone-leg-curl",
         name: "Prone Leg Curl Machine",
         works: "The backs of your thighs, important for steady, stable knees.",
-        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        sets: "4 sets", reps: "4-6 reps", effort: "moderate", rampUp: true,
         setup: [
           "Lie face down with your knees just past the edge of the pad.",
           "Rest the ankle pad just above your heels.",
@@ -189,7 +189,7 @@ const CONTENT = {
         slug: "lat-pulldown",
         name: "Lat Pulldown",
         works: "Your back and arms, pulling strength for everyday reaching.",
-        sets: "2 sets", reps: "10-12 reps", effort: "moderate",
+        sets: "4 sets", reps: "4-6 reps", effort: "moderate", rampUp: true,
         setup: [
           "Tuck the thigh pad down snugly before you sit.",
           "Take the bar a little wider than shoulder-width, palms facing away.",
@@ -211,7 +211,7 @@ const CONTENT = {
         slug: "machine-shoulder-press",
         name: "Machine Shoulder Press",
         works: "Shoulders and arms, for reaching up to shelves.",
-        sets: "2 sets", reps: "8-10 reps", effort: "easy",
+        sets: "4 sets", reps: "4-6 reps", effort: "easy", rampUp: true,
         setup: [
           "Set the seat so the handles start level with your shoulders.",
           "Keep your back flat against the pad the whole time.",
@@ -276,89 +276,49 @@ const CONTENT = {
         note: "Not steady enough on one leg yet? Start on both feet and build up over time.",
       },
     ],
-    // Warm-up movements - shown together on one scrollable page (like the
-    // cool-down). Mobility- and longevity-focused: a gentle raise, then loosening
-    // every joint the workout will load from the top down, finishing with a
-    // supported squat that primes the first machine (the leg press).
-    // Each has a real demo GIF (ExerciseGymGifsDB) in assets/exercises/.
+    // Warm-up - one whole-body cardio block, on its own scrollable page.
+    // Physio guidance (Aug 2026): a single cardio piece that works the whole
+    // body is all the pre-gym warm-up she needs. The old mobility moves were
+    // dropped from here; the bridge and supported squat moved to HOME_MOVES,
+    // where they're genuinely useful between sessions. Each machine then gets
+    // its own warm-up: 1-2 light sets before the working sets.
+    // GIF (ExerciseGymGifsDB) in assets/exercises/.
     WARMUP_EXERCISES: [
       {
         slug: "warmup-cardio",
-        name: "General Raise",
+        name: "Whole-Body Cardio",
         focus: "Warm the heart & whole body",
-        works: "A gentle few minutes to wake up your whole body and warm your joints so everything moves more easily. It looks after your heart and muscles before the work begins.",
-        dose: "3 minutes", effort: "gentle",
+        works: "Five to ten easy minutes to wake up your whole body and warm your joints so everything moves more freely. This is your whole warm-up, and it looks after your heart before the lifting begins.",
+        dose: "5-10 minutes", effort: "gentle",
         setup: [
-          "Choose a brisk incline walk on the treadmill, or the cross-trainer.",
-          "Start slowly and build to a gentle, steady pace.",
-          "Keep it easy enough that you could still hold a conversation.",
+          "The cross-trainer is the best choice, it warms your arms, legs and hips all at once.",
+          "If it's taken, a brisk incline walk on the treadmill does the job just as well.",
+          "Start slowly and build up to a gentle, steady pace.",
         ],
         doThis: [
-          "Let your breathing rise a little, warm but never puffed out.",
-          "Keep your shoulders relaxed and down, posture tall.",
-          "Give yourself the full 3 minutes, there's no rush.",
+          "Give it the full 5 to 10 minutes, there's no rush.",
+          "Let your breathing rise a little, warm and working, never puffed out.",
+          "Keep it easy enough that you could still hold a conversation.",
         ],
         avoid: [
           "Going hard or fast, this is only to warm up.",
-          "Skipping it because you feel fine, warm joints move far better.",
+          "Cutting it short, warm joints move far better and are far safer under weight.",
           "Holding your breath.",
         ],
         breath: "Breathe in and out slowly and evenly the whole time.",
       },
-      {
-        slug: "warmup-upper-back",
-        name: "Shoulder & Upper-Back Reach",
-        focus: "Shoulders & upper back",
-        works: "Loosens your shoulders and upper back, the joints behind every press and pull. Mobile shoulders help you reach and dress with ease, and keep you standing tall.",
-        dose: "8-10 slow reps", effort: "gentle",
-        setup: [
-          "Stand tall, or sit tall, with your feet about hip-width apart.",
-          "Clasp your hands together and reach them out in front, about chest height.",
-          "Let your neck and shoulders stay relaxed.",
-        ],
-        doThis: [
-          "Reach forward and gently round your upper back, feeling a soft stretch between the shoulder blades.",
-          "Then open your arms wide and squeeze your shoulder blades gently together.",
-          "Finish with a few slow shoulder rolls, backwards.",
-        ],
-        avoid: [
-          "Forcing the movement or holding your breath.",
-          "Shrugging up towards your ears.",
-          "Rushing, slow and smooth warms the joint far better.",
-        ],
-        breath: "Breathe out as you reach forward, in as you open up.",
-      },
-      {
-        slug: "warmup-midback-twists",
-        name: "Seated Mid-Back Twists",
-        focus: "Mid-back & posture",
-        works: "Frees up your mid-back so you can turn and stand tall, and readies you for the rows and pulldowns. Good upper-back movement is where posture is won or lost as the years go by.",
-        dose: "8 each side", effort: "gentle",
-        setup: [
-          "Sit tall on a bench or sturdy chair (or on a mat with your legs out, as shown).",
-          "Cross your arms loosely over your chest.",
-          "Keep your hips still and facing forwards.",
-        ],
-        doThis: [
-          "Turn your upper body gently to one side, then to the other.",
-          "Let the movement come from your mid-back, not your lower back.",
-          "Move slowly and only as far as feels comfortable.",
-        ],
-        avoid: [
-          "Twisting hard or fast, or bouncing at the end of the turn.",
-          "Letting your hips swing round with you.",
-          "Straining your neck, let your head follow your chest.",
-        ],
-        breath: "Breathe out gently as you turn, in as you come back to the middle.",
-      },
+    ],
+    // Optional at-home movements for the days between gym sessions. They used
+    // to sit in the warm-up; they're better used here.
+    HOME_MOVES: [
       {
         slug: "warmup-glute-bridges",
         name: "Glute Bridges",
         focus: "Hips & glutes",
-        works: "Wakes up your glutes and the back of your hips, priming the hip thrust and the leg press. Strong glutes power every stand-up, stair and step, and look after your lower back.",
-        dose: "10 reps", effort: "gentle",
+        works: "Wakes up your glutes and the back of your hips. Strong glutes power every stand-up, stair and step, and look after your lower back.",
+        dose: "2 sets of 10 reps", effort: "gentle",
         setup: [
-          "Lie on your back on a mat, knees bent and feet flat on the floor.",
+          "Lie on your back on a mat or rug, knees bent and feet flat on the floor.",
           "Place your feet about hip-width apart, arms resting by your sides.",
           "Tuck your chin gently and let your shoulders relax.",
         ],
@@ -378,10 +338,10 @@ const CONTENT = {
         slug: "warmup-squats",
         name: "Supported Squats",
         focus: "Legs & hips",
-        works: "Grooves the exact movement of the leg press and warms your thighs and hips. Rising smoothly from a chair, or a squat, is one of the clearest signs of a strong, independent body.",
-        dose: "8-10 reps", effort: "gentle",
+        works: "Practises the exact movement of standing up from a chair. Rising smoothly from a chair, or a squat, is one of the clearest signs of a strong, independent body.",
+        dose: "2 sets of 8-10 reps", effort: "gentle",
         setup: [
-          "Stand tall, holding a sturdy bench, rail or machine frame in front of you.",
+          "Stand tall, holding the back of a sturdy chair or a kitchen bench in front of you.",
           "Feet about shoulder-width apart, toes turned out very slightly.",
           "Hold on lightly, just for balance and confidence.",
         ],
@@ -398,18 +358,39 @@ const CONTENT = {
         breath: "Breathe out as you stand, in as you lower.",
       },
     ],
+    // Eat-before-you-lift guidance. Shown on the home screen (where there's
+    // still time to act on it), on the warm-up screen, and in the full plan.
+    FUEL: {
+      title: "Eat something before you go",
+      text: "Have a snack with some carbohydrate in it <strong>30-45 minutes before</strong> you start, a slice of toast, a banana, or a small bowl of rice. Training on an empty stomach can leave you feeling weak or dizzy.",
+      short: "Eat something 30-45 minutes before you start.",
+    },
     WARMUP: {
       title: "Warm-Up First",
-      kicker: "About 5 minutes",
-      intro: "A few gentle moves to loosen your joints and get your body ready. Don't skip them. Warm joints move better and stay healthy for years.",
+      kicker: "5-10 minutes",
+      intro: "One easy cardio piece is all you need. It warms your heart, your muscles and every joint the workout will use. Don't skip it. Warm joints move better and stay healthy for years.",
       overviewTitle: "Today's warm-up",
-      tip: "Save deeper stretching for the very end, muscles stretch better once they're warm.",
+      tip: "<b>Then warm up each machine as you get to it.</b> Do 1-2 easy sets at a light weight before your working sets. That's the best warm-up there is for the exercise you're about to do.",
     },
     COOLDOWN: {
       title: "Cool-Down",
-      kicker: "About 5 minutes",
-      intro: "Lovely work. Scroll through these gentle stretches while your muscles are still warm. Hold each one, breathe, and don't bounce. Then a balance hold and a little recovery.",
-      overviewTitle: "Ease down, top to toe",
+      kicker: "10-15 minutes",
+      intro: "Lovely work. Start with another easy stretch of cardio, that's the part that really does the job. The stretches after it feel good and are well worth doing while your muscles are still warm. Then your balance practice.",
+      overviewTitle: "Ease down",
+      // The main event: a second easy cardio block. Reuses the warm-up demo
+      // (same movement, same GIF, already cached).
+      cardio: {
+        slug: "warmup-cardio",
+        name: "Easy Cardio",
+        focus: "Bring the body back down",
+        hold: "5-10 minutes",
+        works: "The best way to cool down. It brings your heart rate down gently, keeps the blood moving through the muscles you've just worked, and leaves you feeling loose rather than stiff tomorrow.",
+        cues: [
+          "Back on the cross-trainer, the bike, or a walk on the treadmill.",
+          "Keep it easy and conversational, gentler than your warm-up.",
+          "Let your breathing settle back to normal before you stop.",
+        ],
+      },
       // Gentle end-of-session stretches, each with a real demo GIF
       // (ExerciseGymGifsDB, same source as the warm-up). Shown all together
       // on one scrollable page rather than one per screen.
@@ -478,14 +459,15 @@ const CONTENT = {
       balance: {
         name: "Single-Leg Balance Hold",
         focus: "Balance training",
-        hold: "2 × 20-30 sec each side",
-        text: "Stand on one leg. Hold a rail, then just a fingertip, then try with your eyes closed. This is your balance training, and it looks after you for years.",
+        hold: "3 × 30 sec each side",
+        text: "Stand on one leg and hold for 30 seconds, three times on each side. Hold a rail at first, then just a fingertip, then nothing. This is your balance training, and it's what keeps you on your feet for years.",
+        harder: "<b>Make it harder as you get steadier.</b> First build each hold up to a full 60 seconds. After that, try turning your head slowly side to side while you balance, or closing your eyes. Always have a rail within reach.",
       },
       recover: {
         name: "Recover",
         text: "A glass of water now, and a little protein at your next meal, to help your muscles rebuild.",
       },
-      tip: "Feeling wobbly on one leg? Keep hold of the rail. Steadiness comes with practice.",
+      tip: "Feeling wobbly on one leg? Keep hold of the rail, and shorten the hold if you need to. Steadiness comes with practice.",
     },
   },
 
@@ -501,7 +483,7 @@ const CONTENT = {
         slug: "leg-press",
         name: "Đạp Chân",
         works: "Chân và hông của bạn, động tác lớn giống như đứng lên từ ghế.",
-        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        sets: "4 hiệp", reps: "4-6 lần", effort: "moderate", rampUp: true,
         setup: [
           "Chỉnh ghế sao cho đầu gối gập khoảng một góc vuông ở điểm thấp nhất, không sâu hơn.",
           "Đặt bàn chân phẳng trên bàn đạp, rộng bằng vai, đặt hơi cao một chút.",
@@ -523,7 +505,7 @@ const CONTENT = {
         slug: "chest-press",
         name: "Đẩy Ngực",
         works: "Ngực, vai và mặt sau cánh tay, sức đẩy.",
-        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        sets: "4 hiệp", reps: "4-6 lần", effort: "moderate", rampUp: true,
         setup: [
           "Chỉnh độ cao ghế sao cho tay cầm ngang với giữa ngực.",
           "Ngồi thẳng, lưng phẳng, vai nhẹ nhàng kéo ra sau và xuống dưới.",
@@ -545,7 +527,7 @@ const CONTENT = {
         slug: "seated-row",
         name: "Kéo Cáp Ngồi",
         works: "Lưng trên và tư thế của bạn, giúp bạn đứng thẳng.",
-        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        sets: "4 hiệp", reps: "4-6 lần", effort: "moderate", rampUp: true,
         setup: [
           "Ngồi với ngực tựa chắc vào đệm, nếu có.",
           "Nắm lấy tay cầm ở khoảng ngang ngực.",
@@ -567,7 +549,7 @@ const CONTENT = {
         slug: "prone-leg-curl",
         name: "Máy Gập Chân Nằm Sấp",
         works: "Mặt sau đùi, quan trọng cho đầu gối vững và ổn định.",
-        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        sets: "4 hiệp", reps: "4-6 lần", effort: "moderate", rampUp: true,
         setup: [
           "Nằm sấp với đầu gối hơi vượt qua mép đệm.",
           "Đặt đệm mắt cá ngay trên gót chân.",
@@ -589,7 +571,7 @@ const CONTENT = {
         slug: "lat-pulldown",
         name: "Kéo Xà Trên",
         works: "Lưng và cánh tay, sức kéo cho việc với tay hằng ngày.",
-        sets: "2 hiệp", reps: "10-12 lần", effort: "moderate",
+        sets: "4 hiệp", reps: "4-6 lần", effort: "moderate", rampUp: true,
         setup: [
           "Kéo đệm đùi xuống cho khít trước khi ngồi.",
           "Nắm thanh xà rộng hơn vai một chút, lòng bàn tay hướng ra ngoài.",
@@ -611,7 +593,7 @@ const CONTENT = {
         slug: "machine-shoulder-press",
         name: "Máy Đẩy Vai",
         works: "Vai và cánh tay, để với lên kệ cao.",
-        sets: "2 hiệp", reps: "8-10 lần", effort: "easy",
+        sets: "4 hiệp", reps: "4-6 lần", effort: "easy", rampUp: true,
         setup: [
           "Chỉnh ghế sao cho tay cầm bắt đầu ngang với vai.",
           "Giữ lưng phẳng tựa vào đệm suốt cả động tác.",
@@ -676,96 +658,56 @@ const CONTENT = {
         note: "Chưa đủ vững trên một chân? Hãy bắt đầu bằng cả hai chân rồi tăng dần theo thời gian.",
       },
     ],
-    // Các động tác khởi động - hiển thị từng động tác trên mỗi màn hình,
-    // giống như các bài tập chính. Tập trung vào sự linh hoạt của khớp và sự
-    // dẻo dai lâu dài: làm ấm nhẹ, rồi thả lỏng từng khớp từ trên xuống,
-    // kết thúc bằng bài squat có điểm tựa để chuẩn bị cho máy đạp chân.
-    // Mỗi động tác có GIF minh họa thật (ExerciseGymGifsDB) trong assets/exercises/.
+    // Khởi động - một khối cardio toàn thân duy nhất, trên một trang cuộn.
+    // Theo góp ý của chuyên viên vật lý trị liệu (8/2026): một bài cardio làm
+    // ấm toàn thân là đủ cho phần khởi động trước khi tập. Các động tác linh
+    // hoạt cũ đã được bỏ khỏi đây; bài cầu mông và squat có điểm tựa được
+    // chuyển sang HOME_MOVES để tập tại nhà giữa các buổi. Sau đó mỗi máy có
+    // phần làm ấm riêng: 1-2 hiệp nhẹ trước các hiệp chính.
+    // GIF (ExerciseGymGifsDB) trong assets/exercises/.
     WARMUP_EXERCISES: [
       {
         slug: "warmup-cardio",
-        name: "Khởi Động Chung",
+        name: "Cardio Toàn Thân",
         focus: "Làm ấm tim & toàn thân",
-        works: "Vài phút nhẹ nhàng để đánh thức toàn bộ cơ thể và làm ấm các khớp để mọi thứ cử động dễ dàng hơn. Nó chăm sóc tim và cơ bắp của bạn trước khi vào bài.",
-        dose: "3 phút", effort: "gentle",
+        works: "Năm đến mười phút nhẹ nhàng để đánh thức toàn bộ cơ thể và làm ấm các khớp để mọi thứ chuyển động dễ dàng hơn. Đây là toàn bộ phần khởi động, và nó chăm sóc tim của bạn trước khi bắt đầu nâng tạ.",
+        dose: "5-10 phút", effort: "gentle",
         setup: [
-          "Chọn đi bộ nhanh lên dốc trên máy chạy, hoặc máy tập trên không.",
-          "Bắt đầu chậm rãi rồi tăng dần lên nhịp độ nhẹ nhàng, đều đặn.",
-          "Giữ đủ nhẹ để bạn vẫn có thể vừa tập vừa trò chuyện.",
+          "Máy đi bộ trên không (cross-trainer) là lựa chọn tốt nhất, nó làm ấm tay, chân và hông cùng một lúc.",
+          "Nếu máy đó có người dùng, đi bộ nhanh trên máy chạy có độ dốc cũng tốt không kém.",
+          "Bắt đầu chậm rãi rồi tăng dần đến nhịp độ nhẹ nhàng, đều đặn.",
         ],
         doThis: [
-          "Để hơi thở tăng lên một chút, ấm người nhưng không hụt hơi.",
-          "Giữ vai thả lỏng, hạ xuống, và giữ tư thế thẳng.",
-          "Dành trọn 3 phút cho mình, không cần vội.",
+          "Hãy dành trọn 5 đến 10 phút, không cần vội.",
+          "Để hơi thở nhanh lên một chút, ấm người và có gắng sức, nhưng đừng hụt hơi.",
+          "Giữ ở mức đủ nhẹ để bạn vẫn có thể trò chuyện được.",
         ],
         avoid: [
-          "Tập mạnh hoặc nhanh, đây chỉ là để khởi động.",
-          "Bỏ qua vì thấy mình vẫn khỏe, khớp được làm ấm sẽ cử động tốt hơn nhiều.",
+          "Tập mạnh hoặc nhanh, đây chỉ là để làm ấm.",
+          "Cắt ngắn phần này, khớp ấm sẽ chuyển động tốt hơn nhiều và an toàn hơn nhiều khi có tạ.",
           "Nín thở.",
         ],
-        breath: "Hít vào và thở ra chậm rãi, đều đặn suốt thời gian.",
+        breath: "Hít vào và thở ra chậm rãi, đều đặn trong suốt thời gian.",
       },
-      {
-        slug: "warmup-upper-back",
-        name: "Vươn Vai & Lưng Trên",
-        focus: "Vai & lưng trên",
-        works: "Làm mềm vai và lưng trên, những khớp đứng sau mọi động tác đẩy và kéo. Vai linh hoạt giúp bạn với tay, mặc đồ dễ dàng và giữ dáng đứng thẳng.",
-        dose: "8-10 lần chậm", effort: "gentle",
-        setup: [
-          "Đứng thẳng, hoặc ngồi thẳng, hai chân rộng bằng hông.",
-          "Đan hai tay vào nhau và vươn ra trước, khoảng ngang ngực.",
-          "Giữ cổ và vai thả lỏng.",
-        ],
-        doThis: [
-          "Vươn tay ra trước và nhẹ nhàng cong lưng trên, cảm nhận sự căng nhẹ giữa hai bả vai.",
-          "Sau đó mở rộng hai tay và nhẹ nhàng ép hai bả vai lại với nhau.",
-          "Kết thúc bằng vài vòng xoay vai chậm ra sau.",
-        ],
-        avoid: [
-          "Ép động tác hoặc nín thở.",
-          "Nhún vai lên gần tai.",
-          "Vội vàng, chậm và mượt sẽ làm ấm khớp tốt hơn nhiều.",
-        ],
-        breath: "Thở ra khi vươn tay ra trước, hít vào khi mở rộng.",
-      },
-      {
-        slug: "warmup-midback-twists",
-        name: "Vặn Lưng Giữa Khi Ngồi",
-        focus: "Lưng giữa & tư thế",
-        works: "Làm linh hoạt lưng giữa để bạn xoay người và đứng thẳng, đồng thời sẵn sàng cho các bài kéo. Lưng trên cử động tốt là nơi quyết định tư thế theo năm tháng.",
-        dose: "8 lần mỗi bên", effort: "gentle",
-        setup: [
-          "Ngồi thẳng trên băng hoặc ghế chắc chắn (hoặc trên thảm với chân duỗi, như trong hình).",
-          "Khoanh nhẹ hai tay trước ngực.",
-          "Giữ hông yên và hướng về phía trước.",
-        ],
-        doThis: [
-          "Xoay nhẹ phần thân trên sang một bên, rồi sang bên kia.",
-          "Để chuyển động đến từ lưng giữa, không phải lưng dưới.",
-          "Xoay chậm rãi và chỉ đến mức thấy thoải mái.",
-        ],
-        avoid: [
-          "Vặn mạnh hoặc nhanh, hay nảy ở cuối động tác.",
-          "Để hông xoay theo người.",
-          "Gồng cổ, hãy để đầu xoay theo ngực.",
-        ],
-        breath: "Thở ra nhẹ khi xoay, hít vào khi trở về giữa.",
-      },
+    ],
+    // Các động tác tùy chọn để tập tại nhà vào những ngày giữa các buổi tập
+    // gym. Trước đây chúng nằm trong phần khởi động; dùng ở đây hợp lý hơn.
+    HOME_MOVES: [
       {
         slug: "warmup-glute-bridges",
         name: "Cầu Mông",
         focus: "Hông & cơ mông",
-        works: "Đánh thức cơ mông và mặt sau của hông, chuẩn bị cho bài hip thrust và đạp chân. Cơ mông khỏe giúp mỗi lần đứng dậy, lên cầu thang và bước đi, đồng thời bảo vệ lưng dưới.",
-        dose: "10 lần", effort: "gentle",
+        works: "Đánh thức cơ mông và phía sau hông. Cơ mông khỏe giúp bạn đứng dậy, lên cầu thang và bước đi, đồng thời chăm sóc phần lưng dưới.",
+        dose: "2 hiệp, mỗi hiệp 10 lần", effort: "gentle",
         setup: [
-          "Nằm ngửa trên thảm, gập gối và đặt hai bàn chân phẳng trên sàn.",
-          "Đặt hai chân rộng bằng hông, hai tay đặt xuôi bên thân.",
+          "Nằm ngửa trên thảm hoặc tấm trải, gập gối và đặt bàn chân phẳng trên sàn.",
+          "Đặt hai bàn chân rộng bằng hông, hai tay buông dọc thân người.",
           "Thu nhẹ cằm và để vai thả lỏng.",
         ],
         doThis: [
           "Siết cơ mông và nâng hông lên phía trần nhà.",
-          "Nâng đến khi thân người thành một đường thẳng từ gối đến vai.",
-          "Dừng lại ở đỉnh, rồi hạ xuống chậm rãi có kiểm soát.",
+          "Nâng đến khi thân người tạo thành một đường thẳng từ gối đến vai.",
+          "Dừng lại ở trên cùng, rồi hạ xuống chậm rãi có kiểm soát.",
         ],
         avoid: [
           "Ưỡn lưng dưới, hãy để cơ mông làm việc nâng.",
@@ -778,38 +720,58 @@ const CONTENT = {
         slug: "warmup-squats",
         name: "Squat Có Điểm Tựa",
         focus: "Chân & hông",
-        works: "Rèn đúng động tác của bài đạp chân và làm ấm đùi cùng hông. Đứng dậy nhẹ nhàng từ ghế, hay từ tư thế squat, là dấu hiệu rõ nhất của cơ thể khỏe mạnh, tự lập.",
-        dose: "8-10 lần", effort: "gentle",
+        works: "Luyện đúng động tác đứng dậy từ ghế. Đứng lên mượt mà từ một chiếc ghế, hay một cú squat, là một trong những dấu hiệu rõ nhất của một cơ thể khỏe mạnh và tự chủ.",
+        dose: "2 hiệp, mỗi hiệp 8-10 lần", effort: "gentle",
         setup: [
-          "Đứng thẳng, tay nắm vào băng, thanh vịn hoặc khung máy chắc chắn ở phía trước.",
-          "Hai chân rộng bằng vai, mũi chân hơi xoay ra ngoài.",
-          "Nắm nhẹ, chỉ để giữ thăng bằng và vững tâm.",
+          "Đứng thẳng, tay vịn vào lưng một chiếc ghế chắc chắn hoặc mặt bếp phía trước.",
+          "Hai bàn chân rộng bằng vai, mũi chân hơi xoay ra ngoài một chút.",
+          "Chỉ vịn nhẹ, để giữ thăng bằng và thêm tự tin.",
         ],
         doThis: [
-          "Đẩy hông ra sau và hạ xuống, như thể ngồi xuống ghế.",
-          "Chỉ hạ đến mức thấy thoải mái, rồi đứng lên mượt mà.",
-          "Giữ đầu gối hướng thẳng hàng với các ngón chân.",
+          "Đẩy hông ra sau và xuống dưới, như thể đang ngồi xuống ghế.",
+          "Chỉ hạ xuống đến mức thấy thoải mái, rồi đứng lên mượt mà.",
+          "Giữ đầu gối hướng cùng chiều với mũi chân.",
         ],
         avoid: [
-          "Buông người xuống nhanh, hãy hạ có kiểm soát.",
+          "Hạ xuống quá nhanh, hãy hạ có kiểm soát.",
           "Để đầu gối đổ vào trong.",
-          "Dùng tay kéo người lên nếu chân bạn có thể tự làm.",
+          "Dùng tay kéo mình lên nếu chân vẫn còn làm được.",
         ],
         breath: "Thở ra khi đứng lên, hít vào khi hạ xuống.",
       },
     ],
+    // Hướng dẫn ăn trước khi tập.
+    FUEL: {
+      title: "Hãy ăn gì đó trước khi đi",
+      text: "Hãy ăn nhẹ có tinh bột <strong>trước 30-45 phút</strong> khi bắt đầu, một lát bánh mì nướng, một quả chuối, hoặc một chén cơm nhỏ. Tập khi bụng đói có thể khiến bạn thấy yếu sức hoặc chóng mặt.",
+      short: "Hãy ăn gì đó trước khi bắt đầu 30-45 phút.",
+    },
     WARMUP: {
       title: "Khởi Động Trước",
-      kicker: "Khoảng 5 phút",
-      intro: "Vài động tác nhẹ nhàng để làm mềm các khớp và giúp cơ thể sẵn sàng. Đừng bỏ qua, khớp được làm ấm sẽ cử động tốt hơn và khỏe mạnh trong nhiều năm.",
+      kicker: "5-10 phút",
+      intro: "Chỉ cần một bài cardio nhẹ là đủ. Nó làm ấm tim, cơ bắp và mọi khớp mà buổi tập sẽ dùng đến. Đừng bỏ qua, khớp được làm ấm sẽ cử động tốt hơn và khỏe mạnh trong nhiều năm.",
       overviewTitle: "Khởi động hôm nay",
-      tip: "Để dành việc giãn cơ sâu đến tận cuối buổi, cơ bắp giãn tốt hơn khi đã ấm.",
+      tip: "<b>Sau đó hãy làm ấm từng máy khi bạn đến máy đó.</b> Tập 1-2 hiệp nhẹ với mức tạ nhẹ trước các hiệp chính. Đó là cách khởi động tốt nhất cho chính bài tập bạn sắp làm.",
     },
     COOLDOWN: {
       title: "Thả Lỏng",
-      kicker: "Khoảng 5 phút",
-      intro: "Làm rất tốt. Cuộn qua các động tác giãn cơ nhẹ nhàng này khi cơ bắp còn ấm. Giữ mỗi động tác, hít thở, và đừng nảy. Sau đó là giữ thăng bằng và hồi phục một chút.",
-      overviewTitle: "Thả lỏng từ trên xuống dưới",
+      kicker: "10-15 phút",
+      intro: "Làm rất tốt. Hãy bắt đầu bằng một đợt cardio nhẹ nữa, đó mới là phần thực sự hiệu quả. Các động tác giãn cơ sau đó rất dễ chịu và rất đáng làm khi cơ bắp còn ấm. Rồi đến phần luyện thăng bằng.",
+      overviewTitle: "Thả lỏng",
+      // Phần chính: một khối cardio nhẹ nữa. Dùng lại GIF của phần khởi động
+      // (cùng động tác, cùng ảnh, đã được lưu sẵn).
+      cardio: {
+        slug: "warmup-cardio",
+        name: "Cardio Nhẹ",
+        focus: "Đưa cơ thể trở lại bình thường",
+        hold: "5-10 phút",
+        works: "Cách thả lỏng tốt nhất. Nó đưa nhịp tim xuống từ từ, giữ máu lưu thông qua các cơ bạn vừa tập, và giúp bạn thấy nhẹ nhõm thay vì cứng mỏi vào ngày mai.",
+        cues: [
+          "Quay lại máy đi bộ trên không, xe đạp, hoặc đi bộ trên máy chạy.",
+          "Giữ nhẹ nhàng, vẫn trò chuyện được, nhẹ hơn cả lúc khởi động.",
+          "Hãy để hơi thở trở lại bình thường trước khi dừng hẳn.",
+        ],
+      },
       moves: [
         {
           slug: "cooldown-quad",
@@ -875,14 +837,15 @@ const CONTENT = {
       balance: {
         name: "Giữ Thăng Bằng Một Chân",
         focus: "Luyện thăng bằng",
-        hold: "2 × 20-30 giây mỗi bên",
-        text: "Đứng trên một chân. Bám thanh vịn, rồi chỉ một đầu ngón tay, rồi thử nhắm mắt. Đây là bài tập thăng bằng của bạn, và nó bảo vệ bạn trong nhiều năm.",
+        hold: "3 × 30 giây mỗi bên",
+        text: "Đứng trên một chân và giữ 30 giây, ba lần mỗi bên. Ban đầu hãy bám thanh vịn, rồi chỉ một đầu ngón tay, rồi buông hẳn. Đây là bài tập thăng bằng của bạn, và nó giữ bạn vững vàng trong nhiều năm.",
+        harder: "<b>Hãy tăng độ khó khi bạn vững hơn.</b> Trước hết nâng mỗi lần giữ lên trọn 60 giây. Sau đó, thử xoay đầu chậm rãi sang hai bên trong khi giữ thăng bằng, hoặc nhắm mắt lại. Luôn đứng gần một thanh vịn trong tầm tay.",
       },
       recover: {
         name: "Hồi phục",
         text: "Một cốc nước ngay bây giờ, và một chút chất đạm vào bữa ăn kế tiếp, để cơ bắp tái tạo.",
       },
-      tip: "Thấy chông chênh trên một chân? Cứ bám vào thanh vịn. Sự vững vàng đến cùng luyện tập.",
+      tip: "Thấy chông chênh trên một chân? Cứ bám vào thanh vịn, và rút ngắn thời gian giữ nếu cần. Sự vững vàng đến cùng luyện tập.",
     },
   },
 };
@@ -902,7 +865,7 @@ const UI = {
     todaysWorkout: "Today's workout",
     workoutName: "Full-Body Strength",
     exercisesCount: (n) => `${n} exercises`,
-    aboutMinutes: "About 50 minutes",
+    aboutMinutes: "About 80 minutes",
     doneToday: "You've done this today, lovely!",
     startWorkout: "Start Workout",
     doItAgain: "Do it again",
@@ -923,6 +886,8 @@ const UI = {
     finish: "Finish",
     exerciseXofY: (i, n) => `Exercise ${i} of ${n}`,
     warmupAim: "Aim for",
+    rampUpTitle: "Warm up this machine first",
+    rampUpText: "Do 1-2 easy sets at a light weight before your working sets, to groove the movement and get the joint ready.",
     doLabel: "Do",
     ofReps: (reps) => `of ${reps}`,
     howHardLabel: "How hard",
@@ -935,22 +900,27 @@ const UI = {
     backToStart: "Back to start",
 
     planTitle: "The Full Plan",
-    planIntro: "The same 8 exercises, <strong>3 days a week</strong>, for example Monday, Wednesday and Friday, with a rest day in between. Each session takes about 50 minutes.",
+    planIntro: "The same 8 exercises, <strong>3 days a week</strong>, for example Monday, Wednesday and Friday, with a rest day in between. Each session now takes about 80 minutes, longer than it used to, because of the extra sets.",
     planBefore: `<b style="display:inline; margin-left:0.4rem">Before you begin</b><br/>If you've never had a bone-density (DEXA) scan, or you have any joint replacement, disc problem, osteopenia or osteoporosis, please get the all-clear from your doctor first.`,
     planWarmup: "Warm-up",
+    planHome: "Between gym sessions, at home",
+    planHomeIntro: "Optional, on your days off. These two need no equipment at all and keep your hips and legs working between sessions.",
     planExercises: "The exercises",
     planTapAny: "Tap any exercise to see how to do it.",
     planCooldown: "Cool-down",
     planStronger: "Getting stronger over time",
-    planStrongerP1: "Only add a little weight when you can finish every set comfortably with good form, and it still feels like you had 2-3 reps left in you.",
+    planStrongerP1: "Every machine is <strong>4 sets of 4 to 6 reps</strong>. Fewer reps with a bit more weight is what builds bone as well as muscle, which is the whole point of this program.",
+    planStrongerP1b: "Only add a little weight when you can finish every set with good form, and it still feels like you had about 2 reps left in you. Most beginners guess low here, so if you get to the end of a set and could clearly have done 5 or 6 more, that's your sign to go up.",
     planStrongerP2: "Go up in <strong>small steps</strong> (the smallest the machine allows). If your form gets messy during a set, that's your stopping point, never push through it.",
     planExtras: `<b>Two optional extras (ask first)</b>Once you've done the basic plan well for a couple of months, a slightly heavier block on the leg and chest press, and some gentle heel-drops for bone strength, can be added. These specifically need a doctor or physio's OK if there's any bone or joint concern, so please check before adding them.`,
 
-    effortIntro: "You don't need to push to your limit. The aim is <strong>comfortably hard</strong>, working, but always in control.",
+    effortIntro: "You don't need to push to your limit. The aim is <strong>comfortably hard</strong>, working, but always in control. On the machines that means stopping each set with about <strong>2 reps left in you</strong>.",
     effortTestTitle: "A simple test",
-    effortTestP: "At the end of each set, ask yourself: <strong>could I have done a few more?</strong> If the answer is yes, about 2 or 3 more, you've got it just right.",
+    effortTestP: "At the end of each set, ask yourself: <strong>could I have done a few more?</strong> If the answer is about 2 more, you've got it just right. If you could clearly have done 5 or 6 more, the weight is too light, and next time you can go up a step.",
     effortLevelsTitle: "The levels",
+    effortRest: `<b>Rest properly between sets</b>Take a good 1½ to 2 minutes between sets, sitting down if you like, and longer if you still feel puffed. With heavier sets like these the rest is part of the exercise, not a break from it.`,
     effortLighter: `<b>If in doubt, go lighter</b>A weight that's a little too easy is far better than one that's too heavy. You can always add a little next time.`,
+    effortGuessLow: `<b>Most people guess low at first</b>It's very common to think you have only 2 left when you really have 5 or 6. If every set feels easy and your form stays neat, trust that and add a small step of weight.`,
     effortSharp: `<b style="display:inline;margin-left:0.4rem">Sharp pain is different</b><br/>A gentle muscle "burn" is normal. Sharp, pinching or shooting pain is not, stop straight away.`,
 
     safetyTitle: "Staying safe",
@@ -965,6 +935,7 @@ const UI = {
       "You simply can't feel the right muscle working, even after following the set-up.",
     ],
     safetyWorth: `<b>Worth doing</b>One session with a physiotherapist or trainer to check your set-up on the machines is a great investment, even if you do the rest on your own.`,
+    safetyFuel: `<b>Don't train on an empty stomach</b>Have a snack with some carbohydrate in it 30-45 minutes before you start, a slice of toast, a banana, or a small bowl of rice. Going in hungry is a common reason for feeling weak or dizzy partway through.`,
     safetyCheck: `<b>Check with your doctor first if you have</b>any joint replacement, a disc problem, or diagnosed osteopenia or osteoporosis, ideally before starting this program at all.`,
     safetyDisclaimer: "This app is a friendly guide, not medical advice. Your doctor and physio know you best.",
 
@@ -988,7 +959,7 @@ const UI = {
     todaysWorkout: "Bài tập hôm nay",
     workoutName: "Sức mạnh toàn thân",
     exercisesCount: (n) => `${n} bài tập`,
-    aboutMinutes: "Khoảng 50 phút",
+    aboutMinutes: "Khoảng 80 phút",
     doneToday: "Bạn đã hoàn thành hôm nay rồi, tuyệt vời!",
     startWorkout: "Bắt đầu tập",
     doItAgain: "Tập lại",
@@ -1009,6 +980,8 @@ const UI = {
     finish: "Hoàn tất",
     exerciseXofY: (i, n) => `Bài tập ${i} trên ${n}`,
     warmupAim: "Mục tiêu",
+    rampUpTitle: "Làm ấm máy này trước",
+    rampUpText: "Tập 1-2 hiệp nhẹ với mức tạ nhẹ trước các hiệp chính, để quen động tác và giúp khớp sẵn sàng.",
     doLabel: "Thực hiện",
     ofReps: (reps) => `mỗi hiệp ${reps}`,
     howHardLabel: "Mức gắng sức",
@@ -1021,22 +994,27 @@ const UI = {
     backToStart: "Về trang đầu",
 
     planTitle: "Kế Hoạch Đầy Đủ",
-    planIntro: "Vẫn 8 bài tập đó, <strong>3 ngày một tuần</strong>, ví dụ Thứ Hai, Thứ Tư và Thứ Sáu, với một ngày nghỉ xen giữa. Mỗi buổi mất khoảng 50 phút.",
+    planIntro: "Vẫn 8 bài tập đó, <strong>3 ngày một tuần</strong>, ví dụ Thứ Hai, Thứ Tư và Thứ Sáu, với một ngày nghỉ xen giữa. Mỗi buổi giờ mất khoảng 80 phút, lâu hơn trước, vì có thêm hiệp tập.",
     planBefore: `<b style="display:inline; margin-left:0.4rem">Trước khi bắt đầu</b><br/>Nếu bạn chưa từng đo mật độ xương (DEXA), hoặc có thay khớp, vấn đề đĩa đệm, thiếu xương hoặc loãng xương, xin hãy được bác sĩ cho phép trước.`,
     planWarmup: "Khởi động",
+    planHome: "Giữa các buổi tập, tại nhà",
+    planHomeIntro: "Tùy chọn, vào những ngày nghỉ. Hai động tác này không cần dụng cụ gì cả và giúp hông cùng chân của bạn vận động giữa các buổi tập.",
     planExercises: "Các bài tập",
     planTapAny: "Chạm vào bài tập bất kỳ để xem cách thực hiện.",
     planCooldown: "Thả lỏng",
     planStronger: "Mạnh hơn theo thời gian",
-    planStrongerP1: "Chỉ tăng thêm một chút tạ khi bạn có thể hoàn thành mọi hiệp thoải mái với tư thế tốt, và vẫn cảm thấy như còn dư 2-3 lần.",
+    planStrongerP1: "Mỗi máy đều là <strong>4 hiệp, mỗi hiệp 4 đến 6 lần</strong>. Ít lần hơn với mức tạ nặng hơn một chút là điều giúp xây dựng xương cùng với cơ bắp, và đó chính là mục đích của chương trình này.",
+    planStrongerP1b: "Chỉ tăng thêm một chút tạ khi bạn hoàn thành được mọi hiệp với tư thế tốt, và vẫn cảm thấy như còn dư khoảng 2 lần. Hầu hết người mới đều đoán thấp hơn thực tế, nên nếu kết thúc một hiệp mà bạn thấy rõ mình còn làm được 5 hay 6 lần nữa, đó là dấu hiệu nên tăng tạ.",
     planStrongerP2: "Tăng theo <strong>các bước nhỏ</strong> (mức nhỏ nhất máy cho phép). Nếu tư thế của bạn trở nên lộn xộn giữa hiệp, đó là điểm dừng, đừng bao giờ cố ép.",
     planExtras: `<b>Hai phần thêm tùy chọn (hỏi trước)</b>Sau khi bạn đã tập tốt kế hoạch cơ bản trong vài tháng, có thể thêm một khối nặng hơn một chút cho đạp chân và đẩy ngực, cùng vài động tác thả gót nhẹ nhàng để tăng sức mạnh xương. Những phần này đặc biệt cần sự cho phép của bác sĩ hoặc chuyên viên vật lý trị liệu nếu có bất kỳ lo ngại nào về xương hoặc khớp, nên xin hãy hỏi trước khi thêm.`,
 
-    effortIntro: "Bạn không cần phải gắng đến giới hạn. Mục tiêu là <strong>nặng vừa phải</strong>, có gắng sức nhưng luôn trong tầm kiểm soát.",
+    effortIntro: "Bạn không cần phải gắng đến giới hạn. Mục tiêu là <strong>nặng vừa phải</strong>, có gắng sức nhưng luôn trong tầm kiểm soát. Với các máy tập, điều đó nghĩa là kết thúc mỗi hiệp khi vẫn còn <strong>dư khoảng 2 lần</strong>.",
     effortTestTitle: "Một phép thử đơn giản",
-    effortTestP: "Ở cuối mỗi hiệp, hãy tự hỏi: <strong>mình có thể làm thêm vài lần nữa không?</strong> Nếu câu trả lời là có, khoảng 2 hoặc 3 lần nữa, thì bạn đã làm vừa đúng.",
+    effortTestP: "Ở cuối mỗi hiệp, hãy tự hỏi: <strong>mình có thể làm thêm vài lần nữa không?</strong> Nếu câu trả lời là khoảng 2 lần nữa, thì bạn đã làm vừa đúng. Nếu bạn thấy rõ mình còn làm được 5 hay 6 lần nữa, mức tạ đang quá nhẹ, và lần sau bạn có thể tăng lên một nấc.",
     effortLevelsTitle: "Các mức độ",
+    effortRest: `<b>Hãy nghỉ đủ giữa các hiệp</b>Hãy nghỉ trọn 1 phút rưỡi đến 2 phút giữa các hiệp, ngồi xuống nếu bạn muốn, và lâu hơn nữa nếu vẫn còn thở gấp. Với những hiệp nặng như thế này, việc nghỉ là một phần của bài tập, không phải là ngừng tập.`,
     effortLighter: `<b>Nếu còn phân vân, hãy chọn nhẹ hơn</b>Một mức tạ hơi quá nhẹ vẫn tốt hơn nhiều so với mức quá nặng. Bạn luôn có thể thêm một chút vào lần sau.`,
+    effortGuessLow: `<b>Phần lớn mọi người lúc đầu đều đoán thấp</b>Rất thường gặp chuyện bạn nghĩ mình chỉ còn dư 2 lần trong khi thật ra còn 5 hay 6 lần. Nếu mọi hiệp đều thấy nhẹ và tư thế vẫn gọn gàng, hãy tin vào điều đó và tăng thêm một nấc tạ nhỏ.`,
     effortSharp: `<b style="display:inline;margin-left:0.4rem">Đau nhói thì khác</b><br/>Cảm giác cơ bắp "rát" nhẹ là bình thường. Đau nhói, đau nhức hoặc đau buốt thì không, hãy dừng ngay lập tức.`,
 
     safetyTitle: "Giữ an toàn",
@@ -1051,6 +1029,7 @@ const UI = {
       "Bạn đơn giản là không cảm nhận được đúng cơ đang hoạt động, dù đã làm theo phần chuẩn bị.",
     ],
     safetyWorth: `<b>Đáng để làm</b>Một buổi với chuyên viên vật lý trị liệu hoặc huấn luyện viên để kiểm tra cách bạn chỉnh máy là một khoản đầu tư tuyệt vời, kể cả khi bạn tự tập phần còn lại.`,
+    safetyFuel: `<b>Đừng tập khi bụng đói</b>Hãy ăn nhẹ có tinh bột trước 30-45 phút khi bắt đầu, một lát bánh mì nướng, một quả chuối, hoặc một chén cơm nhỏ. Bụng đói là lý do thường gặp khiến bạn thấy yếu sức hoặc chóng mặt giữa buổi tập.`,
     safetyCheck: `<b>Hãy hỏi bác sĩ trước nếu bạn có</b>bất kỳ khớp thay thế nào, vấn đề đĩa đệm, hoặc được chẩn đoán thiếu xương hoặc loãng xương, tốt nhất là trước khi bắt đầu chương trình này.`,
     safetyDisclaimer: "Ứng dụng này là một người bạn hướng dẫn thân thiện, không phải lời khuyên y tế. Bác sĩ và chuyên viên vật lý trị liệu hiểu bạn rõ nhất.",
 
@@ -1190,7 +1169,9 @@ function mediaUrls() {
   const slugs = [
     ...c.EXERCISES.map((ex) => ex.slug),
     ...(c.WARMUP_EXERCISES || []).map((ex) => ex.slug),
+    ...(c.HOME_MOVES || []).map((ex) => ex.slug),
     ...c.COOLDOWN.moves.map((m) => m.slug),
+    ...(c.COOLDOWN.cardio ? [c.COOLDOWN.cardio.slug] : []),
   ];
   return [...new Set(slugs)].map((slug) => `assets/exercises/${slug}.gif`);
 }
@@ -1356,6 +1337,8 @@ function viewHome() {
       `}
     </section>
 
+    ${fuelCallout()}
+
     <nav class="quick-links" aria-label="More">
       <button class="quick-link" data-go="plan">
         <span class="ql-icon">${icon.book}</span>
@@ -1451,22 +1434,32 @@ function cooldownStep(data) {
       </button>` };
   };
 
-  const cards = data.moves.map((m, i) => {
+  // A stretch-style card. The cardio block and the stretches share this shape,
+  // so the cardio simply leads the list as card 1.
+  const moveCard = (m, num, key, eager) => {
     const cues = m.cues.map((c) => `<li>${c}</li>`).join("");
-    const t = tick(`cd-move-${i}`);
+    const t = tick(key);
     return `
     <article class="cool-card ${t.on ? "checked" : ""}">
       ${t.btn}
-      <div class="cool-kicker">${i + 1} &middot; ${m.focus} &middot; ${m.hold}</div>
+      <div class="cool-kicker">${num} &middot; ${m.focus} &middot; ${m.hold}</div>
       <h3 class="cool-name">${m.name}</h3>
       <p class="cool-works">${m.works}</p>
-      ${mediaHTML(m, { eager: i === 0 })}
+      ${mediaHTML(m, { eager })}
       <section class="block do" style="margin-top:1rem">
         <div class="block-head">${icon.check} ${T().doThisHead}</div>
         <ul>${cues}</ul>
       </section>
     </article>`;
-  }).join("");
+  };
+
+  // The cardio block is the part that actually does the cooling down, so it
+  // comes first and the stretches follow it.
+  const cardioCard = data.cardio ? moveCard(data.cardio, 1, "cd-cardio", true) : ``;
+  const offset = data.cardio ? 2 : 1;
+  const cards = data.moves
+    .map((m, i) => moveCard(m, i + offset, `cd-move-${i}`, !data.cardio && i === 0))
+    .join("");
 
   const b = data.balance;
   const bt = tick("cd-balance");
@@ -1477,6 +1470,7 @@ function cooldownStep(data) {
       <div class="cool-kicker">${b.focus} &middot; ${b.hold}</div>
       <h3 class="cool-name">${b.name}</h3>
       <p class="cool-works">${b.text}</p>
+      ${b.harder ? `<div class="callout info" style="margin-top:1rem">${b.harder}</div>` : ``}
     </article>`;
 
   const r = data.recover;
@@ -1495,6 +1489,7 @@ function cooldownStep(data) {
     <p class="works">${data.intro}</p>
     <div class="warm-overview-head" style="margin-top:1.4rem">${data.overviewTitle}</div>
     <div class="cool-list">
+      ${cardioCard}
       ${cards}
       ${balanceCard}
       ${recoverCard}
@@ -1564,7 +1559,16 @@ function warmupStep(data) {
     <p class="works">${data.intro}</p>
     <div class="warm-overview-head" style="margin-top:1.4rem">${data.overviewTitle}</div>
     <div class="cool-list">${cards}</div>
-    <div class="callout info" style="margin-top:1.3rem">${data.tip}</div>`;
+    <div class="callout info" style="margin-top:1.3rem">${data.tip}</div>
+    ${fuelCallout()}`;
+}
+
+// "Eat something 30-45 minutes before you start." Repeated wherever it can
+// still be acted on: the home screen, the warm-up, and the full plan.
+function fuelCallout(cls = "info") {
+  const f = C().FUEL;
+  return `
+    <div class="callout ${cls}" style="margin-top:1rem">${icon.clock}<b style="display:inline;margin-left:0.4rem">${f.title}</b><br/>${f.text}</div>`;
 }
 
 function exerciseStep(ex, exIndex) {
@@ -1592,6 +1596,8 @@ function exerciseStep(ex, exIndex) {
       </div>
     </div>
 
+    ${rampUpCallout(ex)}
+
     <section class="block setup">
       <div class="block-head">${T().setUp}</div>
       <ol>${setup}</ol>
@@ -1609,6 +1615,15 @@ function exerciseStep(ex, exIndex) {
 
     <div class="breath">${icon.breath}<span>${ex.breath}</span></div>
     ${ex.note ? `<div class="callout info" style="margin-top:1rem">${ex.note}</div>` : ``}`;
+}
+
+// The machines each get their own warm-up: 1-2 light sets before the working
+// sets. Bodyweight moves (dead bug, calf raise) carry no `rampUp` flag and
+// show nothing.
+function rampUpCallout(ex) {
+  if (!ex.rampUp) return ``;
+  return `
+    <div class="callout info" style="margin-top:1.1rem">${icon.dumbbell}<b style="display:inline;margin-left:0.4rem">${T().rampUpTitle}</b><br/>${T().rampUpText}</div>`;
 }
 
 function viewDone() {
@@ -1658,6 +1673,7 @@ function planAccItem(ex, num) {
           ${doseVital}
           <div class="vital effort"><div class="vlabel">${T().howHardLabel}</div><div class="meter">${eff.bars}</div><div class="vsub">${eff.word}</div></div>
         </div>
+        ${rampUpCallout(ex)}
         <section class="block setup"><div class="block-head">${T().setUp}</div><ol>${ex.setup.map((s) => `<li>${s}</li>`).join("")}</ol></section>
         <section class="block do"><div class="block-head">${icon.check} ${T().doThisHead}</div><ul>${ex.doThis.map((s) => `<li>${s}</li>`).join("")}</ul></section>
         <section class="block avoid"><div class="block-head">${icon.alert} ${T().avoidHead}</div><ul>${ex.avoid.map((s) => `<li>${s}</li>`).join("")}</ul></section>
@@ -1666,8 +1682,10 @@ function planAccItem(ex, num) {
 }
 
 function viewPlan() {
+  const cd = C().COOLDOWN;
   const warmAcc = (C().WARMUP_EXERCISES || []).map((ex, i) => planAccItem(ex, i + 1)).join("");
   const acc = C().EXERCISES.map((ex, i) => planAccItem(ex, i + 1)).join("");
+  const homeAcc = (C().HOME_MOVES || []).map((ex, i) => planAccItem(ex, i + 1)).join("");
 
   return `
   ${pageHeader(T().planTitle)}
@@ -1675,6 +1693,8 @@ function viewPlan() {
     <p class="section-intro">${T().planIntro}</p>
 
     <div class="callout info">${icon.shield}${T().planBefore}</div>
+
+    ${fuelCallout()}
 
     <h2 class="section-title">${T().planWarmup}</h2>
     <p class="section-intro">${T().planTapAny}</p>
@@ -1686,14 +1706,22 @@ function viewPlan() {
 
     <h2 class="section-title">${T().planCooldown}</h2>
     <ul class="plan-list">
-      ${C().COOLDOWN.moves.map((m) => `<li>${icon.dot}<span><strong>${m.name}.</strong> ${m.focus}, ${m.hold}.</span></li>`).join("")}
-      <li>${icon.dot}<span><strong>${C().COOLDOWN.balance.name}.</strong> ${C().COOLDOWN.balance.hold}.</span></li>
-      <li>${icon.dot}<span><strong>${C().COOLDOWN.recover.name}.</strong> ${C().COOLDOWN.recover.text}</span></li>
+      ${cd.cardio ? `<li>${icon.dot}<span><strong>${cd.cardio.name}.</strong> ${cd.cardio.focus}, ${cd.cardio.hold}.</span></li>` : ``}
+      ${cd.moves.map((m) => `<li>${icon.dot}<span><strong>${m.name}.</strong> ${m.focus}, ${m.hold}.</span></li>`).join("")}
+      <li>${icon.dot}<span><strong>${cd.balance.name}.</strong> ${cd.balance.hold}.</span></li>
+      <li>${icon.dot}<span><strong>${cd.recover.name}.</strong> ${cd.recover.text}</span></li>
     </ul>
+
+    ${homeAcc ? `
+    <h2 class="section-title">${T().planHome}</h2>
+    <p class="section-intro">${T().planHomeIntro}</p>
+    <div class="acc">${homeAcc}</div>
+    ` : ``}
 
     <h2 class="section-title">${T().planStronger}</h2>
     <div class="prose">
       <p>${T().planStrongerP1}</p>
+      <p>${T().planStrongerP1b}</p>
       <p>${T().planStrongerP2}</p>
     </div>
 
@@ -1725,7 +1753,11 @@ function viewEffort() {
     ${row("steady")}
     ${row("easy")}
 
-    <div class="callout warn" style="margin-top:1.2rem">${T().effortLighter}</div>
+    <div class="callout info" style="margin-top:1.2rem">${T().effortRest}</div>
+
+    <div class="callout info">${T().effortGuessLow}</div>
+
+    <div class="callout warn" style="margin-top:1rem">${T().effortLighter}</div>
 
     <div class="callout danger" style="margin-top:1rem">${icon.alert}${T().effortSharp}</div>
 
@@ -1748,7 +1780,9 @@ function viewSafety() {
       ${stops.map((s) => `<div class="stop-item">${icon.alert}<span>${s}</span></div>`).join("")}
     </div>
 
-    <div class="callout info" style="margin-top:1.4rem">${T().safetyWorth}</div>
+    <div class="callout warn" style="margin-top:1.4rem">${T().safetyFuel}</div>
+
+    <div class="callout info">${T().safetyWorth}</div>
 
     <div class="callout warn">${T().safetyCheck}</div>
 
